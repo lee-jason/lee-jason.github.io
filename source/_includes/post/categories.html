@@ -1,6 +1,9 @@
 {% capture category %}{% if post %}{{ post.categories | category_links | size }}{% else %}{{ page.categories | category_links | size }}{% endif %}{% endcapture %}
 {% unless category == '0' %}
+<<<<<<< HEAD
 in
+=======
+>>>>>>> 7f3405e529df5730194d00a51aa34337a811d98d
 <span class="categories">
   {% if post %}
     {{ post.categories | category_links }}

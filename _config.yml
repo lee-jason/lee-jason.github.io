@@ -7,7 +7,7 @@ title: Wow this blog looks fancy
 subtitle: its <i>mostly</i> about programming
 author: Jason Lee
 simple_search: https://www.google.com/search
-description: I'm an unemployed web developer from California. Initially a Java web developer, after being recruited into front end web development, now prefers the MEAN stack(Mongo, Express, Angular, Node). I make web apps that I think people would like to use.
+description: I'm a programmer from California specializing in web development. Initially in Java, now prefers the MEAN stack(Mongo, Express, Angular, Node). I make web apps that I think people would like to use.
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
@@ -19,7 +19,7 @@ date_format: "ordinal"
 subscribe_rss: /atom.xml
 subscribe_email:
 # RSS feeds can list your email address if you like
-email:
+email: lee.jason930@gmail.com
 
 # ----------------------- #
 #    Jekyll & Plugins     #
@@ -71,7 +71,7 @@ github_skip_forks: true
 
 # Twitter
 twitter_user:
-twitter_tweet_button: false
+twitter_tweet_button: true
 
 # Google +1
 google_plus_one: false
@@ -99,3 +99,7 @@ google_analytics_tracking_id: UA-50368577-5
 
 # Facebook Like
 facebook_like: false
+
+# music
+music: true
+music_user: jihoon222

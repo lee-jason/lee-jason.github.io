@@ -5,7 +5,7 @@ date: 2014-11-06 19:35:39 -0800
 comments: true
 categories: ['problems', 'java']
 ---
-<div><img src="https://s3.amazonaws.com/jasonjlblog/herobinarytreeexample.png" alt="sample binary tree structures based off three nodes"></div>
+<div><img src="https://s3.amazonaws.com/jasonjlblog/herobinarytreeexample.png" alt="sample binary tree structures based off threez nodes"></div>
 So I've been brushing up and working with binary trees recently and I was pleasantly reminded how binary trees can flex and change while still maintaining the same data. It was fun testing self balancing trees when they would keep changing up on me. I got a little annoyed and my mind started to wander and wondered just how many different kinds of trees can a set of numbers create?
 
 <strong>Problem:</strong> Given the amount of nodes in a set, how many different binary tree structures can be made from it?

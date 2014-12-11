@@ -5,11 +5,11 @@ date: 2014-12-10 12:18:49 -0800
 comments: true
 categories: ['javascript', 'guide']
 ---
-Object oriented Javascript isn't really a new concept.  For years people have been trying to make JavaScript more familiar towards object oriented programmers by perverting its naturally prototypical architecture towards something more classical. There are many guides on how to create classes with private and public members and inheritance but there aren't as many guides on how to organize these into an actual usuable and familiar project structure.  I think the primary problem in why developers have so many varying ways of organizing their Javascript code is in that the language was never really meant to be built to such huge degrees.  Large scale Javascript projects are popping up with the rise in popularity of NodeJS and large-scale front end frameworks that try to organize the usual mess that comes from hacking together a 'native' application experience on the web. The need for organized module JS is becoming increasingly important which is why I think I've found a pretty decent solution from the wide amount of options out there.
+Object oriented Javascript isn't really a new concept.  For years people have been trying to make JavaScript more familiar towards object oriented programmers by perverting its naturally prototypical architecture towards something more classical. There are many guides on how to create classes with private and public members and inheritance but there aren't as many guides on how to organize these into an actual usable and familiar project structure.  I think the primary problem in why developers have so many varying ways of organizing their Javascript code is in that the language was never really meant to be built to such huge degrees.  Large scale Javascript projects are popping up with the rise in popularity of NodeJS and large-scale front end frameworks that try to organize the usual mess that comes from hacking together a 'native' application experience on the web. The need for organized module JS is becoming increasingly important which is why I think I've found a pretty decent solution from the wide amount of options out there.
 
 <!-- more -->
 
-JavaScript can simulate classes, but how do you organize them in files?  Native Java can support a single class in a single file as well as any additional subclasses within that file.  Different classes are brought together in Java by specifying its dependencies at the beginning of each file with the 'import' keyword.  Unfortunately at this current state there is no largely supported 'import' feature for JavaScript which brings JavaScript developers out of the woodwork to make up functionality for it.  <a href="http://requirejs.org/">RequireJS</a> seems to be a pretty good module loader that emulates the functionality of an import. This means that it's no longer necessary to rely on properly ordering your dependencies in \<script\> tags in your html, but rather declare dependencies directly in the JavaScript files themselves. This also means that you can just insert the script tag for just the RequireJS file in the html.  This file will be the entry point of the program and simulates the <code>public static void main(String args[])</code> function for Java. Imports is a pretty awesome feature that JavaScript was missing in creating clean modular object oriented JavaScript.
+JavaScript can simulate classes, but how do you organize them in files?  Native Java can support a single class in a single file as well as any additional subclasses within that file.  Different classes are brought together in Java by specifying its dependencies at the beginning of each file with the 'import' keyword.  Unfortunately at this current state there is no largely supported 'import' feature for JavaScript which brings JavaScript developers out of the woodwork to make up functionality for it.  <a href="http://requirejs.org/">RequireJS</a> seems to be a pretty good module loader that emulates the functionality of an import. This means that it's no longer necessary to rely on properly ordering your dependencies in <script\> tags in your html, but rather declare dependencies directly in the JavaScript files themselves. This also means that you can just insert the script tag for just the RequireJS file in the html.  This file will be the entry point of the program and simulates the <code>public static void main(String args[])</code> function for Java. Imports is a pretty awesome feature that JavaScript was missing in creating clean modular object oriented JavaScript.
 
 {% codeblock lang:javascript main.js %}
     //the equivalent of import Class1; import Class2;
@@ -46,7 +46,7 @@ Here's the content if you're too lazy to click on the source link
     </html>
 {% endcodeblock %}
 
-Note that main imports Car and Person and simulates a person entering a car and going.
+Note that main.js imports Car and Person and simulates a person entering a car and going.
 {% codeblock lang:javascript main.js %}
     require(["./car", "./person"], function(Car, Person){
         var civic = new Car("sedan");
@@ -108,7 +108,7 @@ Note that properties 'on' and 'driver' are arbitrarily private as an example to 
     });                 
 {% endcodeblock %}
 
-{% codeblock lang:javascript car.js %}
+{% codeblock lang:javascript person.js %}
     define([], function(){
         var Person = function(name){
             this.name = name;

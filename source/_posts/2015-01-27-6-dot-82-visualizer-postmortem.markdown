@@ -9,9 +9,12 @@ categories: ["javascript", "project", "postmortem", "angular"]
 <a href="http://jasonjl.me/682Visualizer">website</a>   
 <a href="https://github.com/lee-jason/682Visualizer">source code</a>   
 
-6.82 Visualizer is a gold and experience data charter for the game Dota 2. For those unfamiliar to the game of Dota, there are two teams of five that duke it out against each other to ultimately destroy their opponents base. Just like a real war, the way to gain an advantage over an opponent is to have a stronger capital, that's essentially what Dota's gold and experience is. There was a controversial update to the game where it drastically changed the effect of how each team would gain experience and gold giving the losing team a boost in capital in order to catch up. Many members in the community were worried that this would change their game for the worse and they expressed it with personal anecdotes of many lost games. But when everyone had stories I wanted the data. I sought to provide the community with the hard facts in an easy to view format of how the experience and gold were exactly affected so that we can see clearly just how much it altered the game.
- 
+6.82 Visualizer is a gold and experience data grapher for the game Dota 2.  There was a controversial update to the game where the game would give the losing team drastic advantages so that they would be able to catch up to the leader. This program was created to show the hard data on how much this important game mechanic changed.
+
 <!-- more --> 
+
+For those unfamiliar to the game of Dota, there are two teams of five that duke it out against each other to ultimately destroy their opponents base. Just like a real war, the way to gain an advantage over an opponent is to have a stronger capital, that's essentially what Dota's gold and experience is. Many members in the community were worried that this would change their game for the worse and they expressed it with personal anecdotes of many lost games. I wanted to see the change for myself not with stories but with hard data. I sought to provide the community with the hard facts in an easy to view format of how the experience and gold were exactly affected so that we can see clearly just how much it altered the game.
+ 
 
 <h2>The Backend</h2>
 Backend? What backend? There actually is no backend to this site.  The entire application is self contained in the html and js file.  The pages are served through github's project pages much like this blog you're reading.

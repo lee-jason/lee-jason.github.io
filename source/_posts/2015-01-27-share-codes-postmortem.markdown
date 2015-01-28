@@ -6,12 +6,14 @@ comments: true
 categories: ["project", "postmortem", "javascript", "node"]
 ---
 
-<a href="sharecodes.jasonjl.me">website</a>   
+<a href="http://sharecodes.jasonjl.me">website</a>   
 <a href="">source code</a>   
 
-Share Codes is a site for people to trade beta/alpha/early access codes for whatever product people want. The premise is simple, people with codes post their email saying that they have a code and whether they want something for it, those wanting an access code post their email saying that they want a code and whether they're willing to give something for it. This site was originally created for people to share the early access demo code for the video game Super Smash Brothers for 3DS. Only a few priviledged people were able to receive an early access code from Nintendo and had a few codes to share.  Internet communities across the web were going wild on searching for a spare code while those with the codes had the opportunity to get something in return for having such a rare commodity. I felt a site like this was needed to help people filter all the noise into something more digestable. The site was furiously written and released and it even helped some people find and give away codes, but of course it wasn't without its problems.
+Share Codes is a site for people to trade beta/alpha/early access codes. The premise is simple, people with codes post their email and people that want codes post their emails. Match made in heaven! 
  
 <!-- more --> 
+
+This site was originally created for people to share the early access demo code for the video game Super Smash Brothers for 3DS. Only a few priviledged people were able to receive an early access code from Nintendo and had a few codes to share.  Internet communities across the web were going wild on searching for a spare code while those fortunate ones with the codes had the opportunity to get something in return for having such a rare commodity. I felt a site like this was needed to help people filter all the noise into something more digestable. The site was furiously written and released and it even helped some people find and give away codes.
 
 <h2>The Backend</h2>
 The backend was made with node and with the express framework.  Once again I tried to make a proper REST API style endpoints that my front end would connect to. There is no real persistence layer since I wanted an email to disappear within 30 minutes of them being posted so that other more newer emails can gain visibility. All emails are stored in memory. If I knew the site would be getting a million hits and a million emails then I would have had to store the emails in a document store but I knew I was only going to be dealing with a small amount. The server has a scheduled timed function that prunes emails from the email list if the email is older than 30 minutes. That's it, there's nothing more interesting to say about the backend.

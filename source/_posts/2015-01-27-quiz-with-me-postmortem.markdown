@@ -6,12 +6,14 @@ comments: true
 categories: ["project", "javascript", "postmortem"]
 ---
 
-<a href="quiz.jasonjl.me">website</a>   
+<a href="http://quiz.jasonjl.me">website</a>   
 <a href="">source code</a>   
 
-Quiz With Me is a community generated trivia site. Each user that connects to the site competes with all other users on the same question after a set period of time. Once time is up, the polls are tallied and users can compare their choice to those of their peers. Users can play anonymously or sign-up and login to keep track of their points. Each user can also submit a multiple choice trivia question with at least four or more potential answers. Each question can also be judged by the community as to whether it is factually correct or just a nonsensical question. Quiz with me brings the joy of answering trivia questions vs the entire world!
+Quiz With Me is a community generated trivia site. Each user competes against the people around the world to test themselves with the trivia questions that they submit. Quiz With Me brings the joy of answering and creating trivia questions vs the entire world!
  
 <!-- more --> 
+
+Every player on Quiz With Me are all competing against each other directly in the same trivia game. Each player gets time to answer the same question as everyone else. Once time is up, the polls are tallied and users can compare their choice to those of their peers. Players can play anonymously or sign-up and login to keep track of their points. Each player can also submit their own multiple choice trivia question with at least four or more potential answers. Each question can also be judged by the community as to whether it is factually correct or just nonsensical BS. 
 
 <h2>The Backend</h2>
 The backend is ran on node.js with the express framework with a mongo+mongoose persistence layer.  This is my second project working with node and I wanted to create endpoints that follow public api guidelines. There are api endpoints GET, POST, CREATE endpoints for users and questions that handle account and question management respectively. You would think I would use socket.io again to create real-time experience but I really wanted to practice working on creating a RESTful api. Its funny, all API creation guides recommend making your server side content stateless.  The problem here is that I needed to synchronize all users to the server's state, the time remaining on the current question, and the question itself. I think its easy to create a stateless REST endpoints when dealing with normal documents, but when we're creating a game of sorts, its kind of assumed that we're going to be maintaining a state that all clients have to synchronize to right?

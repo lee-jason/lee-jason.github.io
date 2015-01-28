@@ -5,18 +5,11 @@ date: 2015-01-27 09:47:57 -0800
 comments: true
 categories: ["project", "javascript", "postmortem"]
 ---
----
-layout: post
-title: "Confess.me Postmortem"
-date: 2015-01-27 09:47:57 -0800
-comments: true
-categories: ["project", "javascript", "postmortem"]
----
 
-<a href="confess.jasonjl.me">website</a>   
+<a href="http://confess.jasonjl.me">website</a>   
 <a href="">source code</a>   
 
-Confess.me is an anonymous real-time secret posting website. Its meant to be a safe place where you can share with the world about what's been bothering you. Other supportive members who read these messages can give back simple responses of support letting the secret sharer know that they've been heard. The secret sharer can thank these anonymous eyes and ears for their support in turn. All of this is done in real time letting user's know that there are people out there willing to listen.
+Confess.me is an anonymous real-time secret posting website. Other supportive members can send comforting messages of support to the anonymous secret sharer. The secret sharer can thank these anonymous eyes and ears for their support in turn. All of this is done in real time letting users have an outlet for those things that they hide to themselves.
 
 <!-- more -->
 

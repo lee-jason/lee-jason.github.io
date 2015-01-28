@@ -8,9 +8,11 @@ categories: ["javascript", "project", "postmortem"]
 
 <a href="https://github.com/lee-jason/Random_Projects/tree/master/niconicotwitch">Source code</a>
 
-NicoNicoTwitch is a javascript canvas project that's meant to bring over the unique on-screen scrolling commentary feature of <a href="http://niconico.jp">Nico Nico Douga</a> onto the popular game live streaming platform <a href="http://twitch.tv">twitch.tv</a>. I made this because I always loved Nico's unique text-on-video overlay of community commentary and wanted to bring that over to Twitch who also sports a vibrant commentary community. I personally think that bringing the chat more closer to the video gives us a closer connection to those on the people on the web as you can relate when you both find a certain scene uproaringly hilarious, or another particular scene sad. Twitch was the perfect video playing platform to emulate this feature on due to the chat being in real time as well as being quite infectious with its commentary.
+NicoNicoTwitch is a javascript canvas project that's meant to bring over the unique on-screen scrolling commentary feature of <a href="http://niconico.jp">Nico Nico Douga</a> onto the popular game live streaming platform <a href="http://twitch.tv">twitch.tv</a>. 
 
 <!-- more -->
+
+I made this because I always loved Nico's unique text-on-video overlay of community commentary and wanted to bring that over to Twitch who also sports a vibrant commentary community. I personally think that bringing the chat more closer to the video gives us a closer connection to those on the people on the web as you can relate when you both find a certain scene uproaringly hilarious, or another particular scene sad. Twitch was the perfect video playing platform to emulate this feature on due to the chat being in real time as well as being quite infectious with its commentary.
 
 The basic rundown of how niconicotwitch works is pretty straightforward. Set a timer to read any updates in the chat, when there's new messages, parse and process them for any emoticons, send them to the display sorter where it'll find a spot for them to 'marquee', then animate the text as it flies by.  The jQuery library was used for its convenience in dom selection and traversal through all the chat elements and the html5 canvas feature was used to paint the text over the video. The following will go into a bit further detail about the intricacies of the program.
 

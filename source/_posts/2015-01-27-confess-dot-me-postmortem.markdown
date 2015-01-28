@@ -3,7 +3,7 @@ layout: post
 title: "Confess.me Postmortem"
 date: 2015-01-27 09:47:57 -0800
 comments: true
-categories: ["project", "javascript", "postmortem"]
+categories: ["project", "javascript", "postmortem", "node", "mongoose"]
 ---
 
 <a href="http://confess.jasonjl.me">website</a>   

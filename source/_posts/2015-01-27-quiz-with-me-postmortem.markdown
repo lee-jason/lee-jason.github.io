@@ -3,7 +3,7 @@ layout: post
 title: "Quiz With Me Postmortem"
 date: 2015-01-27 12:20:43 -0800
 comments: true
-categories: ["project", "javascript", "postmortem", "node", "mongoose"]
+categories: ["project", "javascript", "postmortem", "node", "mongoose", "angular"]
 ---
 
 <a href="http://quiz.jasonjl.me">website</a>   

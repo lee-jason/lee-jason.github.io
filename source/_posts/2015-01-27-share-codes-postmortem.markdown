@@ -1,0 +1,25 @@
+---
+layout: post
+title: "Share Codes Postmortem"
+date: 2015-01-27 14:40:13 -0800
+comments: true
+categories: ["project", "postmortem", "javascript", "node"]
+---
+
+<a href="sharecodes.jasonjl.me">website</a>   
+<a href="">source code</a>   
+
+Share Codes is a site for people to trade beta/alpha/early access codes for whatever product people want. The premise is simple, people with codes post their email saying that they have a code and whether they want something for it, those wanting an access code post their email saying that they want a code and whether they're willing to give something for it. This site was originally created for people to share the early access demo code for the video game Super Smash Brothers for 3DS. Only a few priviledged people were able to receive an early access code from Nintendo and had a few codes to share.  Internet communities across the web were going wild on searching for a spare code while those with the codes had the opportunity to get something in return for having such a rare commodity. I felt a site like this was needed to help people filter all the noise into something more digestable. The site was furiously written and released and it even helped some people find and give away codes, but of course it wasn't without its problems.
+ 
+<!-- more --> 
+
+<h2>The Backend</h2>
+The backend was made with node and with the express framework.  Once again I tried to make a proper REST API style endpoints that my front end would connect to. There is no real persistence layer since I wanted an email to disappear within 30 minutes of them being posted so that other more newer emails can gain visibility. All emails are stored in memory. If I knew the site would be getting a million hits and a million emails then I would have had to store the emails in a document store but I knew I was only going to be dealing with a small amount. The server has a scheduled timed function that prunes emails from the email list if the email is older than 30 minutes. That's it, there's nothing more interesting to say about the backend.
+ 
+<h2>The Frontend</h2>
+The front end was created with plain old html with the bootstrap framework for styling.  I don't really like using the bootstrap grid layout feature so I don't use that and make my own responsive layout using flexible containers and media queries. The posting of the emails is not actually asynchronous. I know the experience would have probably been better if emails asynchronously updated without a page refresh but I haven't worked on a non-asynchronous site in so long that I really wanted to remind myself how to do it using traditional forms, actions, and methods.  Its funny, I'm a developer born into the web 2.0 world that I have little project experience on how to do things in the web 1.0 world. I also wanted users to keep refreshing their pages to simulate heavy load to test how much strain a single Heroku dyno can take.
+ 
+<h2>The good, the bad</h2>
+The site was a blast to make. I knew that there was a time limit of when a site like this would be relevant since the codes would expire in a week. I churned this site out in around six hours just to see if I could. I think I felt that this would be kind of a proving ground whether I'm comfortable enough with node to create a basic web application relatively quickly. Fortunately I was able to reuse the framework from my other node projects that already had the configurations I wanted.  The site worked and I felt really alive after I saw actual users on the site. I continued to make micro improvements from layout, extra fields, cleaning up text, making it responsive, all within the first hour of being live. If I wanted to generalize this, I can just swap out the title and make it apply for any kind of pre-access code sharing site.
+
+So here's the bad. The bad involved the marketing. Once I was done, I sent it around to my friends, then I made a post on reddit in the primary thread and any other thread involved in trading of codes. Unfortunately for me, these threads were already filled to the brim with people looking for codes. I think it was the largest reddit comment thread I've seen at 20,000 comments since I last seen it. Everytime I would make a post in a thread I would check the analytics and I was fortunate to even get a few bites. Someone even posted it on their facebook wall thereby getting more bites. It was pretty swell, my site was actually being used by real people. Many of them posted their email looking for codes but nobody posted their email giving away their code. It was a seller's market at a rate of 1 seller to 50 buyers. Some users kept reposting their email when it got pruned but then eventually the site would be empty. 

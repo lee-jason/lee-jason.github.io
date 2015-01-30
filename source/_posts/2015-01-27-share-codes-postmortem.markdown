@@ -10,6 +10,7 @@ categories: ["project", "postmortem", "javascript", "node", "angular", "mongo"]
     <source src="https://s3.amazonaws.com/jasonjlblog/sharecodes.webm" type="video/webm">
     <img src="https://s3.amazonaws.com/jasonjlblog/sharecodes.jpg">
 </video>
+
 <a href="http://sharecodes.jasonjl.me">website</a>   
 <a href="https://github.com/lee-jason/ShareCodes">source code</a>   
 
@@ -30,4 +31,4 @@ The micro app was a blast to make. I knew that there was a time limit of relevan
 
 So here's the bad. The bad involved the marketing. Once I was done, I sent it around to my friends, then I made a post on Reddit in the primary thread and any other thread involved in trading of codes. Unfortunately for me, these threads were already filled to the brim with people looking for codes. It was a storm of fish desperately trying to gobble the bait. I think it was the largest Reddit thread I've seen at 20,000 comments since I last seen it. Every time I would make a post in a thread I would check the analytics and I was fortunate to even get a few bites. Someone even posted it on their Facebook wall thereby getting a few more bites. It was pretty swell, my site was actually being used by real people. Many of them posted their email looking for codes but nobody posted their email giving away their code. It was a seller's market at a rate of 1 seller to 50 buyers. Some users kept reposting their email when it got pruned but then eventually the site would be empty. 
 
-Well, there you have it. I'm glad that some people were helped by the site, but it didn't spread even when I hopped around forums posting the link. I think the clarity of the share codes service is actually really helpful but when people are already ingrained in their communities it seems tha they can't be bothered to use anything else.
+Well, there you have it. I'm glad that some people were helped by the site, but it didn't spread even when I hopped around forums posting the link. I think the clarity of the share codes service is actually really helpful but when people are already ingrained in their communities it seems that they can't be bothered to use anything else.

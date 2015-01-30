@@ -3,7 +3,7 @@ layout: post
 title: "Text Twist Bot"
 date: 2014-11-21 23:28:34 -0800
 comments: true
-categories: ['project', 'postmortem', 'java']
+categories: ['project', 'postmortem', 'java', 'bots']
 ---
 <video muted autoplay loop width="400px" poster="https://s3.amazonaws.com/jasonjlblog/texttwistbot.jpg">
     <source src="https://s3.amazonaws.com/jasonjlblog/texttwistbot.mp4" type="video/mp4">

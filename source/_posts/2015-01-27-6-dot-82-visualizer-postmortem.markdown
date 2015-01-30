@@ -5,7 +5,11 @@ date: 2015-01-27 16:22:06 -0800
 comments: true
 categories: ["javascript", "project", "postmortem", "angular"]
 ---
-
+<video muted autoplay loop width="550px" poster="https://s3.amazonaws.com/jasonjlblog/682visualizer.jpg">
+    <source src="https://s3.amazonaws.com/jasonjlblog/682visualizer.mp4" type="video/mp4">
+    <source src="https://s3.amazonaws.com/jasonjlblog/682visualizer.webm" type="video/webm">
+    <img src="https://s3.amazonaws.com/jasonjlblog/682visualizer.jpg">
+</video>
 <a href="http://jasonjl.me/682Visualizer">website</a>   
 <a href="https://github.com/lee-jason/682Visualizer">source code</a>   
 

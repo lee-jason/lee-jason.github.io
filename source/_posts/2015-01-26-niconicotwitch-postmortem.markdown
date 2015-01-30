@@ -5,7 +5,11 @@ date: 2015-01-26 18:52:05 -0800
 comments: true
 categories: ["javascript", "project", "postmortem"]
 ---
-
+<video muted autoplay loop width="550px" poster="https://s3.amazonaws.com/jasonjlblog/niconicotwitch.jpg">
+    <source src="https://s3.amazonaws.com/jasonjlblog/niconicotwitch.mp4" type="video/mp4">
+    <source src="https://s3.amazonaws.com/jasonjlblog/niconicotwitch.webm" type="video/webm">
+    <img src="https://s3.amazonaws.com/jasonjlblog/niconicotwitch.jpg">
+</video>
 <a href="https://github.com/lee-jason/Random_Projects/tree/master/niconicotwitch">Source code</a>
 
 NicoNicoTwitch is a JavaScript canvas project that's meant to bring over the unique on-screen scrolling commentary feature of <a href="http://niconico.jp">Nico Nico Douga</a> onto the popular game live streaming platform <a href="http://twitch.tv">twitch.tv</a>. 

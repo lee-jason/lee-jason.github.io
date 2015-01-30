@@ -5,9 +5,13 @@ date: 2015-01-27 09:47:57 -0800
 comments: true
 categories: ["project", "javascript", "postmortem", "node", "mongoose"]
 ---
-
+<video muted autoplay loop width="550px" poster="https://s3.amazonaws.com/jasonjlblog/confessme.jpg">
+    <source src="https://s3.amazonaws.com/jasonjlblog/confessme.mp4" type="video/mp4">
+    <source src="https://s3.amazonaws.com/jasonjlblog/confessme.webm" type="video/webm">
+    <img src="https://s3.amazonaws.com/jasonjlblog/confessme.jpg">
+</video>
 <a href="http://confess.jasonjl.me">website</a>   
-<a href="">source code</a>   
+<a href="https://github.com/lee-jason/confess.me">source code</a>   
 
 Confess.me is an anonymous real-time secret posting website. Other supportive members can send comforting messages of support to the anonymous secret sharer. The secret sharer can thank these anonymous eyes and ears for their support in turn. All of this is done in real time letting users have an outlet for those things that they hide to themselves.
 

@@ -5,9 +5,13 @@ date: 2015-01-27 12:20:43 -0800
 comments: true
 categories: ["project", "javascript", "postmortem", "node", "mongoose", "angular"]
 ---
-
+<video muted autoplay loop width="550px" poster="https://s3.amazonaws.com/jasonjlblog/quizwithme.jpg">
+    <source src="https://s3.amazonaws.com/jasonjlblog/quizwithme.mp4" type="video/mp4">
+    <source src="https://s3.amazonaws.com/jasonjlblog/quizwithme.webm" type="video/webm">
+    <img src="https://s3.amazonaws.com/jasonjlblog/quizwithme.jpg">
+</video>
 <a href="http://quiz.jasonjl.me">website</a>   
-<a href="">source code</a>   
+<a href="https://github.com/lee-jason/QuizWithMe">source code</a>   
 
 Quiz With Me is a community generated trivia site. Each user competes against the people around the world to test themselves with the trivia questions that they submit. Quiz With Me brings the joy of answering and creating trivia questions vs the entire world!
  

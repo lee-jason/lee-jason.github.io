@@ -1,0 +1,134 @@
+---
+layout: post
+title: "How Much Stuff Can You Fit In Memory?"
+date: 2015-02-04 14:22:47 -0800
+comments: true
+categories: ["guide", "java"]
+---
+
+<p>So you're given a limit on the amount of random access memory your program can use, how much stuff (ints, chars, booleans, bytes) can you cache in there before having to store it in physical media?</p>
+
+<!-- more -->
+<style type="text/css">
+    table, th{
+        border: 1px solid black;
+    }
+    tr:nth-child(odd) {
+        background-color: aliceblue;
+    }
+</style>
+
+<table>
+    <tr>
+        <th>Exponent Form</th>
+        <th>Exact Value</th>
+        <th>Approx Value</th>
+        <th>Bytes</th>
+        <th>bits (Bytes * 8)</th>
+        <th>ints (Bytes / 4)</th>
+        <th>chars (Bytes / 2)</th>
+    </tr>
+    <tr>
+        <td>2<sup>0</sup></td>
+        <td>1</td>
+        <td></td>
+        <td>1B</td>
+        <td>8b</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>2<sup>1</sup></td>
+        <td>2</td>
+        <td></td>
+        <td>2B</td>
+        <td>16b</td>
+        <td></td>
+        <td>1 char</td>
+    </tr>
+    <tr>
+        <td>2<sup>2</sup></td>
+        <td>4</td>
+        <td></td>
+        <td>4B</td>
+        <td>32b</td>
+        <td>1 int</td>
+        <td>2 chars</td>
+    </tr>
+    <tr>
+        <td>2<sup>10</sup></td>
+        <td>1024</td>
+        <td>1 thousand</td>
+        <td>1KB</td>
+        <td>8Kb</td>
+        <td>~250 ints</td>
+        <td>~500 chars</td>
+    </tr>
+    <tr>
+        <td>2<sup>16</sup></td>
+        <td>65,536</td>
+        <td></td>
+        <td>64KB</td>
+        <td>512Kb</td>
+        <td>16K ints</td>
+        <td>32K chars</td>
+    </tr>
+        <tr>
+        <td>2<sup>20</sup></td>
+        <td>1,048,576</td>
+        <td>1 million</td>
+        <td>1MB</td>
+        <td>8Mb</td>
+        <td>250K ints</td>
+        <td>500K chars</td>
+    </tr>
+        <tr>
+        <td>2<sup>30</sup></td>
+        <td>1,073,741,824</td>
+        <td>1 billion</td>
+        <td>1GB</td>
+        <td>8Gb</td>
+        <td>250M ints</td>
+        <td>500M chars</td>
+    </tr>
+        <tr>
+        <td>2<sup>32</sup></td>
+        <td>4,294,967,296</td>
+        <td>4 billion</td>
+        <td>4GB</td>
+        <td>32Gb</td>
+        <td>1G ints</td>
+        <td>2G chars</td>
+    </tr>
+        <tr>
+        <td>2<sup>40</sup></td>
+        <td>1,099,511,627,776</td>
+        <td>1 trillion</td>
+        <td>1TB</td>
+        <td>8Tb</td>
+        <td>250G ints</td>
+        <td>500G chars</td>
+    </tr>
+</table>
+
+<p>In case if you forgot...</p>
+<ul>
+    <li>Data types are represented by bits</li>
+    <li>8 bits make a byte</li>
+    <li>1 byte (or 8 bits) make a boolean</li>
+    <li>2 bytes (or 16 bits) make a char</li>
+    <li>4 bytes (or 32 bits) make an int</li>
+    <li>8 bytes (or 64 bits) make a long [this is not shown in the chart]</li>
+    <li>There are a total of 2^16 (~65k) character representation in Java</li>
+    <li>There are a total of 2^32 (~4 billion) int representation in Java</li>
+    <li>Each character and integer can be represented through hex</li>
+    <li>\u0000, \uFFFF represent characters where each character represents a byte</li>
+    <li>0x00000000, 0xFFFFFFFF represent integers where each character represents a byte</li>
+    <li>Each 2^(10*n) breaks another thousand barrier</li>
+</ul>
+
+<p>So say you have N amount of bytes to work with. If we want to know how many ints we can fit in there, we take N/4 since each integer uses four bytes.</p>
+<p>Say we want to fit all integers into an array in memory.  How much memory to do we need?  we take all the integers (2^32) then multiply it by 4 since each integer is represented by four bytes. We would need roughly 16GBytes of memory to put all representable integers into an array</p>
+<p>The conversions are for the most part simple, it just requires careful calculation around big numbers.</p>
+
+<small><i>note: all primitive types are based on the Java language. Table is an extension of Gayle Laakmann Mcdowell's Powers of 2 in <a href="http://www.careercup.com/book">Crack the Coding Interview 5th edition</a></i></small>

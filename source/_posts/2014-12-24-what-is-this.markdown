@@ -25,7 +25,7 @@ The MDN docs uses an interesting word, 'bound'.  From this point on, whenever yo
     }
     var person = new Person();
     console.log(person.age) //20
-    console.log(person.name //'Jason'
+    console.log(person.name) //'Jason'
 {% endcodeblock %}
 
 The above code is equivalent to the code below
@@ -184,7 +184,7 @@ Note how once again, the person.drinking object wasn't the one that was affected
             if(this.age < 21){
                 //note the binds to the same top level 'this' object.  This ensures that the anonymous function references the same 'this' object that gets created when new Person is constructed
                 return function(){
-                    this.drinking = 'milk';
+                    this.drinking = 'eggnog';
                 }.bind(this)
             }
             else{
@@ -212,7 +212,7 @@ The code up top is also equivalent to the following
         this.drinkFunction = function(){
             if(this.age < 21){
                 return function(){
-                    this.drinking = 'milk';
+                    this.drinking = 'eggnog';
                 }
             }
             else{

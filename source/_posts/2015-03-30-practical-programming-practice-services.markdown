@@ -29,8 +29,8 @@ Each question has tags associated with them describing what methods of programmi
 <h3>Overall</h3>
 Overall I think its actually a really neat service. Like I said earlier, I've learned so much more about JavaScript than I ever would have if I were to just continue working on my own projects. I'm definitely going to use it again when I delve into Python.
 
-<h2>Leetcode</h2>
-<a href="https://leetcode.com/">LeetCode</a> is all about the algorithms.  There are no pretenses, you're going to be solving very straightforward problems that have very defined lower bounds in terms of space and memory. These problems will often test cases on all edges of the spectrum and will only accept answers that meet the lowest bound limitation.  Your preferred language is just a means to work around an algorithm. At the end of each problem, Leetcode ranks you up against your peers by how quickly your code executed.
+<h2>LeetCode OJ</h2>
+<a href="https://leetcode.com/">LeetCode OJ</a> is all about the algorithms.  There are no pretenses, you're going to be solving very straightforward problems that have very defined lower bounds in terms of space and memory. These problems will often test cases on all edges of the spectrum and will only accept answers that meet the lowest bound limitation.  Your preferred language is just a means to work around an algorithm. At the end of each problem, Leetcode ranks you up against your peers by how quickly your code executed.
 
 <h3>Things I like</h3>
 No muss no fuss, these questions ask you about algorithms and after enough exercises will hammer the common ways to solve them into your brain. I think this is a good second level after reading and solving the exercises to Crack the Coding Interview. There are tons more exercises here that touches on things that CTCI doesn't which makes it a natural progression to the book. 
@@ -40,25 +40,29 @@ The code editor is actually really good. Everything flows like a real profession
 The questions are very direct.  There are no fillers, no context. At first its a little ambiguous to know what values will be used to test your program, but after a while it becomes very obvious what kinds of edge case values Leetcode expects your program to process.
 
 <h3>Things I don't like</h3>
-Since the online judge only wants answers that are strictly the lowest bound in terms of space and runtime, it'll often fail passing solutions that are not the most optimal. Obviously this means that a solution runtime of O(n^3) is unacceptable when the lower bound is O(n^2) but it also means that an acceptable solution of O(nlogn) will fail when the answer's lowest bound is O(n). It gets kind of frustrating thinking and implementing a good solution to find out that it fails an exceptionally long test case often requiring you to rethink the whole algorithm and reimplement it. Sometimes you think of the correct algorithm, but implement it in such a way that it still exceeds the time limit. It ambiguous to know what exactly is the bit of code to optimize in order to pass the test.
+Since the online judge only wants answers that are strictly the lowest bound in terms of space and runtime, it'll often fail passing solutions that are not the most optimal. It will fail an acceptable solution of O(nlogn) if the lowest bound possible is O(n). Sometimes you think of the correct algorithm, but implement it in such a way that it still exceeds the time limit. It ambiguous to know what exactly is the bit of code to optimize in order to pass the test.
 
-The community seems more concerned with writing concise code rather than best practice code. Discussion solutions are often compressed to be difficult to read.
+The community seems more concerned with writing concise code rather than best practice code. Discussion solutions are often compressed to the point where its difficult to read.
 
 I really wish they would allow us to see each user's submitted code so we can see exactly what we need to do to get the most optimization out of our language of choice.
 
 <h3>Overall</h3>
-This site is great if you need some extra exercises to hone in on what you're looking for be it algorithms, database, or shell scripting. I would not recommend it as a place to actually learn from 0% knowledge but more of a place if you're looking for medium to advanced challenges. You have to be familiar with your language of choice as your language is just a tool you should be familiar with to solve a greater problem.
+This site is great if you need some extra exercises to hone in on pure algorithm practice. I would not recommend it as a place to actually learn from 0% knowledge but more of a place if you're looking for medium to advanced challenges. You have to be familiar with your language of choice as your language is just a tool you should be familiar with to solve a greater problem.
 
 <h2>HackerRank</h2>
-<a href="https://www.hackerrank.com/">HackerRank</a> is site that focuses more on the competitive nature of programming. HackerRank encourages you to participate in its many ongoing week long challenges where you can start fresh and compete against thousands around the world. Points are awarded based on the difficulty of the challenge as well as the amount of correct to incorrect submissions. It has questions with A Lot of context that clearly defines the parameters of the problem so each question can definitely be answered in one try. It supports the most amount of languages than any other challenge site due to the nature of the input.  Each program gets passed in a text file with clearly defined layout that contains the parameters of the input. Since each programming language has an input and output stream its easy to reuse a single problem for many different languages. They cover a wide range of practice problems ranging from algorithms, functional programming, linux shell cmds, and even AI.
+<a href="https://www.hackerrank.com/">HackerRank</a> is site that focuses more on the competitive nature of programming. HackerRank encourages you to participate in its many ongoing week long challenges. They support a ton of languages cover a wide range of practice problems ranging from algorithms, functional programming, linux shell cmds, and even AI.
 
 <h3>Things I like</h3>
 Since each challenge requests you parse a text file, it actually gives you plenty of exercises in reading in a file, parsing it, and outputting it.  I feel like this is something that's overlooked by a lot of challenge sites so its nice to see a site that allows you to practice that skill.
 
 Each challenge has very clearly defined variables.  Sometimes its actually kind of annoying, but each challenge will let you know exactly what its going to test for.
 
+There are a ton of active competitions going on at a time meaning you can always test your chops against other programmers.
+
 <h3>Things I don't like</h3>
 Its code editor is missing a lot of convenience features that the other code editors have. Sure it has code highlighting but other than that its very uncomfortable to use.
 
+Parsing a text file every time is kind of annoying. Some times you just want the values to be passed in as primitive data as if it would be used as a modular piece in a larger project.
+
 <h3>Overall</h3>
-I've used this the least amount so I'm not yet decided on whether I like it or not. I'm definitely going to be using it when I want to learn more about shell scripting as the challenges are designed in a way to ramp up your learning from the basics to advanced techniques.
+I've used this the least amount so I'm not yet decided on whether I like it or not. The challenges are appropriately challenging but the text editor is not very fun to use. Its less of a site to practice but more to compete. Some of you may view this as the same thing.

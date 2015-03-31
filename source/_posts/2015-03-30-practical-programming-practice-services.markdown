@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Codewars, Leetcode, Hackerrank. Practical Programming Practice Challenges"
+title: "Codewars, Leetcode, Hackerrank. Online Judges Reviews"
 date: 2015-03-30 12:41:31 -0700
 comments: true
-categories: ['programming', 'java', 'javascript']
+categories: ['programming', 'algorithms']
 ---
 Sometimes the projects you work on just aren't stimulating enough. Sometimes you need to fill your brain with as many programming problems as possible. Usually tackling a small sized project only requires a small set of challenges to solve while the rest of the time is spent tying the project together. When you need as many challenges to tackle in as short a time as possible you need online judges.  This article is a review on the online judges, <a href="http://www.codewars.com/">Codewars</a>, <a href="https://leetcode.com/">LeetCode</a>, and <a href="https://www.hackerrank.com/">HackerRank</a>.
 

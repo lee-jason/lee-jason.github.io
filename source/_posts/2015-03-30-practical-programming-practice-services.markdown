@@ -3,7 +3,7 @@ layout: post
 title: "Codewars, Leetcode, Hackerrank. Online Judges Reviews"
 date: 2015-03-30 12:41:31 -0700
 comments: true
-categories: ['programming', 'algorithms']
+categories: ['programming', 'algorithms', 'review']
 ---
 Sometimes the projects you work on just aren't stimulating enough. Sometimes you need to fill your brain with as many programming problems as possible. Usually tackling a small sized project only requires a small set of challenges to solve while the rest of the time is spent tying the project together. When you need as many challenges to tackle in as short a time as possible you need online judges.  This article is a review on the online judges, <a href="http://www.codewars.com/">Codewars</a>, <a href="https://leetcode.com/">LeetCode</a>, and <a href="https://www.hackerrank.com/">HackerRank</a>.
 
@@ -23,7 +23,7 @@ The Java error messages are less than helpful.  I'm not sure how they return exc
 Each question has tags associated with them describing what methods of programming you'll use to solve the problem. These tags often give a hint on what to do to solve the problem which is kind of a problem since people look at these tags as extra meta information to give them a lead. I often like to come into a problem blind and find out myself what to do in order to get to a solution.
 
 <h3>Overall</h3>
-Overall I think its actually a really neat service. Like I said earlier, I've learned so much more about JavaScript than I ever would have if I were to just continue working on my own projects. I'm definitely going to use it again when I delve into Python.
+Overall I think it's actually a really neat service. Like I said earlier, I've learned so much more about JavaScript than I ever would have if I were to just continue working on my own projects. I'm definitely going to use it again when I delve into Python.
 
 <h2>LeetCode OJ</h2>
 <a href="https://leetcode.com/">LeetCode OJ</a> is all about the algorithms.  There are no pretenses, you're going to be solving very straightforward problems that have very defined lower bounds in terms of space and memory. These problems will often test cases on all edges of the spectrum and will only accept answers that meet the lowest bound limitation.  Your preferred language is just a means to work around an algorithm. At the end of each problem, Leetcode ranks you up against your peers by how quickly your code executed.
@@ -51,7 +51,7 @@ This site is great if you need some extra exercises to hone in on pure algorithm
 <h3>Things I like</h3>
 Since each challenge requests you parse a text file, it actually gives you plenty of exercises in reading in a file, parsing it, and outputting it.  I feel like this is something that's overlooked by a lot of challenge sites so its nice to see a site that allows you to practice that skill.
 
-Each challenge has very clearly defined variables.  Sometimes its actually kind of annoying, but each challenge will let you know exactly how the text file will be formatted and exactly what it will be testing on.
+Each challenge has very clearly defined variables.  Sometimes it's actually kind of annoying, but each challenge will let you know exactly how the text file will be formatted and exactly what it will be testing on.
 
 There are a ton of active competitions going on at a time meaning you can always test your chops against other programmers.
 

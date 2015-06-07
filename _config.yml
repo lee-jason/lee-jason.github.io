@@ -7,7 +7,7 @@ title: Wow this blog looks fancy
 subtitle: its <i>mostly</i> about programming
 author: Jason Lee
 simple_search: https://www.google.com/search
-description: I'm a programmer from California specializing in web development. Initially in Java, a small stint in C#, now focusing on the MEAN stack(Mongo, Express, Angular, Node). I make web apps that I think people would like to use. If there's anything I need, its community inspection so please call me out on my bs.
+description: I'm a programmer from California specializing in web development. Initially in Java, a small stint in C and the MEAN stack. Happily employed at a startup where I'm working with python and Backbone.js. I make web apps that I think people would like to use. If there's anything I need, its community inspection so please call me out on my bs.
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in

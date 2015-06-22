@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Javascript | Wow this blog looks fancy]]></title>
   <link href="http://jasonjl.me/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://jasonjl.me/"/>
-  <updated>2015-06-21T20:06:15-07:00</updated>
+  <updated>2015-06-21T20:13:07-07:00</updated>
   <id>http://jasonjl.me/</id>
   <author>
     <name><![CDATA[Jason Lee]]></name>
@@ -93,44 +93,26 @@
 
 <p>Now that we know how to crash the browsers we just need to place the code in.</p>
 
-<p><figure class='code'><figcaption><span>Logging on browser crash  </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>   <span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">load</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">good_exit</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">pending</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;);</span>
-</span><span class='line'>    <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>         <span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">time_before_crash</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">toString</span><span class="p">());</span>
-</span><span class='line'>      <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
-</span><span class='line'>   <span class="p">});</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>   <span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">beforeunload</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">good_exit</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="kc">true</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;);</span>
-</span><span class='line'>   <span class="p">});</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>   <span class="k">if</span><span class="p">(</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">good_exit</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;)</span> <span class="o">&amp;</span><span class="nx">amp</span><span class="p">;</span><span class="o">&amp;</span><span class="nx">amp</span><span class="p">;</span>
-</span><span class='line'>      <span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">good_exit</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;)</span> <span class="o">!==</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="kc">true</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="err">/&lt;em&gt;</span>
-</span><span class='line'>        <span class="nx">insert</span> <span class="nx">crash</span> <span class="nx">logging</span> <span class="nx">code</span> <span class="nx">here</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="sr">/em&gt;/</span>
-</span><span class='line'>      <span class="nx">alert</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">Hey</span><span class="p">,</span> <span class="nx">welcome</span> <span class="nx">back</span> <span class="nx">from</span> <span class="nx">your</span> <span class="nx">crash</span><span class="p">,</span> <span class="nx">looks</span> <span class="nx">like</span> <span class="nx">you</span> <span class="nx">crashed</span> <span class="nx">on</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;</span> <span class="o">+</span> <span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">time_before_crash</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
-</span><span class='line'>   <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript Logging on browser crash  %}
+   window.addEventListener(&lsquo;load&rsquo;, function () {
+    sessionStorage.setItem(&lsquo;good_exit&rsquo;, &lsquo;pending&rsquo;);
+    setInterval(function () {
+         sessionStorage.setItem(&lsquo;time_before_crash&rsquo;, new Date().toString());
+      }, 1000);
+   });</p>
+
+<p>   window.addEventListener(&lsquo;beforeunload&rsquo;, function () {
+    sessionStorage.setItem(&lsquo;good_exit&rsquo;, &lsquo;true&rsquo;);
+   });</p>
+
+<p>   if(sessionStorage.getItem(&lsquo;good_exit&rsquo;) &amp;&amp;
+      sessionStorage.getItem(&lsquo;good_exit&rsquo;) !== &lsquo;true&rsquo;) {
+    /<em>
+        insert crash logging code here
+    </em>/
+      alert(&lsquo;Hey, welcome back from your crash, looks like you crashed on: &rsquo; + sessionStorage.getItem(&lsquo;time_before_crash&rsquo;));
+   }
+{% endcodeblock %}</p>
 
 <p>The code above is checking if the user successfully closes, refreshes, or browses to another page by applying a <code>good_exit = true</code> flag in our sessionStorage. When the user successfully loads the page, the &lsquo;good_exit&rsquo; flag will be set to &lsquo;pending&rsquo; as we&rsquo;re not sure if the user will successfully exit from this session. If the user unsuccessfully closes, refreshes, or browsers to another page and manages to crash the browser, the &lsquo;good_exit&rsquo; flag will not be changed to &lsquo;true&rsquo; and will stay as &lsquo;pending. Everytime the user loads the page we check whether they&rsquo;re coming back from a crash. If they are, then we apply our crashalytics code.</p>
 
@@ -180,54 +162,34 @@
 <h4>JSX</h4>
 
 
-<p><figure class='code'><figcaption><span>Unexpected Incorrect rendering of list in JSX </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">IncorrectListRender</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
-</span><span class='line'>    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="p">(</span>
-</span><span class='line'>        <span class="o">&lt;</span><span class="nx">ul</span><span class="o">&gt;</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
-</span><span class='line'>        <span class="o">&lt;</span><span class="err">/ul&gt;</span>
-</span><span class='line'>      <span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">});</span>
-</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">IncorrectListRender</span> <span class="nx">list</span><span class="o">=</span><span class="p">{[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]}</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">incorrect</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript Unexpected Incorrect rendering of list in JSX %}
+  var IncorrectListRender = React.createClass({
+    render: function() {
+      return (
+        <ul>
+          <li>{this.props.list}</li>
+        </ul>
+      )
+    }
+  });
+  React.render(<IncorrectListRender list={[1,2,3,4,5]} />, document.getElementById(&lsquo;incorrect-list-render&rsquo;));
+{% endcodeblock %}</p>
 
 <h4>Compiled to JavaScript</h4>
 
 
-<p><figure class='code'><figcaption><span>Unexpected Incorrect rendering of list in JavaScript </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">IncorrectListRender</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span><span class="nx">displayName</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">IncorrectListRender</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span>
-</span><span class='line'>    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="p">(</span>
-</span><span class='line'>        <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">ul</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">li</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">)</span>
-</span><span class='line'>        <span class="p">)</span>
-</span><span class='line'>      <span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">});</span>
-</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">IncorrectListRender</span><span class="p">,</span> <span class="p">{</span><span class="nx">list</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]}),</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">incorrect</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript Unexpected Incorrect rendering of list in JavaScript %}
+  var IncorrectListRender = React.createClass({displayName: &ldquo;IncorrectListRender&rdquo;,
+    render: function() {
+      return (
+        React.createElement(&ldquo;ul&rdquo;, null,
+          React.createElement(&ldquo;li&rdquo;, null, this.props.list)
+        )
+      )
+    }
+  });
+  React.render(React.createElement(IncorrectListRender, {list: [1,2,3,4,5]}), document.getElementById(&lsquo;incorrect-list-render&rsquo;));
+{% endcodeblock %}</p>
 
 <h4>Rendered Result</h4>
 
@@ -259,74 +221,44 @@
 <h4>JSX</h4>
 
 
-<p><figure class='code'><figcaption><span>Inflexible way of rendering lists in JSX </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">InflexibleListRender</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
-</span><span class='line'>    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="p">(</span>
-</span><span class='line'>        <span class="o">&lt;</span><span class="nx">ul</span><span class="o">&gt;</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">0</span><span class="p">]}</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">1</span><span class="p">]}</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">2</span><span class="p">]}</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">3</span><span class="p">]}</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">4</span><span class="p">]}</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
-</span><span class='line'>        <span class="o">&lt;</span><span class="err">/ul&gt;</span>
-</span><span class='line'>      <span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">});</span>
-</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">InflexibleListRender</span> <span class="nx">list</span><span class="o">=</span><span class="p">{[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]}</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">inflexible</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render1</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
-</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">InflexibleListRender</span> <span class="nx">list</span><span class="o">=</span><span class="p">{[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]}</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">inflexible</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render2</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript Inflexible way of rendering lists in JSX %}
+  var InflexibleListRender = React.createClass({
+    render: function() {
+      return (
+        <ul>
+          <li>{this.props.list[0]}</li>
+          <li>{this.props.list[1]}</li>
+          <li>{this.props.list[2]}</li>
+          <li>{this.props.list[3]}</li>
+          <li>{this.props.list[4]}</li>
+        </ul>
+      )
+    }
+  });
+  React.render(<InflexibleListRender list={[1,2,3,4,5]} />, document.getElementById(&lsquo;inflexible-list-render1&rsquo;));
+  React.render(<InflexibleListRender list={[1,2,3,4,5,6,7,8,9,10]} />, document.getElementById(&lsquo;inflexible-list-render2&rsquo;));
+{% endcodeblock %}</p>
 
 <h4>Compiled to JavaScript</h4>
 
 
-<p><figure class='code'><figcaption><span>Inflexible way of rendering lists in JavaScript </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'> <span class="kd">var</span> <span class="nx">InflexibleListRender</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span><span class="nx">displayName</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">InflexibleListRender</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span>
-</span><span class='line'>    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="p">(</span>
-</span><span class='line'>        <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">ul</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">li</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
-</span><span class='line'>          <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">li</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
-</span><span class='line'>          <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">li</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
-</span><span class='line'>          <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">li</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span>
-</span><span class='line'>          <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">li</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
-</span><span class='line'>        <span class="p">)</span>
-</span><span class='line'>      <span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">});</span>
-</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">InflexibleListRender</span><span class="p">,</span> <span class="p">{</span><span class="nx">list</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]}),</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">inflexible</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render1</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
-</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">InflexibleListRender</span><span class="p">,</span> <span class="p">{</span><span class="nx">list</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]}),</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">inflexible</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render2</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript Inflexible way of rendering lists in JavaScript %}
+ var InflexibleListRender = React.createClass({displayName: &ldquo;InflexibleListRender&rdquo;,
+    render: function() {
+      return (
+        React.createElement(&ldquo;ul&rdquo;, null,
+          React.createElement(&ldquo;li&rdquo;, null, this.props.list[0]),
+          React.createElement(&ldquo;li&rdquo;, null, this.props.list[1]),
+          React.createElement(&ldquo;li&rdquo;, null, this.props.list[2]),
+          React.createElement(&ldquo;li&rdquo;, null, this.props.list[3]),
+          React.createElement(&ldquo;li&rdquo;, null, this.props.list[4])
+        )
+      )
+    }
+  });
+  React.render(React.createElement(InflexibleListRender, {list: [1,2,3,4,5]}), document.getElementById(&lsquo;inflexible-list-render1&rsquo;));
+  React.render(React.createElement(InflexibleListRender, {list: [1,2,3,4,5,6,7,8,9,10]}), document.getElementById(&lsquo;inflexible-list-render2&rsquo;));
+{% endcodeblock %}</p>
 
 <h4>Rendered Result</h4>
 
@@ -364,66 +296,40 @@
 <h4>JSX</h4>
 
 
-<p><figure class='code'><figcaption><span>Properly Repeatable React Elements in JSX </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">ProperListRender</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
-</span><span class='line'>    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="p">(</span>
-</span><span class='line'>        <span class="o">&lt;</span><span class="nx">ul</span><span class="o">&gt;</span>
-</span><span class='line'>          <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">listValue</span><span class="p">){</span>
-</span><span class='line'>            <span class="k">return</span> <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">listValue</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/li&gt;;</span>
-</span><span class='line'>          <span class="p">})}</span>
-</span><span class='line'>        <span class="o">&lt;</span><span class="err">/ul&gt;</span>
-</span><span class='line'>      <span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">});</span>
-</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">ProperListRender</span> <span class="nx">list</span><span class="o">=</span><span class="p">{[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]}</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">proper</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render1</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
-</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">ProperListRender</span> <span class="nx">list</span><span class="o">=</span><span class="p">{[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]}</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">proper</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render2</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript Properly Repeatable React Elements in JSX %}
+  var ProperListRender = React.createClass({
+    render: function() {
+      return (
+        <ul>
+          {this.props.list.map(function(listValue){
+            return <li>{listValue}</li>;
+          })}
+        </ul>
+      )
+    }
+  });
+  React.render(<ProperListRender list={[1,2,3,4,5]} />, document.getElementById(&lsquo;proper-list-render1&rsquo;));
+  React.render(<ProperListRender list={[1,2,3,4,5,6,7,8,9,10]} />, document.getElementById(&lsquo;proper-list-render2&rsquo;));
+{% endcodeblock %}</p>
 
 <h4>Compiled to JavaScript</h4>
 
 
-<p><figure class='code'><figcaption><span>Properly repeatable React Elements in JavaScript </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">ProperListRender</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span><span class="nx">displayName</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">ProperListRender</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span>
-</span><span class='line'>    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="p">(</span>
-</span><span class='line'>        <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">ul</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span>
-</span><span class='line'>          <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">listValue</span><span class="p">){</span>
-</span><span class='line'>            <span class="k">return</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">li</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">listValue</span><span class="p">);</span>
-</span><span class='line'>          <span class="p">})</span>
-</span><span class='line'>        <span class="p">)</span>
-</span><span class='line'>      <span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">});</span>
-</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">ProperListRender</span><span class="p">,</span> <span class="p">{</span><span class="nx">list</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]}),</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">proper</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render1</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
-</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">ProperListRender</span><span class="p">,</span> <span class="p">{</span><span class="nx">list</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]}),</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">proper</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render2</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript Properly repeatable React Elements in JavaScript %}
+  var ProperListRender = React.createClass({displayName: &ldquo;ProperListRender&rdquo;,
+    render: function() {
+      return (
+        React.createElement(&ldquo;ul&rdquo;, null,
+          this.props.list.map(function(listValue){
+            return React.createElement(&ldquo;li&rdquo;, null, listValue);
+          })
+        )
+      )
+    }
+  });
+  React.render(React.createElement(ProperListRender, {list: [1,2,3,4,5]}), document.getElementById(&lsquo;proper-list-render1&rsquo;));
+  React.render(React.createElement(ProperListRender, {list: [1,2,3,4,5,6,7,8,9,10]}), document.getElementById(&lsquo;proper-list-render2&rsquo;));
+{% endcodeblock %}</p>
 
 <h4>Rendered Result</h4>
 
@@ -480,64 +386,35 @@
 
 <p>Prototypal inheritance is similar to classical language&rsquo;s concept of extending. It has some of the same concepts of subclassing such as inheriting parent fields, overriding, and creating new fields. Here&rsquo;s a small example of how to subclass a JavaScript class.</p>
 
-<p><figure class='code'><figcaption><span>Creating a Child subclass from Parent class by extending Prototype chain  </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>   <span class="c1">//Parent class</span>
-</span><span class='line'>   <span class="kd">var</span> <span class="nx">Parent</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">parent</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;</span>
-</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">adult</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;;</span>
-</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">species</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">human</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;;</span>
-</span><span class='line'>    <span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="c1">//Child class</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">Child</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;child&quot;</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="s2">&quot;infant&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">//set Child&#39;s prototype to a new Parent object</span>
-</span><span class='line'><span class="nx">Child</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Parent</span><span class="p">();</span>
-</span><span class='line'><span class="c1">//re-set the Child&#39;s constructor to itself, since it was overwritten in the previous statement</span>
-</span><span class='line'><span class="nx">Child</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">constructor</span> <span class="o">=</span> <span class="nx">Child</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">var</span> <span class="nx">child</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Child</span><span class="p">();</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">child</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span> <span class="c1">//&quot;child&quot;</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">child</span><span class="p">.</span><span class="nx">status</span><span class="p">)</span> <span class="c1">//&quot;infant&quot;</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">child</span><span class="p">.</span><span class="nx">species</span><span class="p">)</span> <span class="c1">//&quot;human&quot; taken from Parent.species</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">child</span> <span class="k">instanceof</span> <span class="nx">Parent</span><span class="p">)</span> <span class="c1">//true</span>
-</span><span class='line'><span class="k">delete</span> <span class="nx">child</span><span class="p">.</span><span class="nx">name</span> <span class="c1">//true removed Child&#39;s name</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">child</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span> <span class="c1">//&quot;parent&quot; taken from Parent.name</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript Creating a Child subclass from Parent class by extending Prototype chain  %}
+   //Parent class
+   var Parent = function(){
+        this.name = &ldquo;parent&rdquo;
+        this.status = &ldquo;adult&rdquo;;
+        this.species = &ldquo;human&rdquo;;
+    }</p>
+
+<pre><code>//Child class
+var Child = function(){
+    this.name = "child";
+    this.status = "infant";
+}
+
+//set Child's prototype to a new Parent object
+Child.prototype = new Parent();
+//re-set the Child's constructor to itself, since it was overwritten in the previous statement
+Child.prototype.constructor = Child;
+
+var child = new Child();
+console.log(child.name) //"child"
+console.log(child.status) //"infant"
+console.log(child.species) //"human" taken from Parent.species
+console.log(child instanceof Parent) //true
+delete child.name //true removed Child's name
+console.log(child.name) //"parent" taken from Parent.name
+</code></pre>
+
+<p>{% endcodeblock %}</p>
 
 <p>This is the basic structure. Each function has a <code>prototype</code> property. This <code>prototype</code> field is an object that is applied to all objects created from that function using the <code>new</code> keyword. Setting the prototype of the Child class to that of the Parent class will create a prototype chain which would then allow the <code>instanceof</code> feature to work. The Child class would also borrow any attributes it didn&rsquo;t have that the Parent object would supply. Deleting overriden attributes in the Child class would revert back to use the assigned Parent&rsquo;s attributes.</p>
 

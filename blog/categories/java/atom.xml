@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Java | Wow this blog looks fancy]]></title>
   <link href="http://jasonjl.me/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://jasonjl.me/"/>
-  <updated>2015-06-21T20:06:15-07:00</updated>
+  <updated>2015-06-21T20:13:07-07:00</updated>
   <id>http://jasonjl.me/</id>
   <author>
     <name><![CDATA[Jason Lee]]></name>
@@ -271,36 +271,22 @@ Highlight a segment of Java code while on a breakpoint and press <code>ctrl+u</c
 
 <p>The picture above shows three different tree examples based off three nodes.  If we keep going, we find out that there&rsquo;s five total unique tree structures just through brute force. I don&rsquo;t care about which numbers fill in which node in this problem (although that does sound like quite the problem) I just care about the shape of the tree structure. With that said, I was having trouble figuring out all the different tree types for four nodes and I didn&rsquo;t even try for five nodes. That&rsquo;s the point where we give up and ask the computer</p>
 
-<p><figure class='code'><figcaption><span>Recursive solution to tree pattern count </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'>    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">binaryTreeCount</span><span class="o">(</span><span class="kt">int</span> <span class="n">nodes</span><span class="o">,</span> <span class="kt">int</span> <span class="n">count</span><span class="o">){</span>
-</span><span class='line'>        <span class="k">if</span><span class="o">(</span><span class="n">nodes</span><span class="o">==</span><span class="mi">1</span><span class="o">){</span>
-</span><span class='line'>            <span class="k">return</span> <span class="n">count</span><span class="o">+</span><span class="mi">1</span><span class="o">;</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>        <span class="c1">//simulate left node path</span>
-</span><span class='line'>        <span class="n">count</span><span class="o">=</span><span class="n">binaryCount</span><span class="o">(</span><span class="n">nodes</span><span class="o">-</span><span class="mi">1</span><span class="o">,</span> <span class="n">count</span><span class="o">);</span>
-</span><span class='line'>        <span class="c1">//simulate right node path</span>
-</span><span class='line'>        <span class="n">count</span><span class="o">=</span><span class="n">binaryCount</span><span class="o">(</span><span class="n">nodes</span><span class="o">-</span><span class="mi">1</span><span class="o">,</span> <span class="n">count</span><span class="o">);</span>
-</span><span class='line'>        <span class="c1">//simulate left right node path</span>
-</span><span class='line'>        <span class="k">if</span><span class="o">(</span><span class="n">nodes</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="o">){</span>
-</span><span class='line'>            <span class="n">count</span><span class="o">=</span><span class="n">binaryCount</span><span class="o">(</span><span class="n">nodes</span><span class="o">-</span><span class="mi">2</span><span class="o">,</span> <span class="n">count</span><span class="o">);</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">count</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:java Recursive solution to tree pattern count %}
+    public int binaryTreeCount(int nodes, int count){
+        if(nodes==1){
+            return count+1;
+        }
+        //simulate left node path
+        count=binaryCount(nodes-1, count);
+        //simulate right node path
+        count=binaryCount(nodes-1, count);
+        //simulate left right node path
+        if(nodes >= 3){
+            count=binaryCount(nodes-2, count);
+        }
+        return count;
+    }
+{% endcodeblock %}</p>
 
 <p>This recursive function is simulating a depth first search that&rsquo;s limited by the amount of nodes available to it.  Once it reaches the end of a path, it adds one to the &lsquo;count&rsquo; counter that gets passed back up and down the recursive stack.  The function goes down the left path, and the right path, and also considers paths that can be generated from a node that branches into two paths with the third condition. I&rsquo;m not a mathmagician but the runtime of this isn&rsquo;t so hot.  I&rsquo;m pretty sure I can make it better by storing the path counts for amount of nodes down a certain path in a reference table so I don&rsquo;t have to calculate the repeated calculations every time but I&rsquo;m just kind of glad right now that I got the answer I wanted.</p>
 ]]></content>

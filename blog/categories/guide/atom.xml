@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Guide | Wow this blog looks fancy]]></title>
   <link href="http://jasonjl.me/blog/categories/guide/atom.xml" rel="self"/>
   <link href="http://jasonjl.me/"/>
-  <updated>2015-06-21T20:06:15-07:00</updated>
+  <updated>2015-06-21T20:13:07-07:00</updated>
   <id>http://jasonjl.me/</id>
   <author>
     <name><![CDATA[Jason Lee]]></name>
@@ -43,54 +43,34 @@
 <h4>JSX</h4>
 
 
-<p><figure class='code'><figcaption><span>Unexpected Incorrect rendering of list in JSX </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">IncorrectListRender</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
-</span><span class='line'>    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="p">(</span>
-</span><span class='line'>        <span class="o">&lt;</span><span class="nx">ul</span><span class="o">&gt;</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
-</span><span class='line'>        <span class="o">&lt;</span><span class="err">/ul&gt;</span>
-</span><span class='line'>      <span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">});</span>
-</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">IncorrectListRender</span> <span class="nx">list</span><span class="o">=</span><span class="p">{[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]}</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">incorrect</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript Unexpected Incorrect rendering of list in JSX %}
+  var IncorrectListRender = React.createClass({
+    render: function() {
+      return (
+        <ul>
+          <li>{this.props.list}</li>
+        </ul>
+      )
+    }
+  });
+  React.render(<IncorrectListRender list={[1,2,3,4,5]} />, document.getElementById(&lsquo;incorrect-list-render&rsquo;));
+{% endcodeblock %}</p>
 
 <h4>Compiled to JavaScript</h4>
 
 
-<p><figure class='code'><figcaption><span>Unexpected Incorrect rendering of list in JavaScript </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">IncorrectListRender</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span><span class="nx">displayName</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">IncorrectListRender</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span>
-</span><span class='line'>    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="p">(</span>
-</span><span class='line'>        <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">ul</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">li</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">)</span>
-</span><span class='line'>        <span class="p">)</span>
-</span><span class='line'>      <span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">});</span>
-</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">IncorrectListRender</span><span class="p">,</span> <span class="p">{</span><span class="nx">list</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]}),</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">incorrect</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript Unexpected Incorrect rendering of list in JavaScript %}
+  var IncorrectListRender = React.createClass({displayName: &ldquo;IncorrectListRender&rdquo;,
+    render: function() {
+      return (
+        React.createElement(&ldquo;ul&rdquo;, null,
+          React.createElement(&ldquo;li&rdquo;, null, this.props.list)
+        )
+      )
+    }
+  });
+  React.render(React.createElement(IncorrectListRender, {list: [1,2,3,4,5]}), document.getElementById(&lsquo;incorrect-list-render&rsquo;));
+{% endcodeblock %}</p>
 
 <h4>Rendered Result</h4>
 
@@ -122,74 +102,44 @@
 <h4>JSX</h4>
 
 
-<p><figure class='code'><figcaption><span>Inflexible way of rendering lists in JSX </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">InflexibleListRender</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
-</span><span class='line'>    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="p">(</span>
-</span><span class='line'>        <span class="o">&lt;</span><span class="nx">ul</span><span class="o">&gt;</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">0</span><span class="p">]}</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">1</span><span class="p">]}</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">2</span><span class="p">]}</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">3</span><span class="p">]}</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">4</span><span class="p">]}</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
-</span><span class='line'>        <span class="o">&lt;</span><span class="err">/ul&gt;</span>
-</span><span class='line'>      <span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">});</span>
-</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">InflexibleListRender</span> <span class="nx">list</span><span class="o">=</span><span class="p">{[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]}</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">inflexible</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render1</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
-</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">InflexibleListRender</span> <span class="nx">list</span><span class="o">=</span><span class="p">{[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]}</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">inflexible</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render2</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript Inflexible way of rendering lists in JSX %}
+  var InflexibleListRender = React.createClass({
+    render: function() {
+      return (
+        <ul>
+          <li>{this.props.list[0]}</li>
+          <li>{this.props.list[1]}</li>
+          <li>{this.props.list[2]}</li>
+          <li>{this.props.list[3]}</li>
+          <li>{this.props.list[4]}</li>
+        </ul>
+      )
+    }
+  });
+  React.render(<InflexibleListRender list={[1,2,3,4,5]} />, document.getElementById(&lsquo;inflexible-list-render1&rsquo;));
+  React.render(<InflexibleListRender list={[1,2,3,4,5,6,7,8,9,10]} />, document.getElementById(&lsquo;inflexible-list-render2&rsquo;));
+{% endcodeblock %}</p>
 
 <h4>Compiled to JavaScript</h4>
 
 
-<p><figure class='code'><figcaption><span>Inflexible way of rendering lists in JavaScript </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'> <span class="kd">var</span> <span class="nx">InflexibleListRender</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span><span class="nx">displayName</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">InflexibleListRender</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span>
-</span><span class='line'>    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="p">(</span>
-</span><span class='line'>        <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">ul</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">li</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
-</span><span class='line'>          <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">li</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
-</span><span class='line'>          <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">li</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
-</span><span class='line'>          <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">li</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span>
-</span><span class='line'>          <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">li</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
-</span><span class='line'>        <span class="p">)</span>
-</span><span class='line'>      <span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">});</span>
-</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">InflexibleListRender</span><span class="p">,</span> <span class="p">{</span><span class="nx">list</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]}),</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">inflexible</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render1</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
-</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">InflexibleListRender</span><span class="p">,</span> <span class="p">{</span><span class="nx">list</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]}),</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">inflexible</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render2</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript Inflexible way of rendering lists in JavaScript %}
+ var InflexibleListRender = React.createClass({displayName: &ldquo;InflexibleListRender&rdquo;,
+    render: function() {
+      return (
+        React.createElement(&ldquo;ul&rdquo;, null,
+          React.createElement(&ldquo;li&rdquo;, null, this.props.list[0]),
+          React.createElement(&ldquo;li&rdquo;, null, this.props.list[1]),
+          React.createElement(&ldquo;li&rdquo;, null, this.props.list[2]),
+          React.createElement(&ldquo;li&rdquo;, null, this.props.list[3]),
+          React.createElement(&ldquo;li&rdquo;, null, this.props.list[4])
+        )
+      )
+    }
+  });
+  React.render(React.createElement(InflexibleListRender, {list: [1,2,3,4,5]}), document.getElementById(&lsquo;inflexible-list-render1&rsquo;));
+  React.render(React.createElement(InflexibleListRender, {list: [1,2,3,4,5,6,7,8,9,10]}), document.getElementById(&lsquo;inflexible-list-render2&rsquo;));
+{% endcodeblock %}</p>
 
 <h4>Rendered Result</h4>
 
@@ -227,66 +177,40 @@
 <h4>JSX</h4>
 
 
-<p><figure class='code'><figcaption><span>Properly Repeatable React Elements in JSX </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">ProperListRender</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
-</span><span class='line'>    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="p">(</span>
-</span><span class='line'>        <span class="o">&lt;</span><span class="nx">ul</span><span class="o">&gt;</span>
-</span><span class='line'>          <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">listValue</span><span class="p">){</span>
-</span><span class='line'>            <span class="k">return</span> <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">listValue</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/li&gt;;</span>
-</span><span class='line'>          <span class="p">})}</span>
-</span><span class='line'>        <span class="o">&lt;</span><span class="err">/ul&gt;</span>
-</span><span class='line'>      <span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">});</span>
-</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">ProperListRender</span> <span class="nx">list</span><span class="o">=</span><span class="p">{[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]}</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">proper</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render1</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
-</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">ProperListRender</span> <span class="nx">list</span><span class="o">=</span><span class="p">{[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]}</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">proper</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render2</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript Properly Repeatable React Elements in JSX %}
+  var ProperListRender = React.createClass({
+    render: function() {
+      return (
+        <ul>
+          {this.props.list.map(function(listValue){
+            return <li>{listValue}</li>;
+          })}
+        </ul>
+      )
+    }
+  });
+  React.render(<ProperListRender list={[1,2,3,4,5]} />, document.getElementById(&lsquo;proper-list-render1&rsquo;));
+  React.render(<ProperListRender list={[1,2,3,4,5,6,7,8,9,10]} />, document.getElementById(&lsquo;proper-list-render2&rsquo;));
+{% endcodeblock %}</p>
 
 <h4>Compiled to JavaScript</h4>
 
 
-<p><figure class='code'><figcaption><span>Properly repeatable React Elements in JavaScript </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">ProperListRender</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span><span class="nx">displayName</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">ProperListRender</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span>
-</span><span class='line'>    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="p">(</span>
-</span><span class='line'>        <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">ul</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span>
-</span><span class='line'>          <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">listValue</span><span class="p">){</span>
-</span><span class='line'>            <span class="k">return</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">li</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">listValue</span><span class="p">);</span>
-</span><span class='line'>          <span class="p">})</span>
-</span><span class='line'>        <span class="p">)</span>
-</span><span class='line'>      <span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">});</span>
-</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">ProperListRender</span><span class="p">,</span> <span class="p">{</span><span class="nx">list</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]}),</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">proper</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render1</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
-</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">ProperListRender</span><span class="p">,</span> <span class="p">{</span><span class="nx">list</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]}),</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">proper</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render2</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript Properly repeatable React Elements in JavaScript %}
+  var ProperListRender = React.createClass({displayName: &ldquo;ProperListRender&rdquo;,
+    render: function() {
+      return (
+        React.createElement(&ldquo;ul&rdquo;, null,
+          this.props.list.map(function(listValue){
+            return React.createElement(&ldquo;li&rdquo;, null, listValue);
+          })
+        )
+      )
+    }
+  });
+  React.render(React.createElement(ProperListRender, {list: [1,2,3,4,5]}), document.getElementById(&lsquo;proper-list-render1&rsquo;));
+  React.render(React.createElement(ProperListRender, {list: [1,2,3,4,5,6,7,8,9,10]}), document.getElementById(&lsquo;proper-list-render2&rsquo;));
+{% endcodeblock %}</p>
 
 <h4>Rendered Result</h4>
 
@@ -343,64 +267,35 @@
 
 <p>Prototypal inheritance is similar to classical language&rsquo;s concept of extending. It has some of the same concepts of subclassing such as inheriting parent fields, overriding, and creating new fields. Here&rsquo;s a small example of how to subclass a JavaScript class.</p>
 
-<p><figure class='code'><figcaption><span>Creating a Child subclass from Parent class by extending Prototype chain  </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>   <span class="c1">//Parent class</span>
-</span><span class='line'>   <span class="kd">var</span> <span class="nx">Parent</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">parent</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;</span>
-</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">adult</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;;</span>
-</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">species</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">human</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;;</span>
-</span><span class='line'>    <span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="c1">//Child class</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">Child</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;child&quot;</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="s2">&quot;infant&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">//set Child&#39;s prototype to a new Parent object</span>
-</span><span class='line'><span class="nx">Child</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Parent</span><span class="p">();</span>
-</span><span class='line'><span class="c1">//re-set the Child&#39;s constructor to itself, since it was overwritten in the previous statement</span>
-</span><span class='line'><span class="nx">Child</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">constructor</span> <span class="o">=</span> <span class="nx">Child</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">var</span> <span class="nx">child</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Child</span><span class="p">();</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">child</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span> <span class="c1">//&quot;child&quot;</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">child</span><span class="p">.</span><span class="nx">status</span><span class="p">)</span> <span class="c1">//&quot;infant&quot;</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">child</span><span class="p">.</span><span class="nx">species</span><span class="p">)</span> <span class="c1">//&quot;human&quot; taken from Parent.species</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">child</span> <span class="k">instanceof</span> <span class="nx">Parent</span><span class="p">)</span> <span class="c1">//true</span>
-</span><span class='line'><span class="k">delete</span> <span class="nx">child</span><span class="p">.</span><span class="nx">name</span> <span class="c1">//true removed Child&#39;s name</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">child</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span> <span class="c1">//&quot;parent&quot; taken from Parent.name</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript Creating a Child subclass from Parent class by extending Prototype chain  %}
+   //Parent class
+   var Parent = function(){
+        this.name = &ldquo;parent&rdquo;
+        this.status = &ldquo;adult&rdquo;;
+        this.species = &ldquo;human&rdquo;;
+    }</p>
+
+<pre><code>//Child class
+var Child = function(){
+    this.name = "child";
+    this.status = "infant";
+}
+
+//set Child's prototype to a new Parent object
+Child.prototype = new Parent();
+//re-set the Child's constructor to itself, since it was overwritten in the previous statement
+Child.prototype.constructor = Child;
+
+var child = new Child();
+console.log(child.name) //"child"
+console.log(child.status) //"infant"
+console.log(child.species) //"human" taken from Parent.species
+console.log(child instanceof Parent) //true
+delete child.name //true removed Child's name
+console.log(child.name) //"parent" taken from Parent.name
+</code></pre>
+
+<p>{% endcodeblock %}</p>
 
 <p>This is the basic structure. Each function has a <code>prototype</code> property. This <code>prototype</code> field is an object that is applied to all objects created from that function using the <code>new</code> keyword. Setting the prototype of the Child class to that of the Parent class will create a prototype chain which would then allow the <code>instanceof</code> feature to work. The Child class would also borrow any attributes it didn&rsquo;t have that the Parent object would supply. Deleting overriden attributes in the Child class would revert back to use the assigned Parent&rsquo;s attributes.</p>
 
@@ -655,66 +550,42 @@
 
 <p>The MDN docs uses an interesting word, &lsquo;bound&rsquo;.  From this point on, whenever you see the word bound or bind, you should associate it with setting the <code>this</code> reference.  If I say functionA is bound to ObjectA then you should think that whenever functionA uses <code>this</code> it should always reference ObjectA.  The MDN documentation says that it first creates an object using Object.create(), this step is not really that interesting as it relates to <code>this</code>, it&rsquo;s just merely setting up a shell of an object for us to bind to. Then it executes the constructor function where we start assigning properties to <code>this</code>, or rather the new object shell we just created in step 1.  What this means is that when the function is executed, the interpreter starts attaching properties to the shell object. The example below codes out what the MDN doc is saying</p>
 
-<p><figure class='code'><figcaption><span>Creating a new Person with the new keyword  </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
-</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">Jason</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
-</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="c1">//20</span>
-</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span> <span class="c1">//&amp;lsquo;Jason&amp;rsquo;</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript Creating a new Person with the new keyword  %}
+    var Person = function(){
+        this.age = 20;
+        this.name = &lsquo;Jason&rsquo;;
+    }
+    var person = new Person();
+    console.log(person.age) //20
+    console.log(person.name) //&lsquo;Jason&rsquo;
+{% endcodeblock %}</p>
 
 <p>The above code is equivalent to the code below</p>
 
-<p><figure class='code'><figcaption><span>Creating a new Person using Object create and object binding  </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
-</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">Jason</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">);</span>
-</span><span class='line'>    <span class="c1">//this is where the binding happens</span>
-</span><span class='line'>    <span class="nx">Person</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span>
-</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="c1">//20</span>
-</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span> <span class="c1">//&amp;lsquo;Jason&amp;rsquo;)</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript Creating a new Person using Object create and object binding  %}
+    var Person = function(){
+        this.age = 20;
+        this.name = &lsquo;Jason&rsquo;;
+    }
+    var person = Object.create(Person.prototype);
+    //this is where the binding happens
+    Person.call(person);
+    console.log(person.age) //20
+    console.log(person.name) //&lsquo;Jason&rsquo;)
+{% endcodeblock %}</p>
 
 <p>Note in the code above this line <code>Person.call(person)</code>.  What that line means is that the <code>Person</code> function is executing and explicitly making the empty <code>person</code> object equal to <code>this</code>. This means that after that function call, the once empty <code>person</code> object now has two properties that were applied to it, <code>person.age</code> and <code>person.name</code>. The following bit of code is identical to what the line <code>Person.call(person)</code> is doing above without the use of <code>this</code>.</p>
 
-<p><figure class='code'><figcaption><span>Call Comparison  </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>        <span class="nx">person</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
-</span><span class='line'>        <span class="nx">person</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">Jason</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="nx">Person</span><span class="p">();</span>
-</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="c1">//20</span>
-</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span> <span class="c1">//&amp;lsquo;Jason&amp;rsquo;)</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript Call Comparison  %}
+    var person = {}
+    var Person = function(){
+        person.age = 20;
+        person.name = &lsquo;Jason&rsquo;;
+    }
+    Person();
+    console.log(person.age) //20
+    console.log(person.name) //&lsquo;Jason&rsquo;)
+{% endcodeblock %}</p>
 
 <p>If you need more information about the function method <code>call</code> consult the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call">documentation</a>.</p>
 
@@ -725,22 +596,15 @@
 
 <p>So what if we execute a function with <code>this</code> without explicitly defining a binding?  Then we leave it up to the mercy of the interpreter.  Most of the time, <code>this</code> will be refered to the global object.  The global object varies between JavaScript interpreters. In the browser the global object will refer to the <code>window</code> object, in Node.js it&rsquo;ll refer to <code>global</code> object.  In either case, unknowingly attaching objects to the global object is probably not what you wanted to do.</p>
 
-<p><figure class='code'><figcaption><span>Executing unbound function </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">unboundFunction</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">param1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">param2</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="nx">unboundFunction</span><span class="p">();</span>
-</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">param1</span><span class="p">)</span> <span class="c1">//1</span>
-</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">param2</span><span class="p">)</span> <span class="c1">//2</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript Executing unbound function %}
+    var unboundFunction = function(){
+        this.param1 = 1;
+        this.param2 = 2;
+    }
+    unboundFunction();
+    console.log(window.param1) //1
+    console.log(window.param2) //2
+{% endcodeblock %}</p>
 
 <p>Note how when the function was executed without a binding, it automatically defaulted to the global object which in this case is <code>window</code>.  There are many situations in where you&rsquo;ll be wondering why your <code>this</code> reference didn&rsquo;t work, usually its because you didn&rsquo;t specify a binding to <code>this</code> and made the interpreter guess. While this is the main problems that arises from the improper uses of <code>this</code> the following can give you a head start on some of the more common tricky uses of this.</p>
 
@@ -751,119 +615,64 @@
 
 <p>The following example passes a function to an <code>Executor</code> function that runs any function that gets passed into it.  We create a person object and pass in its <code>growUp</code> function to the Executor where we think it will update our person&rsquo;s age.</p>
 
-<p><figure class='code'><figcaption><span>Executing unbounded function </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="c1">//a function that executes any function passed into it</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">Callbacker</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">callback</span><span class="p">){</span>
-</span><span class='line'>        <span class="c1">//do some logic</span>
-</span><span class='line'>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">executing</span> <span class="nx">callback</span> <span class="kd">function</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;);</span>
-</span><span class='line'>        <span class="c1">//then execute callback function</span>
-</span><span class='line'>        <span class="nx">callback</span><span class="p">();</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="c1">//creation of a person object with a growUp method that ages the person object by 1.</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
-</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">growUp</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>            <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="c1">//confirm the property window.age to see that its undefined before method execution</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="c1">//undefined</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">Callbacker</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">growUp</span><span class="p">);</span> <span class="c1">//&#39;executing function&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="c1">//10(</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="c1">//NaN</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript Executing unbounded function %}
+    //a function that executes any function passed into it
+    var Callbacker = function(callback){
+        //do some logic
+        console.log(&lsquo;executing callback function&rsquo;);
+        //then execute callback function
+        callback();
+    }
+    //creation of a person object with a growUp method that ages the person object by 1.
+    var Person = function(){
+        this.age = 10;
+        this.growUp = function(){
+            this.age += 1;
+        }
+    }
+    var person = new Person();</p>
+
+<pre><code>//confirm the property window.age to see that its undefined before method execution
+console.log(window.age) //undefined
+
+Callbacker(person.growUp); //'executing function'
+
+console.log(person.age) //10(
+console.log(window.age) //NaN
+</code></pre>
+
+<p>{% endcodeblock %}</p>
 
 <p>As you can see from the example above, passing the person&rsquo;s growUp function to be executed by the <code>Executor</code> causes the function to bind the global object to <code>this</code> by default.  That is why <code>person.age</code> doesn&rsquo;t change, and <code>window.age</code> went from <code>undefined</code> to <code>NaN</code> (since undefined + 1 = NaN). If we explicitly define the binding before passing the function, then we can ensure that the <code>growUp</code> function will use the person object no matter where it&rsquo;s executed.</p>
 
-<p><figure class='code'><figcaption><span>Callback executing binded function </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="c1">//a function that executes any function passed into it</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">Callbacker</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">callback</span><span class="p">){</span>
-</span><span class='line'>        <span class="c1">//do some logic</span>
-</span><span class='line'>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">executing</span> <span class="nx">callback</span> <span class="kd">function</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;);</span>
-</span><span class='line'>        <span class="c1">//then execute callback function</span>
-</span><span class='line'>        <span class="nx">callback</span><span class="p">();</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="c1">//creation of a person object with a growUp method that ages the person object by 1.</span>
-</span><span class='line'>    <span class="c1">//note the .bind at the end of the growUp function</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
-</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">growUp</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>            <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>        <span class="p">}.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="c1">//confirm the property window.age to see that its undefined before method execution</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="c1">//undefined</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">Callbacker</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">growUp</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="c1">//11</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="c1">//undefined</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript Callback executing binded function %}
+    //a function that executes any function passed into it
+    var Callbacker = function(callback){
+        //do some logic
+        console.log(&lsquo;executing callback function&rsquo;);
+        //then execute callback function
+        callback();
+    }
+    //creation of a person object with a growUp method that ages the person object by 1.
+    //note the .bind at the end of the growUp function
+    var Person = function(){
+        this.age = 10;
+        this.growUp = function(){
+            this.age += 1;
+        }.bind(this);
+    }
+    var person = new Person();</p>
+
+<pre><code>//confirm the property window.age to see that its undefined before method execution
+console.log(window.age) //undefined
+
+Callbacker(person.growUp);
+
+console.log(person.age) //11
+console.log(window.age) //undefined
+</code></pre>
+
+<p>{% endcodeblock %}</p>
 
 <p>Note how the age now properly adds on the person object and how the window object is not affected.  This is because we use the <code>bind</code> method that every function has.  This specifies which object to use to reference <code>this</code> in the function.<br/>
 This example is a little contrived but it&rsquo;s definitely important to keep in mind especially when dealing with callback code or asynchronous JavaScript where functions are passed around like candy and the flow and scenario is exactly like that in the examples above.</p>
@@ -873,186 +682,99 @@ This example is a little contrived but it&rsquo;s definitely important to keep i
 
 <p>Be careful about your <code>this</code> reference when dealing with functions within functions.  The following example is super contrived but here&rsquo;s the rundown.  Imagine a person object that&rsquo;s at a holiday party and has a property for which drink he&rsquo;s having.  A person that&rsquo;s under 21 will be drinking eggnog while a person 21 or over would be drinking booze. The person has a <code>drinkFunction</code> that will return him another function that updates the state of his drink to either &lsquo;eggnog&rsquo; or &lsquo;booze&rsquo;. (I understand that this can be done with a single function but please bear with me.)</p>
 
-<p><figure class='code'><figcaption><span>Executing function that returns an unbounded function </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
-</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">drinking</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;;</span>
-</span><span class='line'>        <span class="c1">//top level functions like these are autobinded by default to whatever they&amp;rsquo;re attached to.  In this case, the same &amp;lsquo;this&amp;rsquo; object that the constructor binds to.</span>
-</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">drinkFunction</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>            <span class="c1">//&amp;lsquo;this.age&amp;rsquo; resolves correctly and pulls the age property of the current object due to the function properly binding to the corresponding person object.</span>
-</span><span class='line'>            <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">&amp;</span><span class="nx">lt</span><span class="p">;</span> <span class="mi">21</span><span class="p">){</span>
-</span><span class='line'>                <span class="c1">//this function is not bound to anything. It defaults to binding &amp;lsquo;this&amp;rsquo; to the global object</span>
-</span><span class='line'>                <span class="k">return</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>                    <span class="k">this</span><span class="p">.</span><span class="nx">drinking</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">eggnog</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;;</span>
-</span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>            <span class="k">else</span><span class="p">{</span>
-</span><span class='line'>                <span class="c1">//this function is not bound to anything. It defaults to binding &amp;lsquo;this&amp;rsquo; to the global object</span>
-</span><span class='line'>                <span class="k">return</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>                    <span class="k">this</span><span class="p">.</span><span class="nx">drinking</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">booze</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;;</span>
-</span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="c1">//confirm the property window.drinking to see that its undefined before method execution</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">drinking</span><span class="p">)</span> <span class="c1">//undefined</span>
-</span><span class='line'><span class="c1">//execute the drinkFunction as well as the function that it returns</span>
-</span><span class='line'><span class="nx">person</span><span class="p">.</span><span class="nx">drinkFunction</span><span class="p">()();</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">drinking</span><span class="p">)</span> <span class="c1">//&#39;&#39;</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">drinking</span><span class="p">)</span> <span class="c1">//&#39;eggnog&#39;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript Executing function that returns an unbounded function %}
+    var Person = function(){
+        this.age = 10;
+        this.drinking = &lsquo;&rsquo;;
+        //top level functions like these are autobinded by default to whatever they&rsquo;re attached to.  In this case, the same &lsquo;this&rsquo; object that the constructor binds to.
+        this.drinkFunction = function(){
+            //&lsquo;this.age&rsquo; resolves correctly and pulls the age property of the current object due to the function properly binding to the corresponding person object.
+            if(this.age &lt; 21){
+                //this function is not bound to anything. It defaults to binding &lsquo;this&rsquo; to the global object
+                return function(){
+                    this.drinking = &lsquo;eggnog&rsquo;;
+                }
+            }
+            else{
+                //this function is not bound to anything. It defaults to binding &lsquo;this&rsquo; to the global object
+                return function(){
+                    this.drinking = &lsquo;booze&rsquo;;
+                }
+            }
+        }
+    }
+    var person = new Person();</p>
+
+<pre><code>//confirm the property window.drinking to see that its undefined before method execution
+console.log(window.drinking) //undefined
+//execute the drinkFunction as well as the function that it returns
+person.drinkFunction()();
+
+console.log(person.drinking) //''
+console.log(window.drinking) //'eggnog'
+</code></pre>
+
+<p>{% endcodeblock %}</p>
 
 <p>Note how once again, the person.drinking object wasn&rsquo;t the one that was affected, but rather the one in the global window.  This is because we executed the function that we returned in the global state meaning the <code>this.drinking</code> property in the inner returned function was by default bound to the <code>window</code> object when we executed it. If we want the <code>this</code> object to reference the same person object that&rsquo;s executing it, we either need to <code>bind</code> the internal returned function or <code>call</code> the function when executing.  Take a look how at the example below.</p>
 
-<p><figure class='code'><figcaption><span>Executing function with anonymous function by &lsquo;bind&#8217;ing </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
-</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">drinking</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;;</span>
-</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">drinkFunction</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>            <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">&amp;</span><span class="nx">lt</span><span class="p">;</span> <span class="mi">21</span><span class="p">){</span>
-</span><span class='line'>                <span class="c1">//note the binds to the same top level &#39;this&amp;rsquo; object.  This ensures that the anonymous function references the same &amp;lsquo;this&amp;rsquo; object that gets created when new Person is constructed</span>
-</span><span class='line'>                <span class="k">return</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>                    <span class="k">this</span><span class="p">.</span><span class="nx">drinking</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">eggnog</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;;</span>
-</span><span class='line'>                <span class="p">}.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
-</span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>            <span class="k">else</span><span class="p">{</span>
-</span><span class='line'>                <span class="c1">//note the binds to the same top level &amp;lsquo;this&amp;rsquo; object.  This ensures that the anonymous function references the same &amp;lsquo;this&amp;rsquo; object that gets created when new Person is constructed</span>
-</span><span class='line'>                <span class="k">return</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>                    <span class="k">this</span><span class="p">.</span><span class="nx">drinking</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">booze</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;;</span>
-</span><span class='line'>                <span class="p">}.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
-</span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
-</span><span class='line'>    <span class="c1">//execute the drinkFunction as well as the function that it returns</span>
-</span><span class='line'>    <span class="nx">person</span><span class="p">.</span><span class="nx">drinkFunction</span><span class="p">()();</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">drinking</span><span class="p">)</span> <span class="c1">//&#39;eggnog&#39;</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">drinking</span><span class="p">)</span> <span class="c1">//undefined</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript Executing function with anonymous function by &lsquo;bind&#8217;ing %}
+    var Person = function(){
+        this.age = 10;
+        this.drinking = &rsquo;&lsquo;;
+        this.drinkFunction = function(){
+            if(this.age &lt; 21){
+                //note the binds to the same top level &#8216;this&rsquo; object.  This ensures that the anonymous function references the same &lsquo;this&rsquo; object that gets created when new Person is constructed
+                return function(){
+                    this.drinking = &lsquo;eggnog&rsquo;;
+                }.bind(this)
+            }
+            else{
+                //note the binds to the same top level &lsquo;this&rsquo; object.  This ensures that the anonymous function references the same &lsquo;this&rsquo; object that gets created when new Person is constructed
+                return function(){
+                    this.drinking = &lsquo;booze&rsquo;;
+                }.bind(this)
+            }
+        }
+    }
+    var person = new Person();
+    //execute the drinkFunction as well as the function that it returns
+    person.drinkFunction()();</p>
+
+<pre><code>console.log(person.drinking) //'eggnog'
+console.log(window.drinking) //undefined
+</code></pre>
+
+<p>{% endcodeblock %}</p>
 
 <p>The code up top is also equivalent to the following</p>
 
-<p><figure class='code'><figcaption><span>Executing function with anonymous function by &lsquo;call&#8217;ing </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
-</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">drinking</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;;</span>
-</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">drinkFunction</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>            <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">&amp;</span><span class="nx">lt</span><span class="p">;</span> <span class="mi">21</span><span class="p">){</span>
-</span><span class='line'>                <span class="k">return</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>                    <span class="k">this</span><span class="p">.</span><span class="nx">drinking</span> <span class="o">=</span> <span class="s1">&#39;eggnog&amp;rsquo;;</span>
-</span><span class='line'><span class="s1">                }</span>
-</span><span class='line'><span class="s1">            }</span>
-</span><span class='line'><span class="s1">            else{</span>
-</span><span class='line'><span class="s1">                return function(){</span>
-</span><span class='line'><span class="s1">                    this.drinking = &amp;lsquo;booze&amp;rsquo;;</span>
-</span><span class='line'><span class="s1">                }</span>
-</span><span class='line'><span class="s1">            }</span>
-</span><span class='line'><span class="s1">        }</span>
-</span><span class='line'><span class="s1">    }</span>
-</span><span class='line'><span class="s1">    var person = new Person();</span>
-</span><span class='line'><span class="s1">    //note how even without binds we can set the &amp;lsquo;this&amp;rsquo; object inside the anonymous functions using call</span>
-</span><span class='line'><span class="s1">    person.drinkFunction().call(person);&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">&lt;pre&gt;&lt;code&gt;console.log(person.drinking) //&#39;</span><span class="nx">eggnog</span><span class="err">&#39;</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">drinking</span><span class="p">)</span> <span class="c1">//undefined</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript Executing function with anonymous function by &lsquo;call&#8217;ing %}
+    var Person = function(){
+        this.age = 10;
+        this.drinking = &rsquo;&lsquo;;
+        this.drinkFunction = function(){
+            if(this.age &lt; 21){
+                return function(){
+                    this.drinking = &#8216;eggnog&rsquo;;
+                }
+            }
+            else{
+                return function(){
+                    this.drinking = &lsquo;booze&rsquo;;
+                }
+            }
+        }
+    }
+    var person = new Person();
+    //note how even without binds we can set the &lsquo;this&rsquo; object inside the anonymous functions using call
+    person.drinkFunction().call(person);</p>
+
+<pre><code>console.log(person.drinking) //'eggnog'
+console.log(window.drinking) //undefined
+</code></pre>
+
+<p>{% endcodeblock %}</p>
 
 <p>I know that even when trying to explain it in the most normal non technical terms possible, there definitely is still a lot of confusion that arises from understanding <code>this</code> entirely.  What I highly recommend is to open up your JavaScript console, <a href="http://repl.it/">REPL</a>, inspector, whatever and seriously try creating constructors, functions, functions in functions, things outside of your comfort zone as it relates to <code>this</code> and executing them using binds, calls or applies (which I know we didn&rsquo;t talk about in the article but its functionality is very similar to call), and see how they affect the object that you bind to. If you want to learn more about binding, consult the documentation for <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind">bind</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call">call</a>, and <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply">apply</a>. Each are applicable in their own uses which exceed the scope of this guide.</p>
 ]]></content>

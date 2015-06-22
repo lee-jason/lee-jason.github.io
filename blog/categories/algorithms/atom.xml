@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Algorithms | Wow this blog looks fancy]]></title>
   <link href="http://jasonjl.me/blog/categories/algorithms/atom.xml" rel="self"/>
   <link href="http://jasonjl.me/"/>
-  <updated>2015-06-21T20:06:15-07:00</updated>
+  <updated>2015-06-21T20:13:07-07:00</updated>
   <id>http://jasonjl.me/</id>
   <author>
     <name><![CDATA[Jason Lee]]></name>
@@ -134,82 +134,44 @@
 <h3>A Solution</h3>
 
 
-<p><figure class='code'><figcaption><span>halloween path optimization pseudocode </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'>    <span class="n">Class</span> <span class="n">Node</span><span class="o">{</span>
-</span><span class='line'>        <span class="c1">//Node class contains&amp;hellip;</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="n">candyValue</span>
-</span><span class='line'>        <span class="n">NodesNPaths</span><span class="o">[]</span> <span class="n">connectingNodes</span><span class="o">;</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="n">totalCandyValue</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="n">totalSteps</span>
-</span><span class='line'>        <span class="n">Node</span> <span class="n">prevNode</span>
-</span><span class='line'>        <span class="kt">boolean</span> <span class="n">visited</span>
-</span><span class='line'>    <span class="o">}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">//bestPath modifies rootNode to have history of </span>
-</span><span class='line'><span class="n">Node</span> <span class="nf">bestPath</span><span class="o">(</span><span class="n">Node</span> <span class="n">rootNode</span><span class="o">,</span> <span class="n">Node</span> <span class="n">currNode</span><span class="o">,</span> <span class="kt">int</span> <span class="n">pathLength</span><span class="o">,</span> <span class="n">Node</span> <span class="n">prevNode</span><span class="o">,</span> <span class="kt">int</span> <span class="n">stepQuota</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">initial</span><span class="o">){</span>
-</span><span class='line'>    <span class="c1">//route is a failure when totalsteps is over the stepquota,</span>
-</span><span class='line'>    <span class="c1">//when the node has already been visited AND its not the root node</span>
-</span><span class='line'>    <span class="c1">//its fine to go back to the root node to update its values if its under the step quota and its already been visited.</span>
-</span><span class='line'>    <span class="k">if</span><span class="o">(</span><span class="n">currNode</span><span class="o">.</span><span class="na">totalSteps</span> <span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">stepQuota</span> <span class="o">||</span> <span class="n">currNode</span><span class="o">.</span><span class="na">visited</span> <span class="o">&amp;</span><span class="n">amp</span><span class="o">;&amp;</span><span class="n">amp</span><span class="o">;</span> <span class="n">currNode</span> <span class="o">!=</span> <span class="n">rootNode</span><span class="o">){</span>
-</span><span class='line'>        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">//replace tally of path of most candy</span>
-</span><span class='line'>    <span class="n">currNode</span><span class="o">.</span><span class="na">totalCandyValue</span> <span class="o">=</span> <span class="n">currNode</span><span class="o">.</span><span class="na">candyValue</span> <span class="o">+</span> <span class="n">prevNode</span><span class="o">.</span><span class="na">totalCandyValue</span><span class="o">;</span>
-</span><span class='line'>    <span class="n">currNode</span><span class="o">.</span><span class="na">totalSteps</span> <span class="o">+=</span> <span class="n">pathLength</span> <span class="o">+</span> <span class="n">prevNode</span><span class="o">.</span><span class="na">totalSteps</span><span class="o">;</span>
-</span><span class='line'>    <span class="n">currNode</span><span class="o">.</span><span class="na">prevNode</span> <span class="o">=</span> <span class="n">prevNode</span><span class="o">;</span>
-</span><span class='line'>    <span class="n">currNode</span><span class="o">.</span><span class="na">visited</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">for</span><span class="o">(</span><span class="n">Node</span> <span class="n">connectingNode</span> <span class="o">:</span> <span class="n">currNode</span><span class="o">.</span><span class="na">connectingNodes</span><span class="o">){</span>
-</span><span class='line'>        <span class="n">Node</span> <span class="n">nextNode</span> <span class="o">=</span> <span class="n">bestPath</span><span class="o">(</span><span class="n">rootNode</span><span class="o">,</span> <span class="n">connectingNode</span><span class="o">.</span><span class="na">node</span><span class="o">,</span> <span class="n">connectingNode</span><span class="o">.</span><span class="na">pathLength</span><span class="o">,</span> <span class="n">Node</span><span class="o">.</span><span class="na">currNode</span><span class="o">,</span> <span class="n">stepQuota</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
-</span><span class='line'>        <span class="k">if</span><span class="o">(</span><span class="n">nextNode</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
-</span><span class='line'>            <span class="c1">//reset node status, so next branch can access this point again</span>
-</span><span class='line'>            <span class="n">currNode</span><span class="o">.</span><span class="na">visited</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
-</span><span class='line'>            <span class="k">return</span> <span class="kc">null</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:java halloween path optimization pseudocode %}
+    Class Node{
+        //Node class contains&hellip;
+        int candyValue
+        NodesNPaths[] connectingNodes;
+        int totalCandyValue
+        int totalSteps
+        Node prevNode
+        boolean visited
+    }</p>
+
+<pre><code>//bestPath modifies rootNode to have history of 
+Node bestPath(Node rootNode, Node currNode, int pathLength, Node prevNode, int stepQuota, boolean initial){
+    //route is a failure when totalsteps is over the stepquota,
+    //when the node has already been visited AND its not the root node
+    //its fine to go back to the root node to update its values if its under the step quota and its already been visited.
+    if(currNode.totalSteps &gt; stepQuota || currNode.visited &amp;&amp; currNode != rootNode){
+        return null;
+    }
+
+    //replace tally of path of most candy
+    currNode.totalCandyValue = currNode.candyValue + prevNode.totalCandyValue;
+    currNode.totalSteps += pathLength + prevNode.totalSteps;
+    currNode.prevNode = prevNode;
+    currNode.visited = true;
+
+    for(Node connectingNode : currNode.connectingNodes){
+        Node nextNode = bestPath(rootNode, connectingNode.node, connectingNode.pathLength, Node.currNode, stepQuota, false);
+        if(nextNode == null){
+            //reset node status, so next branch can access this point again
+            currNode.visited = false;
+            return null
+        }
+    }
+}
+</code></pre>
+
+<p>{% endcodeblock %}</p>
 
 <p>The algorithm above will update the rootNode with the history where we can traverse through and eventually find the best path.  So in plain english here&rsquo;s what&rsquo;s going on.
 The method above will recursively dig into the graph in a depth first search.  the function will break when it discovers that the path its on exceeds the amount of allotted steps or if the node has been visited and is NOT the root node.  This not distinction exists because revisiting the home node is necessary in order to complete the looping path and update the home node&rsquo;s history and current tally.  Each traversed node keeps track of the previous node that it came from as well as a running tally of how many steps it took to get there as well as the amount of candy gained.  The function is then called recursively on each of the visited node&rsquo;s connected paths and the cycle repeats until no more paths exist. I&rsquo;m not a mathmagician but this algorithm should have a worst case scenario of O(!N + N) where N is number of nodes.</p>

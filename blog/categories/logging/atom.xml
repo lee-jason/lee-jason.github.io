@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Logging | Wow this blog looks fancy]]></title>
   <link href="http://jasonjl.me/blog/categories/logging/atom.xml" rel="self"/>
   <link href="http://jasonjl.me/"/>
-  <updated>2015-06-21T20:06:15-07:00</updated>
+  <updated>2015-06-21T20:13:07-07:00</updated>
   <id>http://jasonjl.me/</id>
   <author>
     <name><![CDATA[Jason Lee]]></name>
@@ -93,44 +93,26 @@
 
 <p>Now that we know how to crash the browsers we just need to place the code in.</p>
 
-<p><figure class='code'><figcaption><span>Logging on browser crash  </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>   <span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">load</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">good_exit</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">pending</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;);</span>
-</span><span class='line'>    <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>         <span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">time_before_crash</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">toString</span><span class="p">());</span>
-</span><span class='line'>      <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
-</span><span class='line'>   <span class="p">});</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>   <span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">beforeunload</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">good_exit</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="kc">true</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;);</span>
-</span><span class='line'>   <span class="p">});</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>   <span class="k">if</span><span class="p">(</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">good_exit</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;)</span> <span class="o">&amp;</span><span class="nx">amp</span><span class="p">;</span><span class="o">&amp;</span><span class="nx">amp</span><span class="p">;</span>
-</span><span class='line'>      <span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">good_exit</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;)</span> <span class="o">!==</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="kc">true</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="err">/&lt;em&gt;</span>
-</span><span class='line'>        <span class="nx">insert</span> <span class="nx">crash</span> <span class="nx">logging</span> <span class="nx">code</span> <span class="nx">here</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="sr">/em&gt;/</span>
-</span><span class='line'>      <span class="nx">alert</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">Hey</span><span class="p">,</span> <span class="nx">welcome</span> <span class="nx">back</span> <span class="nx">from</span> <span class="nx">your</span> <span class="nx">crash</span><span class="p">,</span> <span class="nx">looks</span> <span class="nx">like</span> <span class="nx">you</span> <span class="nx">crashed</span> <span class="nx">on</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;</span> <span class="o">+</span> <span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">time_before_crash</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
-</span><span class='line'>   <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript Logging on browser crash  %}
+   window.addEventListener(&lsquo;load&rsquo;, function () {
+    sessionStorage.setItem(&lsquo;good_exit&rsquo;, &lsquo;pending&rsquo;);
+    setInterval(function () {
+         sessionStorage.setItem(&lsquo;time_before_crash&rsquo;, new Date().toString());
+      }, 1000);
+   });</p>
+
+<p>   window.addEventListener(&lsquo;beforeunload&rsquo;, function () {
+    sessionStorage.setItem(&lsquo;good_exit&rsquo;, &lsquo;true&rsquo;);
+   });</p>
+
+<p>   if(sessionStorage.getItem(&lsquo;good_exit&rsquo;) &amp;&amp;
+      sessionStorage.getItem(&lsquo;good_exit&rsquo;) !== &lsquo;true&rsquo;) {
+    /<em>
+        insert crash logging code here
+    </em>/
+      alert(&lsquo;Hey, welcome back from your crash, looks like you crashed on: &rsquo; + sessionStorage.getItem(&lsquo;time_before_crash&rsquo;));
+   }
+{% endcodeblock %}</p>
 
 <p>The code above is checking if the user successfully closes, refreshes, or browses to another page by applying a <code>good_exit = true</code> flag in our sessionStorage. When the user successfully loads the page, the &lsquo;good_exit&rsquo; flag will be set to &lsquo;pending&rsquo; as we&rsquo;re not sure if the user will successfully exit from this session. If the user unsuccessfully closes, refreshes, or browsers to another page and manages to crash the browser, the &lsquo;good_exit&rsquo; flag will not be changed to &lsquo;true&rsquo; and will stay as &lsquo;pending. Everytime the user loads the page we check whether they&rsquo;re coming back from a crash. If they are, then we apply our crashalytics code.</p>
 

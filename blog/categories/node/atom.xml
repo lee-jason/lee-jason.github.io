@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Node | Wow this blog looks fancy]]></title>
   <link href="http://jasonjl.me/blog/categories/node/atom.xml" rel="self"/>
   <link href="http://jasonjl.me/"/>
-  <updated>2015-06-21T20:06:15-07:00</updated>
+  <updated>2015-06-21T20:13:07-07:00</updated>
   <id>http://jasonjl.me/</id>
   <author>
     <name><![CDATA[Jason Lee]]></name>
@@ -88,7 +88,7 @@
 <h2>The Frontend</h2>
 
 
-<p>The front end is composed of a single index.html page that contains a bootstrapped themed skeleton and an angular.js app file that fills it all in.  The angular.js file has all the routes inside providers that asynchronously contact the server endpoints to get new questions, or handle logins and registrations, or create new questions. There&rsquo;s controllers for the questions segment, a controller for the poll segment, and controller for the header bar.  Each of these controllers does what angular does best which is watch for changes to objects inside the controller which automatically update the  tags in the front end. The page is also responsive in that the buttons and content will reorganize themselves based off the window size.  There&rsquo;s slight display issues regarding the header bar in the mobile view but I&rsquo;m generally happy with how I finally got to try out this new framework everyone <a href="http://larseidnes.com/2014/11/05/angularjs-the-bad-parts/">loves</a> <a href="https://medium.com/este-js-framework/whats-wrong-with-angular-js-97b0a787f903">to</a> <a href="http://www.thoughtworks.com/insights/blog/angularjs-bad-bits">hate</a>.</p>
+<p>The front end is composed of a single index.html page that contains a bootstrapped themed skeleton and an angular.js app file that fills it all in.  The angular.js file has all the routes inside providers that asynchronously contact the server endpoints to get new questions, or handle logins and registrations, or create new questions. There&rsquo;s controllers for the questions segment, a controller for the poll segment, and controller for the header bar.  Each of these controllers does what angular does best which is watch for changes to objects inside the controller which automatically update the {{angular}} tags in the front end. The page is also responsive in that the buttons and content will reorganize themselves based off the window size.  There&rsquo;s slight display issues regarding the header bar in the mobile view but I&rsquo;m generally happy with how I finally got to try out this new framework everyone <a href="http://larseidnes.com/2014/11/05/angularjs-the-bad-parts/">loves</a> <a href="https://medium.com/este-js-framework/whats-wrong-with-angular-js-97b0a787f903">to</a> <a href="http://www.thoughtworks.com/insights/blog/angularjs-bad-bits">hate</a>.</p>
 
 <h2>The good, the bad</h2>
 

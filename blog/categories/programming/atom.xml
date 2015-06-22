@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Programming | Wow this blog looks fancy]]></title>
   <link href="http://jasonjl.me/blog/categories/programming/atom.xml" rel="self"/>
   <link href="http://jasonjl.me/"/>
-  <updated>2015-06-21T20:06:15-07:00</updated>
+  <updated>2015-06-21T20:13:07-07:00</updated>
   <id>http://jasonjl.me/</id>
   <author>
     <name><![CDATA[Jason Lee]]></name>
@@ -130,30 +130,18 @@
 
 <p>When people keep mentioning use greedy vs lazy quantifiers they&rsquo;re talking about the <code>? + *</code> symbols. The default quantifiers will use greedy matching, meaning, they will try to match as many of the quantified character before it continues trying to find matches with the rest of the expression. Appending a <code>?</code> to any quantifier will cause the regular expression engine to become &lsquo;lazy&rsquo; and only match the as little as possible before it finds a complete match.  While having a lazy engine may sound like a bad thing sometimes you just don&rsquo;t want your engine working so hard and going overboard with its matches.  Say you&rsquo;re making a chat client and you want to intercept colon delimited messages so that you can eventually replace those with emoticons.</p>
 
-<p><figure class='code'><figcaption><span>capturing delimited messages </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">msg</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">hello</span> <span class="nx">world</span> <span class="o">:</span><span class="nx">smile</span><span class="o">:</span> <span class="o">:</span><span class="nx">happy</span><span class="o">:&amp;</span><span class="nx">rdquo</span><span class="p">;;</span>
-</span><span class='line'>    <span class="c1">//greedily match any group of characters between two colons</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">emoteRegExpGreedy</span> <span class="o">=</span> <span class="sr">/:.*:/g</span><span class="p">;</span>
-</span><span class='line'>    <span class="nx">msg</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">emoteRegExpGreedy</span><span class="p">);</span> <span class="c1">//returns [&amp;ldquo;:smile: :happy:&amp;rdquo;]&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="c1">//lazily match any group of characters between two colons</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">emoteRegExpLazy</span> <span class="o">=</span> <span class="sr">/:.*?:/g</span><span class="p">;</span>
-</span><span class='line'><span class="nx">msg</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">emoteRegExpLazy</span><span class="p">);</span> <span class="c1">//returns [&quot;:smile:&quot;, &quot;:happy:&quot;]</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript capturing delimited messages %}
+    var msg = &ldquo;hello world :smile: :happy:&rdquo;;
+    //greedily match any group of characters between two colons
+    var emoteRegExpGreedy = /:.*:/g;
+    msg.match(emoteRegExpGreedy); //returns [&ldquo;:smile: :happy:&rdquo;]</p>
+
+<pre><code>//lazily match any group of characters between two colons
+var emoteRegExpLazy = /:.*?:/g;
+msg.match(emoteRegExpLazy); //returns [":smile:", ":happy:"]
+</code></pre>
+
+<p>{% endcodeblock %}</p>
 
 <p>note how the greedy regexp returns a single value consisting of both the :smile: and :happy: combined into a single match, while the lazy regexp properly returns two values splitting up the smile and happy.  The greedy <code>.<em></code> character matcher kept going until the final <code>:</code> was found at the end of the string, while the lazy <code>.</em>?</code> character matcher was content with ending the first match and the first sight of the <code>:</code> after &ldquo;smile&rdquo; and started a new match when it found the first <code>:</code> for &ldquo;happy&rdquo;.</p>
 
@@ -162,29 +150,21 @@
 
 <p>This is something that so easy but not entirely apparent when initially learning about regular expressions (at least not for me).  Surrounding an expression with parenthesis will create a grouping. Groupings are designated in the order that they are written in the expression. Groupings can be designated with <code>( )</code>. A complicated pattern can be written at the start of the expression and reused as a grouping reference later in the expression.  Lets say that we want to catch whenever a user writes duplicate words in the chat box because we&rsquo;re nice and we want to catch users making silly mistakes.</p>
 
-<p><figure class='code'><figcaption><span>catching duplicate words </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">msg</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">hello</span> <span class="nx">hello</span><span class="p">,</span> <span class="nx">how</span> <span class="nx">are</span> <span class="nx">doing</span> <span class="nx">doing</span><span class="o">?</span> <span class="nx">I</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;</span><span class="nx">m</span> <span class="nx">feeling</span> <span class="nx">good</span> <span class="nx">good</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;;</span>
-</span><span class='line'>    <span class="c1">//greedily match a full word followed by one or many whitespaces followed by the same exact word.</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">doubleWordRegExp</span> <span class="o">=</span> <span class="sr">/(\b\w+)\s+\1/g</span><span class="p">;</span>
-</span><span class='line'>    <span class="nx">msg</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">doubleWordRegExp</span><span class="p">);</span> <span class="c1">//returns [&amp;ldquo;hello hello&amp;rdquo;, &amp;ldquo;doing doing&amp;rdquo;, &amp;ldquo;good good&amp;rdquo;]</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript catching duplicate words %}
+    var msg = &ldquo;hello hello, how are doing doing? I&rsquo;m feeling good good&rdquo;;
+    //greedily match a full word followed by one or many whitespaces followed by the same exact word.
+    var doubleWordRegExp = /(\b\w+)\s+\1/g;
+    msg.match(doubleWordRegExp); //returns [&ldquo;hello hello&rdquo;, &ldquo;doing doing&rdquo;, &ldquo;good good&rdquo;]
+{% endcodeblock %}</p>
 
 <p>Text that&rsquo;s captured in a grouping can also be spit out to be used in the replacement string. So continuing with our chat emoticon example, lets say that you want to replace the matched <code>:</code> delimited text with an image tag that points to the appropriate file for each emoticon.</p>
 
-<p><figure class='code'><figcaption><span>replacing groupings with captured text </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">msg</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">hello</span> <span class="nx">world</span> <span class="o">:</span><span class="nx">smile</span><span class="o">:</span> <span class="o">:</span><span class="nx">happy</span><span class="o">:&amp;</span><span class="nx">rdquo</span><span class="p">;;</span>
-</span><span class='line'>    <span class="c1">//greedily match word in between colon and put it in a grouping that will be used in replace text</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">emoteRegExpGreedy</span> <span class="o">=</span> <span class="sr">/:(\w+):/g</span><span class="p">;</span>
-</span><span class='line'>    <span class="nx">msg</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/:(\w+):/g</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="o">&lt;</span><span class="nx">img</span> <span class="nx">src</span><span class="o">=</span><span class="s1">&#39;$1.png&#39;</span><span class="o">&gt;&amp;</span><span class="nx">rdquo</span><span class="p">;);</span> <span class="c1">//returns &amp;ldquo;hello world &lt;img src=&#39;smile.png&#39;&gt; &lt;img src=&#39;happy.png&#39;&gt;&amp;rdquo;</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript replacing groupings with captured text %}
+    var msg = &ldquo;hello world :smile: :happy:&rdquo;;
+    //greedily match word in between colon and put it in a grouping that will be used in replace text
+    var emoteRegExpGreedy = /:(\w+):/g;
+    msg.replace(/:(\w+):/g, &ldquo;<img src='$1.png'>&rdquo;); //returns &ldquo;hello world <img src='smile.png'> <img src='happy.png'>&rdquo;
+{% endcodeblock %}</p>
 
 <p>Parenthesis are placed around the <code>\w+</code> and is accessed with the <code>$1</code> in the replacement text. Notice how the grouping is accessed in the replacement text with the <code>$</code> symbol in JavaScript.  This symbol differs in different languages from what I understand.</p>
 
@@ -193,16 +173,12 @@
 
 <p>Lookahead and lookbehinds are additions to a standard expression that allow you to check whether the base expression either follows, or is followed by another expression.  Lookahead and lookbehinds are not matched, as in they will not be returned by the regexp engine.  This is helpful in that sometimes you just want to capture a subset of a complete expression. Lookaheads are performed with <code>(?=suchandsuch)</code> or <code>(?!notsuchandsuch)</code>.  Lookbehinds are performed with <code>(?&lt;=textbehind)</code> or <code>(?&lt;!nottextbehind)</code>. Continuing the chat box example, lets say that we want to implement a feature where users can vote in a poll.   Users can vote for a certain option by suffixing &lsquo;<em>vote&rsquo; to a number. Our goal is to intercept that number tied to the &lsquo;</em>vote&rsquo;.</p>
 
-<p><figure class='code'><figcaption><span>regexp lookahead </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">msg</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">I</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;</span><span class="nx">m</span> <span class="nx">going</span> <span class="nx">to</span> <span class="nx">vote</span> <span class="k">for</span> <span class="mi">5</span><span class="nx">_vote</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;;</span>
-</span><span class='line'>    <span class="c1">//find matches where a digit is suffixed by &amp;lsquo;&lt;em&gt;vote&amp;rsquo;</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">voteRegExp</span> <span class="o">=</span> <span class="err">/\b(\d+)(?=&lt;/em&gt;vote)/g;</span>
-</span><span class='line'>    <span class="nx">msg</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">voteRegExp</span><span class="p">);</span> <span class="c1">//returns [&amp;lsquo;5&amp;rsquo;];</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript regexp lookahead %}
+    var msg = &ldquo;I&rsquo;m going to vote for 5_vote&rdquo;;
+    //find matches where a digit is suffixed by &lsquo;<em>vote&rsquo;
+    var voteRegExp = /\b(\d+)(?=</em>vote)/g;
+    msg.match(voteRegExp); //returns [&lsquo;5&rsquo;];
+{% endcodeblock %}</p>
 
 <p>To be honest the example is contrived. Usually we would want to prepend &lsquo;vote_&rsquo; but JavaScriptdoes not support lookbehind so I had to use look ahead in this example.</p>
 
@@ -267,103 +243,56 @@
 <p>Javascript uses a pass by value strategy for primitives but uses a <a href="http://en.wikipedia.org/wiki/Evaluation_strategy#Call_by_sharing">call by sharing</a> for objects.  Call by sharing is largely similar to pass by reference in that the function is able to modify the same mutable object but unlike pass by reference isn&#8217;t able to assign directly over it.  If you can stretch your imagination a bit, call by sharing is kind of what the name implies.  Outside objects passed into the function are shared, but once the function decides to overwrite it, the sharing is off and the function only plays with its own version.</p>
 
 
-<p><figure class='code'><figcaption><span>objects call by sharing </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="c1">//created original object with property &amp;lsquo;original&amp;rsquo;</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{};</span>
-</span><span class='line'><span class="nx">obj</span><span class="p">.</span><span class="nx">original</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">original</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;;</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="c1">//function that will add a new property to an object passed to it, and will also try to reassign the object in vain.</span>
-</span><span class='line'><span class="kd">function</span> <span class="nx">prototypeProperty</span><span class="p">(</span><span class="nx">obj</span><span class="p">){</span>
-</span><span class='line'>    <span class="c1">//add new property attribute to object</span>
-</span><span class='line'>    <span class="nx">obj</span><span class="p">.</span><span class="nx">property</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="k">new</span> <span class="nx">property</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;;</span>
-</span><span class='line'>    <span class="c1">//edit the original text of the .original property</span>
-</span><span class='line'>    <span class="nx">obj</span><span class="p">.</span><span class="nx">original</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">edited</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;</span>
-</span><span class='line'>    <span class="c1">//function will overwrite the external reference with a new reference</span>
-</span><span class='line'>    <span class="c1">//does not affect the external object</span>
-</span><span class='line'>    <span class="nx">obj</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span class='line'><span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">prototypeProperty</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">property</span><span class="p">)</span> <span class="c1">// &amp;ldquo;new property&amp;rdquo;, note how the original obj is not empty</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">original</span><span class="p">)</span> <span class="c1">// &amp;ldquo;edited&amp;rdquo;, even though strings are immutable, the function was changing the properties of the mutable object, not the string.</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:js objects call by sharing %}
+//created original object with property &lsquo;original&rsquo;
+var obj = {};
+obj.original = &ldquo;original&rdquo;;</p>
 
-<p><figure class='code'><figcaption><span>arrays call by sharing </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="c1">//create new array</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="c1">//function that changes first two array values, pops the last value, and replaces the external reference with its own internal reference.</span>
-</span><span class='line'><span class="kd">function</span> <span class="nx">modifyArray</span><span class="p">(</span><span class="nx">arr</span><span class="p">){</span>
-</span><span class='line'>    <span class="c1">//update the first two array values</span>
-</span><span class='line'>    <span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
-</span><span class='line'>    <span class="nx">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="c1">//remove the last array value, array is now length 4</span>
-</span><span class='line'><span class="nx">arr</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">//futilly try to replace the array with another one</span>
-</span><span class='line'><span class="c1">//only the internal arr has been replaced, the original arr outside this scope is still the same</span>
-</span><span class='line'><span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">2534</span><span class="p">,</span><span class="o">-</span><span class="mi">345</span><span class="p">,</span><span class="o">-</span><span class="mi">3463</span><span class="p">,</span><span class="o">-</span><span class="mi">4536</span><span class="p">,</span><span class="o">-</span><span class="mi">6453</span><span class="p">];</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="c1">//pass in the og array</span>
-</span><span class='line'><span class="nx">modifyArray</span><span class="p">(</span><span class="nx">arr</span><span class="p">);</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span> <span class="c1">//100 note how none of the array values are reflecting the new negative values</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span> <span class="c1">//200</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="c1">//4&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>//function that will add a new property to an object passed to it, and will also try to reassign the object in vain.
+function prototypeProperty(obj){
+    //add new property attribute to object
+    obj.property = &ldquo;new property&rdquo;;
+    //edit the original text of the .original property
+    obj.original = &ldquo;edited&rdquo;
+    //function will overwrite the external reference with a new reference
+    //does not affect the external object
+    obj = {}
+}</p>
+
+<p>prototypeProperty(obj);</p>
+
+<p>console.log(obj.property) // &ldquo;new property&rdquo;, note how the original obj is not empty
+console.log(obj.original) // &ldquo;edited&rdquo;, even though strings are immutable, the function was changing the properties of the mutable object, not the string.
+{% endcodeblock %}</p>
+
+<p>{% codeblock lang:js arrays call by sharing %}
+//create new array
+var arr = [1, 2, 3, 4, 5]</p>
+
+<p>//function that changes first two array values, pops the last value, and replaces the external reference with its own internal reference.
+function modifyArray(arr){
+    //update the first two array values
+    arr[0] = 100;
+    arr[1] = 200;</p>
+
+<pre><code>//remove the last array value, array is now length 4
+arr.pop();
+
+//futilly try to replace the array with another one
+//only the internal arr has been replaced, the original arr outside this scope is still the same
+arr = [-2534,-345,-3463,-4536,-6453];
+</code></pre>
+
+<p>}</p>
+
+<p>//pass in the og array
+modifyArray(arr);</p>
+
+<p>console.log(arr[0]); //100 note how none of the array values are reflecting the new negative values
+console.log(arr[1]); //200
+console.log(arr.length) //4</p>
+
+<p>{% endcodeblock %}</p>
 
 <h2 id="reference">What is pass by reference?</h2>
 
@@ -377,52 +306,29 @@
 <p>Pass by value means that when you pass that variable into a function its the equivalent of creating a new var and making a copy of the passed in var. They&#8217;re not necessarily the same exact variable in the same exact memory address but rather copies. Modifying the copy does not affect the original. By having functions have predictable outcomes. Programmers can rely that functions will not alter their original variable and would always return a new copy that they can decide to use after the function exits. This is generally a safer way to program by preventing the programmer from overriding variables within functions. Many modern programming languages employ this strategy when it comes to primitives such as Javascript, Java, C#</p>
 
 
-<p><figure class='code'><figcaption><span>primitives passed by value </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="c1">//set initial values</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">string</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;;</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">num</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="c1">//function that reassigns values</span>
-</span><span class='line'><span class="kd">function</span> <span class="nx">passValue</span><span class="p">(</span><span class="nx">str</span><span class="p">,</span> <span class="nx">num</span><span class="p">,</span> <span class="nx">bool</span><span class="p">){</span>
-</span><span class='line'>    <span class="c1">//new variables are copied with the value of the original variables</span>
-</span><span class='line'>    <span class="nx">str</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">othervalue</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;;</span>
-</span><span class='line'>    <span class="nx">num</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">;</span>
-</span><span class='line'>    <span class="kr">boolean</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="c1">//call function that reassigns values</span>
-</span><span class='line'><span class="nx">passValue</span><span class="p">(</span><span class="nx">str</span><span class="p">,</span> <span class="nx">num</span><span class="p">,</span> <span class="nx">bool</span><span class="p">);</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="c1">//original variables don&amp;rsquo;t change</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">str</span><span class="p">);</span> <span class="c1">// &amp;ldquo;string&amp;rdquo;</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">num</span><span class="p">);</span> <span class="c1">// 1</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">bool</span><span class="p">);</span> <span class="c1">// true&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:js primitives passed by value %}
+//set initial values
+var str = &ldquo;string&rdquo;;
+var num = 1;
+var bool = true;</p>
+
+<p>//function that reassigns values
+function passValue(str, num, bool){
+    //new variables are copied with the value of the original variables
+    str = &ldquo;othervalue&rdquo;;
+    num = 10000;
+    boolean = false;
+}</p>
+
+<p>//call function that reassigns values
+passValue(str, num, bool);</p>
+
+<p>//original variables don&rsquo;t change
+console.log(str); // &ldquo;string&rdquo;
+console.log(num); // 1
+console.log(bool); // true</p>
+
+<p>{% endcodeblock %}</p>
 
 <h2 id="mutability">What is mutability?</h2>
 

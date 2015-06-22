@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Algorithms | Wow this blog looks fancy]]></title>
+  <link href="http://jasonjl.me/blog/categories/algorithms/atom.xml" rel="self"/>
+  <link href="http://jasonjl.me/"/>
+  <updated>2015-06-21T20:06:15-07:00</updated>
+  <id>http://jasonjl.me/</id>
+  <author>
+    <name><![CDATA[Jason Lee]]></name>
+    <email><![CDATA[lee.jason930@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Codewars, Leetcode, Hackerrank. Online Judges Reviews]]></title>
+    <link href="http://jasonjl.me/blog/2015/03/30/practical-programming-practice-services/"/>
+    <updated>2015-03-30T12:41:31-07:00</updated>
+    <id>http://jasonjl.me/blog/2015/03/30/practical-programming-practice-services</id>
+    <content type="html"><![CDATA[<p>Sometimes the projects you work on just aren&rsquo;t stimulating enough. Sometimes you need to fill your brain with as many programming problems as possible. Usually tackling a small sized project only requires a small set of challenges to solve while the rest of the time is spent tying the project together. When you need as many challenges to tackle in as short a time as possible you need online judges.  This article is a review on the online judges, <a href="http://www.codewars.com/">Codewars</a>, <a href="https://leetcode.com/">LeetCode</a>, and <a href="https://www.hackerrank.com/">HackerRank</a>.</p>
+
+<!-- more -->
+
+
+
+
+<h2>Codewars</h2>
+
+
+<p><a href="http://www.codewars.com/">Codewars</a> takes the concept of the &lsquo;Code Kata&rsquo; and gamifies the exercises so programmers always have something to challenge themselves when they got a few minutes to spare. Challenges are usually short, ranging from minutes to a few hours.  Most of the questions often have contexts associated with them so it always feels like you&rsquo;re actually solving a potential real world problem rather using your tools as a programmer, even though the contexts are often fantastical in nature.</p>
+
+<h3>Things I like</h3>
+
+
+<p>There&rsquo;s a clear progression that Codewars wants you to take. Challenges start from the fundamentals and rises slowly in difficulty so that you have a good basis of understanding before you move to the next level.</p>
+
+<p>Solutions of all the other members are available to analyze after solving the problem. Finding out how other (more smarter) people solved the same exact problem allows you to gain insights into the gaps in your methodology. The solutions are bite sized so its easier to digest new programming features or new ways of organizing code that you&rsquo;ve never considered before. I truly think that social programming is the way to get better at writing code and I think Codewars deserves a giant plus for this feature.</p>
+
+<h3>Things I don&#8217;t like</h3>
+
+
+<p>The Java error messages are less than helpful.  I&rsquo;m not sure how they return exceptions when your code doesn&rsquo;t compile, but often times the console is going to return an exception from the enclosing outer stack that executes the code meaning you don&rsquo;t get any useful stack debugging information, you just know somethings wrong.</p>
+
+<p>Each question has tags associated with them describing what methods of programming you&rsquo;ll use to solve the problem. These tags often give a hint on what to do to solve the problem which is kind of a problem since people look at these tags as extra meta information to give them a lead. I often like to come into a problem blind and find out myself what to do in order to get to a solution.</p>
+
+<h3>Overall</h3>
+
+
+<p>Overall I think it&rsquo;s actually a really neat service. Like I said earlier, I&rsquo;ve learned so much more about JavaScript than I ever would have if I were to just continue working on my own projects. I&rsquo;m definitely going to use it again when I delve into Python.</p>
+
+<h2>LeetCode OJ</h2>
+
+
+<p><a href="https://leetcode.com/">LeetCode OJ</a> is all about the algorithms.  There are no pretenses, you&rsquo;re going to be solving very straightforward problems that have very defined lower bounds in terms of space and memory. These problems will often test cases on all edges of the spectrum and will only accept answers that meet the lowest bound limitation.  Your preferred language is just a means to work around an algorithm. At the end of each problem, Leetcode ranks you up against your peers by how quickly your code executed.</p>
+
+<h3>Things I like</h3>
+
+
+<p>No muss no fuss, these questions ask you about algorithms and after enough exercises will hammer the common ways to solve them into your brain. I think this is a good second level after reading and solving the exercises to Crack the Coding Interview. There are tons more exercises here that touches on things that CTCI doesn&rsquo;t which makes it a natural progression to the book.</p>
+
+<p>The code editor is actually really good. Everything flows like a real professional code editor including quality of life improvements such as auto tab indentation, mass commenting, auto closing brackets, mass tab indentation, highlight bracketing, etc&hellip;</p>
+
+<p>The questions are very direct.  There are no fillers, no context. At first its a little ambiguous to know what values will be used to test your program, but after a while it becomes very obvious what kinds of edge case values Leetcode expects your program to process.</p>
+
+<h3>Things I don&#8217;t like</h3>
+
+
+<p>Since the online judge only wants answers that are strictly the lowest bound in terms of space and runtime, it&rsquo;ll often fail passing solutions that are not the most optimal. It will fail an acceptable solution of O(nlogn) if the lowest bound possible is O(n). Sometimes you think of the correct algorithm, but implement it in such a way that it still exceeds the time limit. It is ambiguous to know what exactly is the bit of code to optimize in order to pass the test.</p>
+
+<p>The community seems more concerned with writing concise code rather than best practice code. Discussion solutions are often compressed to the point where its difficult to read.</p>
+
+<p>I really wish they would allow us to see each user&rsquo;s submitted code so we can see exactly what we need to do to get the most optimization out of our language of choice. I did not feel like I learned anything about runtime optimization since my code always landed in the middle in terms of speed compared to my peers.</p>
+
+<h3>Overall</h3>
+
+
+<p>This site is great if you need some extra exercises to hone in on pure algorithm practice. I would not recommend it as a place to actually learn from 0% knowledge but more of a place if you&rsquo;re looking for medium to advanced challenges. You have to be familiar with your language of choice as your language is just a tool you should be familiar with to solve a greater problem.</p>
+
+<h2>HackerRank</h2>
+
+
+<p><a href="https://www.hackerrank.com/">HackerRank</a> is site that focuses more on the competitive nature of programming. HackerRank encourages you to participate in its many ongoing week long challenges. They support a ton of languages cover a wide range of practice problems ranging from algorithms, functional programming, linux shell cmds, and even AI.</p>
+
+<h3>Things I like</h3>
+
+
+<p>Since each challenge requests you parse a text file, it actually gives you plenty of exercises in reading in a file, parsing it, and outputting it.  I feel like this is something that&rsquo;s overlooked by a lot of challenge sites so its nice to see a site that allows you to practice that skill.</p>
+
+<p>Each challenge has very clearly defined variables.  Sometimes it&rsquo;s actually kind of annoying, but each challenge will let you know exactly how the text file will be formatted and exactly what it will be testing on.</p>
+
+<p>There are a ton of active competitions going on at a time meaning you can always test your chops against other programmers.</p>
+
+<h3>Things I don&#8217;t like</h3>
+
+
+<p>Its code editor is missing a lot of convenience features that the other code editors have. Sure it has code highlighting but other than that its very uncomfortable to use. The UI around the site is nice, but I feel like it has some work to do on its code editor.</p>
+
+<p>Parsing a text file every time is kind of annoying. Some times you just want the values to be passed in as primitive data as if it would be used as a modular piece in a larger project. Since JavaScript doesn&rsquo;t have a real file output stream (without node) it requests for you to use console.log() to output your answer, which is a small inconvenience.</p>
+
+<h3>Overall</h3>
+
+
+<p>I&rsquo;ve used this the least amount so I&rsquo;m not yet decided on whether I like it or not. The challenges are appropriately challenging but the text editor is not very fun to use. Its less of a site to practice but more to compete. Some of you may view this as the same thing.</p>
+
+<h2>Conclusions</h2>
+
+
+<p>Just about doing any of these is a good natural progression in terms of interview preparation and to generally be a better programmer. All three of these sites and many more like it definitely can only help since you&rsquo;ll be exposed to a wider range of problems you never even knew existed. Of course, nothing truly beats the experience of working on a truly challenging real project but when those are few and far in between, then these online judges got you covered.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Problems: Halloween Edition]]></title>
+    <link href="http://jasonjl.me/blog/2014/10/31/problems-halloween-edition/"/>
+    <updated>2014-10-31T05:53:42-07:00</updated>
+    <id>http://jasonjl.me/blog/2014/10/31/problems-halloween-edition</id>
+    <content type="html"><![CDATA[<p><img src="https://s3.amazonaws.com/jasonjlblog/halloween_graph.png" alt="halloween map of your neighborhood!"></p>
+
+<p><caption>Here&rsquo;s a map of your neighborhood. Pink represents the candy value higher the better, Green and black nodes represent houses, blue is the distance between houses</caption></p>
+
+<p><strong>Problem:</strong> You&rsquo;re a kid, and tonight&rsquo;s the greatest night a kid could have next to Christmas. Halloween night is coming soon and you&rsquo;re prepping your bags for the trick or treating.  The problem is, is that your parents are tired and are only willing to walk a certain number of feet before they call it a night.  Given a map detailing the amount of feet between each house and the amount of candy given per house, how do you maximize the amount of candy gained before having to return back home?</p>
+
+<!-- more -->
+
+
+<p>Of course, graphing optimization problems.  Isn&rsquo;t this what every kid is thinking on Halloween?  I know it was definitely keeping <i>me</i> up last night, even though I don&rsquo;t trick or treat anymore.  This is slightly different from the <a href="http://en.wikipedia.org/wiki/Travelling_salesman_problem">traveling salesman problem</a> in that each location now has a weight, and now the salesman doesn&rsquo;t need to travel to every location.  I guess its a variant of the traveling salesman problem if the salesman&rsquo;s car had n amount of miles of fuel and the each location had variable amounts of money to be made and he needs to return home by the end of the trip. In this problem, we can assume that the graph is undirected and your house is accessible through a loop. To save some computation time, this algorithm does not cross over visited nodes.  Paths will not have intersections.</p>
+
+<h2>Proposed Solution</h2>
+
+
+<p>So after starting to really think about this problem at 6am and it now being 11am, the problem is not as easy as I thought.  I&rsquo;ve given it some thought and this is what I propose.  In order to get the true most optimal path a ton of paths have to be evaluated. A backtrack algorithm would be used to trace down paths starting from the house node going all the way down until it reaches the house node again.  This algorithm would be pretty terrible due to there being O(!N) paths but since backtracking is being used we can save ourselves from checking dead-end paths sooner.</p>
+
+<h3>A Solution</h3>
+
+
+<p><figure class='code'><figcaption><span>halloween path optimization pseudocode </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'>    <span class="n">Class</span> <span class="n">Node</span><span class="o">{</span>
+</span><span class='line'>        <span class="c1">//Node class contains&amp;hellip;</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">candyValue</span>
+</span><span class='line'>        <span class="n">NodesNPaths</span><span class="o">[]</span> <span class="n">connectingNodes</span><span class="o">;</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">totalCandyValue</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">totalSteps</span>
+</span><span class='line'>        <span class="n">Node</span> <span class="n">prevNode</span>
+</span><span class='line'>        <span class="kt">boolean</span> <span class="n">visited</span>
+</span><span class='line'>    <span class="o">}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">//bestPath modifies rootNode to have history of </span>
+</span><span class='line'><span class="n">Node</span> <span class="nf">bestPath</span><span class="o">(</span><span class="n">Node</span> <span class="n">rootNode</span><span class="o">,</span> <span class="n">Node</span> <span class="n">currNode</span><span class="o">,</span> <span class="kt">int</span> <span class="n">pathLength</span><span class="o">,</span> <span class="n">Node</span> <span class="n">prevNode</span><span class="o">,</span> <span class="kt">int</span> <span class="n">stepQuota</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">initial</span><span class="o">){</span>
+</span><span class='line'>    <span class="c1">//route is a failure when totalsteps is over the stepquota,</span>
+</span><span class='line'>    <span class="c1">//when the node has already been visited AND its not the root node</span>
+</span><span class='line'>    <span class="c1">//its fine to go back to the root node to update its values if its under the step quota and its already been visited.</span>
+</span><span class='line'>    <span class="k">if</span><span class="o">(</span><span class="n">currNode</span><span class="o">.</span><span class="na">totalSteps</span> <span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">stepQuota</span> <span class="o">||</span> <span class="n">currNode</span><span class="o">.</span><span class="na">visited</span> <span class="o">&amp;</span><span class="n">amp</span><span class="o">;&amp;</span><span class="n">amp</span><span class="o">;</span> <span class="n">currNode</span> <span class="o">!=</span> <span class="n">rootNode</span><span class="o">){</span>
+</span><span class='line'>        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">//replace tally of path of most candy</span>
+</span><span class='line'>    <span class="n">currNode</span><span class="o">.</span><span class="na">totalCandyValue</span> <span class="o">=</span> <span class="n">currNode</span><span class="o">.</span><span class="na">candyValue</span> <span class="o">+</span> <span class="n">prevNode</span><span class="o">.</span><span class="na">totalCandyValue</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">currNode</span><span class="o">.</span><span class="na">totalSteps</span> <span class="o">+=</span> <span class="n">pathLength</span> <span class="o">+</span> <span class="n">prevNode</span><span class="o">.</span><span class="na">totalSteps</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">currNode</span><span class="o">.</span><span class="na">prevNode</span> <span class="o">=</span> <span class="n">prevNode</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">currNode</span><span class="o">.</span><span class="na">visited</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">for</span><span class="o">(</span><span class="n">Node</span> <span class="n">connectingNode</span> <span class="o">:</span> <span class="n">currNode</span><span class="o">.</span><span class="na">connectingNodes</span><span class="o">){</span>
+</span><span class='line'>        <span class="n">Node</span> <span class="n">nextNode</span> <span class="o">=</span> <span class="n">bestPath</span><span class="o">(</span><span class="n">rootNode</span><span class="o">,</span> <span class="n">connectingNode</span><span class="o">.</span><span class="na">node</span><span class="o">,</span> <span class="n">connectingNode</span><span class="o">.</span><span class="na">pathLength</span><span class="o">,</span> <span class="n">Node</span><span class="o">.</span><span class="na">currNode</span><span class="o">,</span> <span class="n">stepQuota</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+</span><span class='line'>        <span class="k">if</span><span class="o">(</span><span class="n">nextNode</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+</span><span class='line'>            <span class="c1">//reset node status, so next branch can access this point again</span>
+</span><span class='line'>            <span class="n">currNode</span><span class="o">.</span><span class="na">visited</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'>            <span class="k">return</span> <span class="kc">null</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>The algorithm above will update the rootNode with the history where we can traverse through and eventually find the best path.  So in plain english here&rsquo;s what&rsquo;s going on.
+The method above will recursively dig into the graph in a depth first search.  the function will break when it discovers that the path its on exceeds the amount of allotted steps or if the node has been visited and is NOT the root node.  This not distinction exists because revisiting the home node is necessary in order to complete the looping path and update the home node&rsquo;s history and current tally.  Each traversed node keeps track of the previous node that it came from as well as a running tally of how many steps it took to get there as well as the amount of candy gained.  The function is then called recursively on each of the visited node&rsquo;s connected paths and the cycle repeats until no more paths exist. I&rsquo;m not a mathmagician but this algorithm should have a worst case scenario of O(!N + N) where N is number of nodes.</p>
+
+<p>I thought of another addition that allows a path to end earlier before having to dig several nodes deep to reach the step limit. There could be a pre-processing stage where we figure out the shortest path to home from each node.  At each node we check to see if our available steps is more than the steps required to go back home. If it is, then the path is a bust and the algorithm can move on to the next path. This time-saving measure over the course of !N calculations could potentially reduce a lot of number crunching even though the algorithm is would still be of factorial time.</p>
+
+<p>This algorithm is pretty terrible and I&rsquo;m surprised to see that I wasn&rsquo;t able to find much information on a scenario similar to this.  Either I&rsquo;m using the wrong search terms or people just never were curious about finding optimal paths when both the nodes and edges have weights which I highly doubt.</p>
+
+<p>I would absolutely love to read if anybody else has any insight into these kinds of problems.</p>
+]]></content>
+  </entry>
+  
+</feed>

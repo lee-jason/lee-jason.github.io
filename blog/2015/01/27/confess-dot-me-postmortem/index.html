@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Confess.me Postmortem - Wow this blog looks fancy</title>
+  <meta name="author" content="Jason Lee">
+
+  
+  <meta name="description" content="Confess.me Postmortem written January 27, 2015 in javascript, mongoose, node, postmortem, project website source code Confess.me is an anonymous &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://jasonjl.me/blog/2015/01/27/confess-dot-me-postmortem">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Wow this blog looks fancy" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-50368577-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Confess.me Postmortem</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2015-01-27T09:47:57-08:00" pubdate data-updated="true">January 27, 2015
+</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/javascript/'>javascript</a>, <a class='category' href='/blog/categories/mongoose/'>mongoose</a>, <a class='category' href='/blog/categories/node/'>node</a>, <a class='category' href='/blog/categories/postmortem/'>postmortem</a>, <a class='category' href='/blog/categories/project/'>project</a>
+  
+</span>
+
+
+        </div>
+        <p><video muted autoplay loop width="550px" poster="https://s3.amazonaws.com/jasonjlblog/confessme.jpg">
+    <source src="https://s3.amazonaws.com/jasonjlblog/confessme.mp4" type="video/mp4">
+    <source src="https://s3.amazonaws.com/jasonjlblog/confessme.webm" type="video/webm">
+    <img src="https://s3.amazonaws.com/jasonjlblog/confessme.jpg">
+</video></p>
+
+<p><a href="http://confess.jasonjl.me">website</a> <br/>
+<a href="https://github.com/lee-jason/confess.me">source code</a></p>
+
+<p>Confess.me is an anonymous real-time secret posting website. Other supportive members can send comforting messages of support to the anonymous secret sharer. The secret sharer can thank these anonymous eyes and ears for their support in turn. All of this is done in real time letting users have an outlet for those things that they hide to themselves.</p>
+
+<!-- more -->
+
+
+
+
+<h2>The Backend</h2>
+
+
+<p>This site was made with node with express with the addition of the socket.io plugin for websockets.  One of the tricky things to manage was sessions. Websockets aren&rsquo;t actually remembered within the same session so it was necessary to create a session to websocket object storage in the server memory.  This ensures that users maintain the same websocket identity as long as they keep the same session identity. After that it was smooth sailing.  The socket.io documentation is very basic but explains all there is to know about real-time communication.  Set the server up to listen for events, have the client send those events. Have the client listen for events, make the server send those events. Its very basic but I can imagine so much more could be done with sockets ranging from real-time games, polls, data, and even parallel computing.</p>
+
+<p>In terms of persistence, there wasn&rsquo;t supposed to be any message persistence.  Lacking message persistence gives each message a fleeting property as if your secret will be seen but soon let go and forgotten. This was the initial plan, but since there is a severe lack of a userbase many new users would be confused and see nothing on the homepage. I felt the need to store some of the latest messages so that new visitors will see that there&rsquo;s actually some content. I use the hip new document storage system mongo wrapped with the mongoose framework.  The mongoose framework includes the ability to create object schemas for the mongo database. Even though mongo is naturally a schemaless storage system, I feel like it gives too much freedom for the user which would ultimately result in errors and confusion. Mongo as itself is a pretty simple concept to understand for people already familiar with JavaScript objects.  My only wish is that it would carry some familiar SQL syntax for table searching but unfortunately its a new syntax, still simple, but new. Mongoose required a bit more reading to understand though. Its documentation is decent but <a href="http://jasonjl.me/blog/2014/10/17/framework-frustration/">I never really liked frameworks</a>.</p>
+
+<h2>The Frontend</h2>
+
+
+<p>The front end is pretty simple, uses the client side javascript for socket.io and some extra javascript to accomodate the multi-column layout.  The front end is media query responsive so it&rsquo;ll shrink itself to as many or little columns needed on smaller devices.  It was fun trying to get the messages to organize themselves based on a multi-column layout vs a single column mobile layout. My rule for the multi-column layout was to always places the message in the smallest column as well as have newer messages up top, that way all column heights would be relatively even. When users resize their window, messages get reorganized so that it always follows this rule. I also used google&rsquo;s third party library on html sanitization to prevent the page from accepting links and to protect users against XSS attacks.  The problem with this real time updating of content is that the site has zero SEO. All content is dynamically injected through javascript so there is no content to scrape on the index.html page. To be fair though, I didn&rsquo;t really optimize the page to be picked up by search engines, otherwise I would have included an about page, or help, or a blog, or something with actual content, or server side rendering, but at this moment I&rsquo;m just happy that its primary function works, even when there&rsquo;s no audience.</p>
+
+<p>I&rsquo;ve always been fascinated with real time communication and what that could mean for the web.  I thought for this project having someone respond with immediate results would be better than having to refresh the page constantly to see if someone replied to your secret.</p>
+
+<h2>The good, the bad</h2>
+
+
+<p>The good part about the site is that it works. The bad part about the site is that it has no user base so it can&rsquo;t really function as intended.  Ideally there will always be more than a single person on, but at this point it has no user base other than my multiple testing browser windows. At this point I&rsquo;m not sure if it can even handle more than five people at a time much less a hundred or even a thousand. Currently the code is sitting on a free Heroku dyno, I never intend on taking it to a real production level plan unless it happens to explode with popularity which I doubt. This was also my first experience in javascript server side programming.  It was interesting imagining how code jumps around to different functions in a non-sequential manner and to be honest, I&rsquo;m still not entirely sure how to handle errors.  I haven&rsquo;t yet fallen into callback hell but I can imagine that it can get pretty nasty in larger applications.</p>
+
+<p>Well there you have it. I hope this site will be useful as an outlet for the things that trouble you.</p>
+
+
+        <hr class="divider-short"/>
+
+        
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2015/01/26/niconicotwitch-postmortem/" title="Previous Post: NicoNicoTwitch Postmortem">&laquo; Previous: NicoNicoTwitch Postmortem</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2015/01/27/quiz-with-me-postmortem/" title="Next Post: Quiz With Me Postmortem">Next: Quiz With Me Postmortem &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+
+    
+    <a href="https://github.com/lee-jason"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+    <a href="mailto:lee.jason930@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
+    
+      
+    
+    <a href="http://tindeck.com/users/jihoon222"><img src="/images/glyphicons_017_music.png"/></a>
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+      
+
+<script type="text/javascript">
+      var disqus_shortname = 'jihoon222';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://jasonjl.me/blog/2015/01/27/confess-dot-me-postmortem/';
+        var disqus_url = 'http://jasonjl.me/blog/2015/01/27/confess-dot-me-postmortem/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+  </body>
+</html>

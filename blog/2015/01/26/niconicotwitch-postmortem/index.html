@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>NicoNicoTwitch Postmortem - Wow this blog looks fancy</title>
+  <meta name="author" content="Jason Lee">
+
+  
+  <meta name="description" content="NicoNicoTwitch Postmortem written January 26, 2015 in javascript, postmortem, project Source code NicoNicoTwitch is a JavaScript canvas project that &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://jasonjl.me/blog/2015/01/26/niconicotwitch-postmortem">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Wow this blog looks fancy" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-50368577-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>NicoNicoTwitch Postmortem</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2015-01-26T18:52:05-08:00" pubdate data-updated="true">January 26, 2015
+</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/javascript/'>javascript</a>, <a class='category' href='/blog/categories/postmortem/'>postmortem</a>, <a class='category' href='/blog/categories/project/'>project</a>
+  
+</span>
+
+
+        </div>
+        <p><video muted autoplay loop width="550px" poster="https://s3.amazonaws.com/jasonjlblog/niconicotwitch.jpg">
+    <source src="https://s3.amazonaws.com/jasonjlblog/niconicotwitch.mp4" type="video/mp4">
+    <source src="https://s3.amazonaws.com/jasonjlblog/niconicotwitch.webm" type="video/webm">
+    <img src="https://s3.amazonaws.com/jasonjlblog/niconicotwitch.jpg">
+</video></p>
+
+<p><a href="https://github.com/lee-jason/Random_Projects/tree/master/niconicotwitch">Source code</a></p>
+
+<p>NicoNicoTwitch is a JavaScript canvas project that&rsquo;s meant to bring over the unique on-screen scrolling commentary feature of <a href="http://niconico.jp">Nico Nico Douga</a> onto the popular game live streaming platform <a href="http://twitch.tv">twitch.tv</a>.</p>
+
+<!-- more -->
+
+
+<p>I made this because I always loved Nico&rsquo;s unique text-on-video overlay of community comments and wanted to bring that over to Twitch who also sports a vibrant community. I personally think that bringing the chat closer to the video gives us a closer connection to those on the people on the web as you can relate when you both find a certain scene uproariously hilarious, or another particular scene sad. Twitch was the perfect video playing platform to emulate this feature on due to the chat being in real-time as well as being quite infectious with its commentary.</p>
+
+<p>The basic rundown of how NicoNicoTwitch works is pretty straightforward. Set a timer to read any updates in the chat, when there&rsquo;s new messages, parse and process them for any emoticons, send them to the display sorter where it&rsquo;ll find a spot for them to &lsquo;marquee&rsquo;, then update and animate the text.  The jQuery library was used for its convenience in dom selection and traversal through all the chat elements and the HTML5 canvas feature was used to paint the text over the video. The following will go into a bit further detail about the intricacies of the program.</p>
+
+<h2>Running it</h2>
+
+
+<p>So how do you run it? Well, at this point there is no proper executable.  Its simply a hack that&rsquo;s supposed to be ran through the browser JavaScript console.  Just go to a twitch streamer page with chat (i.e. not the homepage) open the console (f12) and paste the code in. I&rsquo;m not exactly sure how to package this up if I want to release it publically.  I hear Chrome Apps is pretty easy to use in terms of packaging up JavaScript applications but to be honest, sharing this wasn&rsquo;t my priority, it was mainly done for the practice.</p>
+
+<h2>The Nitty Gritty</h2>
+
+
+<p>So what happens when you paste the code in your console?  First, I use jQuery to identify where the video flash element is on the screen and overlay a new Canvas element directly over it. This canvas element is transparent and will be used for our flying text. I insert the &lsquo;Initialized&rsquo; text message into the message processing queue where the message is then processed and inserted into a TextObject where it is given its current x and y coordinates as well as the width of the message, the speed at which it&rsquo;ll be flying across the screen, the color of its user, and of course the text message itself.</p>
+
+<h3>Inserting the Text</h3>
+
+
+<p>The <code>insertText</code> function decides the initial location of the text on the screen. New messages captured from the dom get passed into this function.  I gave two rules to deciding the text location.</p>
+
+<ol>
+    <li>1. new text shall be placed as close to the top as possible</li>
+    <li>2. text should never overlap each other.</li>
+</ol>
+
+
+<p>Ensuring that text wouldn&rsquo;t overlap each other essentially required that any incoming message wouldn&rsquo;t start to leave before the already outgoing message left the screen. This required a bit of math involving the velocity of text, the frame rate, the canvas width, the width of the text itself, and the width of any emoticons inside it. I was very fortunate that canvas already supplies a method that measures the width of any supplied text with <code>context.measureText(&ldquo;text&rdquo;)</code>.  This took out the grunt work of measuring each pixel width of each letter individually and calculating the width of text messages letter by letter. I was unsure of whether my <code>insertText</code> function was going to work until I implemented my animator.</p>
+
+<h3>Updating the Screen</h3>
+
+
+<p>My animate function is pretty straight forward.  Clear the canvas screen, update the location of each active text objects based on their given velocity, draw the text back on the screen. When all is over, it calls a global function <code>requestAnimFrame</code> that calculates when to call the animate function again. Currently the Frames Per Second (FPS) is set at 30, so each animation frame triggers every 33.3ms. The FPS is completely adjustable through a variable but I think it looks best at 30.  If I didn&rsquo;t time the animation frames to run in a constant manner, text would probably speed by unnaturally fast as the program would be running the animate function as fast as it could.</p>
+
+<h3>Parsing the DOM + Messages</h3>
+
+
+<p>Okay! We got our animate and we have our insertText function, now we just need to read the messages from the chat box.  There&rsquo;s another timer that triggers every second to read messages from the chat box. It only reads up to the latest message that it hasn&rsquo;t seen before and sends it to the <code>insertText</code> function. This is entirely done with jQuery doing the searching in the DOM tree.  What was probably the most challenging here was parsing the html to grab only the information I wanted with regular expressions.  I&rsquo;m not particular with regular expressions but it was good to practice my matching abilities. What was most surprising to me though was that JavaScript&rsquo;s <code>RegExp.prototype.exec()</code> only returns the first match.  If there are multiple matches in the text for the same regular expression, you need to keep going in a while loop until the exec() returns a null.  Why was it designed this way?  I think that&rsquo;s very counter intuitive. The reason why I needed to exec multiple times on the same string was to catch multiple uses of emoticons in the same message which as we know Twitch chat loves spamming which makes this a very valid use case.</p>
+
+<h3>Parsing the Emoticons</h3>
+
+
+<p>Of course getting emoticons to appear on the canvas object was not as easy as I thought. I needed to parse out the emoticon html, identify the graphic url, identify the graphic keyword, and have the animate function insert a picture in between the text messages. Before the recent update, Twitch used to display their emoticons using &lt;span> tags that had background-images in CSS. Since Twitch has an ever updating emoticon list, I had to preload all possible emoticons and identify each emoticon&rsquo;s url by going through each loaded span and identifying its background-image. Of course this wasn&rsquo;t really that great due to having to pre-load more than 10,000 emoticons before running the program. With the recent emoticon update (which according to the blog updated 4 days ago) Twitch made it way easier to identify the url for each emoticon since they now use an actual &lt;img> tag that has the src right inside it.  Now I use a system that lazily loads the needed emoticon as soon as someone uses it in chat.</p>
+
+<h2>The Annoyances</h2>
+
+
+<p>Of course with such a successful project there are always some things I&rsquo;d like to improve on. It can always be more polished obviously but I&rsquo;m happy at the point that it&rsquo;s at now. I can put further filters in text parsing to remove anchor tags. I can create an actual emoticon object that keeps track of each unique emoticon&rsquo;s width since as of now I give each emoticon around 40 pixels of space. I can refactor the code just sitting out in the open in the NicoNicoTwitch function into its respective config, init, or manager classes instead of barfing everything in the same js file (of course this was before I knew about require.js). I can also clean up comments.  As of writing this :) and &lt;3 are not processed correctly by the emoticon parsing system. I also think there&rsquo;s a better way to read new messages from the chat box than to check it every second.</p>
+
+<p>But with all these annoyances that are actually under my control, the one true annoyance is with Twitch itself.  It&rsquo;s not that I can blame them, but every time they update their system to use a different identifier, different dom structure, different emoticon keyword, different emoticon url, my program breaks. The fact that my program is completely dependent on them not changing anything to their site is the greatest annoyance.  Of course, this was before I knew about their public API that exposes each channel&rsquo;s chat. Regardless, I really can&rsquo;t complain since it is expected that Twitch works on their site to make it better.</p>
+
+<p>Well that was a long boring read but actually watching it come together is something like magic.  Its fun seeing two messages on the same line coming close to colliding but actually just barely miss each other.  It&rsquo;s also fun when there&rsquo;s a lot of chatters filling up the entire screen cheering with excitement or sharing sympathy with a solitary BibleThump.</p>
+
+
+        <hr class="divider-short"/>
+
+        
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2015/01/12/a-basic-rundown-of-how-the-internet-works/" title="Previous Post: A basic rundown of how the internet works">&laquo; Previous: A basic rundown of how the internet works</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2015/01/27/confess-dot-me-postmortem/" title="Next Post: Confess.me Postmortem">Next: Confess.me Postmortem &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+
+    
+    <a href="https://github.com/lee-jason"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+    <a href="mailto:lee.jason930@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
+    
+      
+    
+    <a href="http://tindeck.com/users/jihoon222"><img src="/images/glyphicons_017_music.png"/></a>
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+      
+
+<script type="text/javascript">
+      var disqus_shortname = 'jihoon222';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://jasonjl.me/blog/2015/01/26/niconicotwitch-postmortem/';
+        var disqus_url = 'http://jasonjl.me/blog/2015/01/26/niconicotwitch-postmortem/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+  </body>
+</html>

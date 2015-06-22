@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Javascript, Pass by Value or Pass by Reference? - Wow this blog looks fancy</title>
+  <meta name="author" content="Jason Lee">
+
+  
+  <meta name="description" content="Javascript, Pass by Value or Pass by Reference? written October 15, 2014 in javascript, programming This is something you don't have to question &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://jasonjl.me/blog/2014/10/15/javascript">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Wow this blog looks fancy" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-50368577-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Javascript, Pass by Value or Pass by Reference?</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2014-10-15T08:40:40-07:00" pubdate data-updated="true">October 15, 2014
+</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/javascript/'>javascript</a>, <a class='category' href='/blog/categories/programming/'>programming</a>
+  
+</span>
+
+
+        </div>
+        <p>This is something you don&#8217;t have to question until you need to pass the contents of an object around or pass the same exact reference around. For me this knowledge became important during the development of Angular and Node applications where objects and primitives are passed around like a hot potato.</p>
+
+
+<!-- more -->
+
+
+<h2 id="referencevalue">So is it pass by reference or pass by value?</h2>
+
+
+<p>Javascript uses a pass by value strategy for primitives but uses a <a href="http://en.wikipedia.org/wiki/Evaluation_strategy#Call_by_sharing">call by sharing</a> for objects.  Call by sharing is largely similar to pass by reference in that the function is able to modify the same mutable object but unlike pass by reference isn&#8217;t able to assign directly over it.  If you can stretch your imagination a bit, call by sharing is kind of what the name implies.  Outside objects passed into the function are shared, but once the function decides to overwrite it, the sharing is off and the function only plays with its own version.</p>
+
+
+
+
+<figure class='code'><figcaption><span>objects call by sharing </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="c1">//created original object with property &#39;original&#39;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'><span class="nx">obj</span><span class="p">.</span><span class="nx">original</span> <span class="o">=</span> <span class="s2">&quot;original&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//function that will add a new property to an object passed to it, and will also try to reassign the object in vain.</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">prototypeProperty</span><span class="p">(</span><span class="nx">obj</span><span class="p">){</span>
+</span><span class='line'>    <span class="c1">//add new property attribute to object</span>
+</span><span class='line'>    <span class="nx">obj</span><span class="p">.</span><span class="nx">property</span> <span class="o">=</span> <span class="s2">&quot;new property&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="c1">//edit the original text of the .original property</span>
+</span><span class='line'>    <span class="nx">obj</span><span class="p">.</span><span class="nx">original</span> <span class="o">=</span> <span class="s2">&quot;edited&quot;</span>
+</span><span class='line'>    <span class="c1">//function will overwrite the external reference with a new reference</span>
+</span><span class='line'>    <span class="c1">//does not affect the external object</span>
+</span><span class='line'>    <span class="nx">obj</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nx">prototypeProperty</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">property</span><span class="p">)</span> <span class="c1">// &quot;new property&quot;, note how the original obj is not empty </span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">original</span><span class="p">)</span> <span class="c1">// &quot;edited&quot;, even though strings are immutable, the function was changing the properties of the mutable object, not the string.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>arrays call by sharing </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="c1">//create new array</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//function that changes first two array values, pops the last value, and replaces the external reference with its own internal reference.</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">modifyArray</span><span class="p">(</span><span class="nx">arr</span><span class="p">){</span>
+</span><span class='line'>    <span class="c1">//update the first two array values</span>
+</span><span class='line'>    <span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">//remove the last array value, array is now length 4</span>
+</span><span class='line'>    <span class="nx">arr</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">//futilly try to replace the array with another one</span>
+</span><span class='line'>    <span class="c1">//only the internal arr has been replaced, the original arr outside this scope is still the same</span>
+</span><span class='line'>    <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">2534</span><span class="p">,</span><span class="o">-</span><span class="mi">345</span><span class="p">,</span><span class="o">-</span><span class="mi">3463</span><span class="p">,</span><span class="o">-</span><span class="mi">4536</span><span class="p">,</span><span class="o">-</span><span class="mi">6453</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//pass in the og array</span>
+</span><span class='line'><span class="nx">modifyArray</span><span class="p">(</span><span class="nx">arr</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span> <span class="c1">//100 note how none of the array values are reflecting the new negative values</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span> <span class="c1">//200</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="c1">//4</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h2 id="reference">What is pass by reference?</h2>
+
+
+<p>Pass by reference is when variables passed in to functions are given the direct memory address.  This allows the function to manipulate the object or primitive as it exists outside the scope of the function.  The assignment operators that were &#8216;reverted&#8217; in the previous examples would be applied once the code exited the scope of the function.  This is a generally unsafe way to program due to functions having the ability to make assignments to the initial variable. Although I&#8217;ve never used it, from what I read, FORTRAN and Haskell and C with pointers uses a pass by reference evaluation strategy</p>
+
+
+<h2 id="value">What is pass by value?</h2>
+
+
+<p>Pass by value means that when you pass that variable into a function its the equivalent of creating a new var and making a copy of the passed in var. They&#8217;re not necessarily the same exact variable in the same exact memory address but rather copies. Modifying the copy does not affect the original. By having functions have predictable outcomes. Programmers can rely that functions will not alter their original variable and would always return a new copy that they can decide to use after the function exits. This is generally a safer way to program by preventing the programmer from overriding variables within functions. Many modern programming languages employ this strategy when it comes to primitives such as Javascript, Java, C#</p>
+
+
+
+
+<figure class='code'><figcaption><span>primitives passed by value </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="c1">//set initial values</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="s2">&quot;string&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">num</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//function that reassigns values</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">passValue</span><span class="p">(</span><span class="nx">str</span><span class="p">,</span> <span class="nx">num</span><span class="p">,</span> <span class="nx">bool</span><span class="p">){</span>
+</span><span class='line'>    <span class="c1">//new variables are copied with the value of the original variables</span>
+</span><span class='line'>    <span class="nx">str</span> <span class="o">=</span> <span class="s2">&quot;othervalue&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">num</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">;</span>
+</span><span class='line'>    <span class="kr">boolean</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//call function that reassigns values</span>
+</span><span class='line'><span class="nx">passValue</span><span class="p">(</span><span class="nx">str</span><span class="p">,</span> <span class="nx">num</span><span class="p">,</span> <span class="nx">bool</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//original variables don&#39;t change</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">str</span><span class="p">);</span> <span class="c1">// &quot;string&quot;</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">num</span><span class="p">);</span> <span class="c1">// 1</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">bool</span><span class="p">);</span> <span class="c1">// true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h2 id="mutability">What is mutability?</h2>
+
+
+<p>Mutablility describes whether a certain object is mutatable or changeable after its been created.  Arrays and Objects are considered to be mutable in Javascript.  They have functions that actively change the original object such as Array.splice or Object.prototype.</p>
+
+
+<h2 id="immutability">What is immutability?</h2>
+
+
+<p>Immutability is, you guessed it, describes an object or primitive that&#8217;s not mutatable after its been created. Javascript primitives such as booleans, Strings, integers are not modifiable.  Now this can be confusing because you change boolean flags in your code or add incrementers to your integer variables or modify strings all the time.  What mutability means is whether the same object, the same primitive itself can be modified and still be the same.  When your code changes a boolean flag from true to false in your code, or have an integer incrementer, or updates a string to lowercase you&#8217;re getting a brand new value that overrides the original value. Excuse the terrible analogy but you&#8217;re unable to renovate the original house so you destroy it and plant a new house on top of it.</p>
+
+
+<h2 id="primitive">What is a primitive?</h2>
+
+
+<p>primitives differ from language to language but they are generally the most basic immutable value as declared by the programming language.  The primitives in Javascript are booleans, numbers, and strings and these are all immutable.  Everything else is either an object or undefined (or NaN or null).</p>
+
+
+<h2 id="conclusion">The wrap up</h2>
+
+
+<p>So there you have it. When objects are passed into functions, a copy of the address goes in.  That&#8217;s why you&#8217;re able to manipulate the original mutable object in the function. Everything you would want to know about Javascript and its objects.</p>
+
+
+
+        <hr class="divider-short"/>
+
+        
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2014/10/10/blog-inauguration/" title="Previous Post: Blog inauguration">&laquo; Previous: Blog inauguration</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2014/10/17/framework-frustration/" title="Next Post: Framework frustration">Next: Framework frustration &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+
+    
+    <a href="https://github.com/lee-jason"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+    <a href="mailto:lee.jason930@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
+    
+      
+    
+    <a href="http://tindeck.com/users/jihoon222"><img src="/images/glyphicons_017_music.png"/></a>
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+      
+
+<script type="text/javascript">
+      var disqus_shortname = 'jihoon222';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://jasonjl.me/blog/2014/10/15/javascript/';
+        var disqus_url = 'http://jasonjl.me/blog/2014/10/15/javascript/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+  </body>
+</html>

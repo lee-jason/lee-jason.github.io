@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>6.82 Visualizer Postmortem - Wow this blog looks fancy</title>
+  <meta name="author" content="Jason Lee">
+
+  
+  <meta name="description" content="6.82 Visualizer Postmortem written January 27, 2015 in angular, javascript, postmortem, project website source code 6.82 Visualizer is a gold and &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://jasonjl.me/blog/2015/01/27/6-dot-82-visualizer-postmortem">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Wow this blog looks fancy" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-50368577-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>6.82 Visualizer Postmortem</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2015-01-27T16:22:06-08:00" pubdate data-updated="true">January 27, 2015
+</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/angular/'>angular</a>, <a class='category' href='/blog/categories/javascript/'>javascript</a>, <a class='category' href='/blog/categories/postmortem/'>postmortem</a>, <a class='category' href='/blog/categories/project/'>project</a>
+  
+</span>
+
+
+        </div>
+        <p><video muted autoplay loop width="550px" poster="https://s3.amazonaws.com/jasonjlblog/682visualizer.jpg">
+    <source src="https://s3.amazonaws.com/jasonjlblog/682visualizer.mp4" type="video/mp4">
+    <source src="https://s3.amazonaws.com/jasonjlblog/682visualizer.webm" type="video/webm">
+    <img src="https://s3.amazonaws.com/jasonjlblog/682visualizer.jpg">
+</video></p>
+
+<p><a href="http://jasonjl.me/682Visualizer">website</a> <br/>
+<a href="https://github.com/lee-jason/682Visualizer">source code</a></p>
+
+<p>6.82 Visualizer is a gold and experience data visualizer (grapher) for the game Dota 2.  There was a controversial update to the game where the game would give the losing team drastic advantages so that they would be able to catch up to the leader. The changes are difficult to imagine due to the amount of variables so this program was created to show the data on how much the game had changed.</p>
+
+<!-- more -->
+
+
+<p></p>
+
+<p>For those unfamiliar to the game of Dota, there are two teams of five that duke it out against each other to ultimately destroy their opponents base. Just like a real war, the way for a team to gain an advantage is to have more money, that&rsquo;s essentially what Dota&rsquo;s gold and experience is. Many members in the community were worried that the change to give the poorer team a boost to their economy would change their game for the worse. Many who were vocal about this had personal anecdotes but very few had the hard data. I sought to provide the community with the hard facts in an easy to view format of how the experience and gold were exactly affected so that we could see clearly just how much it altered the game.</p>
+
+<h2>The Backend</h2>
+
+
+<p>Backend? What backend? There actually is no backend to this site.  The entire application is self-contained in the html and js file.  The page is served through GitHub&rsquo;s project pages much like this blog you&rsquo;re reading.</p>
+
+<h2>The Frontend</h2>
+
+
+<p>The front end was built using a charting library <a href="http://www.chartjs.org/">chart.js</a> as well as <a href="https://angularjs.org/">angular.js</a> for the data binding. In the angular file, I have one controller for the form that maintains all the adjustable data. I knew that angular would be a good fit for this project since it very easily binds changeable data to the view. I also created a &lsquo;chart&rsquo; directive attribute tag. This chart directive contains code to initialize whatever element it was inserted into to become a chart. And finally I had one factory that contained all the formulas for calculating the data. I tried using as much as angular offered in intelligently splitting up the tasks of the site.</p>
+
+<h2>The good, the bad</h2>
+
+
+<p>This is actually the first site I made that was incredibly well received. Unlike my other sites, marketing this one was no problem. I posted it once on reddit/r/dota2 where it quickly rose through the ranks with nothing but positive praise. I felt very alive after receiving the first bits of feedback. I quickly continued to work after the initial release creating more graphs, more analysis, preset configurations, sharable configurations, layout changes (you can actually see the <a href="https://github.com/lee-jason/682Visualizer/commits/gh-pages">history here</a>). I keep realizing that community feedback really drives me forward and motivates me to a degree that I can&rsquo;t find anywhere else. Community figures were tweeting about my site, forums and fan pages in China, Germany and Russia were referring to my page, the page was being shared organically through Twitter and Facebook. It was actually quite amazing for me. I&rsquo;m really proud of the fact that I was finally first to market in something. Usually most of my ideas are imitations or alterations on an already existing idea, but this time I got lucky.</p>
+
+<p>That&rsquo;s all well and good but of course there&rsquo;s some bad.  The bad is that the page is not optimized in a degree that I would be proud of. Granted, the application is very JavaScript heavy in the amount of calculation and redraws required from both the charting library and angular but playing with the sliders produces choppy animation. Optimizing that page to for its redraws to be at 60  frames per second was not my highest priority but it would be a good assignment to bury myself in (later). I&rsquo;m also a little ashamed that I wasn&rsquo;t able to produce a proper mobile/tablet view.  According to Google Analytics, about 10-15% of hits were coming in from tablets which is expected. I anticipated a mobile design view would have taken too much effort for it to be worth it. I could only have imagined a site redesign with unique scripts to support a program with this many charts, knobs, and buttons.</p>
+
+<p>Well there you have it. Although this site might not be useful to you random reader but it definitely should be useful to the Dota 2 enthusiast.</p>
+
+
+        <hr class="divider-short"/>
+
+        
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2015/01/27/share-codes-postmortem/" title="Previous Post: Share Codes Postmortem">&laquo; Previous: Share Codes Postmortem</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2015/02/04/how-much-stuff-can-you-fit-in-memory/" title="Next Post: How Much Stuff Can You Fit In Memory?">Next: How Much Stuff Can You Fit In Memory? &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+
+    
+    <a href="https://github.com/lee-jason"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+    <a href="mailto:lee.jason930@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
+    
+      
+    
+    <a href="http://tindeck.com/users/jihoon222"><img src="/images/glyphicons_017_music.png"/></a>
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+      
+
+<script type="text/javascript">
+      var disqus_shortname = 'jihoon222';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://jasonjl.me/blog/2015/01/27/6-dot-82-visualizer-postmortem/';
+        var disqus_url = 'http://jasonjl.me/blog/2015/01/27/6-dot-82-visualizer-postmortem/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+  </body>
+</html>

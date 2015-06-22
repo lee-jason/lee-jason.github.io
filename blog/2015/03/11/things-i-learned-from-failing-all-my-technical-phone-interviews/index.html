@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Things I Learned From Failing Technical Interviews - Wow this blog looks fancy</title>
+  <meta name="author" content="Jason Lee">
+
+  
+  <meta name="description" content="Things I Learned From Failing Technical Interviews written March 11, 2015 in career, mathmatics I just had a long month of technical phone &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://jasonjl.me/blog/2015/03/11/things-i-learned-from-failing-all-my-technical-phone-interviews">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Wow this blog looks fancy" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-50368577-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Things I Learned From Failing Technical Interviews</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2015-03-11T10:46:56-07:00" pubdate data-updated="true">March 11, 2015
+</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/career/'>career</a>, <a class='category' href='/blog/categories/mathmatics/'>mathmatics</a>
+  
+</span>
+
+
+        </div>
+        <p>I just had a long month of technical phone interviews from numerous companies that I got from the technical job hunting service <a href="http://hired.com">Hired</a>. Its funny, you don&rsquo;t truly learn until you&rsquo;ve actually made mistakes in a scenario that actually matters. With that being said, I think I learned a ton of lessons from getting rejected from many technical interviews and I want to share my insights with you!</p>
+
+<!-- more -->
+
+
+<p><b><i>preface!</i></b> <br/>
+I have tried to remain objective in my learnings but there may be hints of bitterness here and there on the account of, you know, failing these technical interviews.</p>
+
+<h2>The only winning move is not to play</h2>
+
+
+<p>Interviewing is a losing game. All applicants are losing, its just a matter of losing the least.  From the time you say &lsquo;Hello&rsquo; you&rsquo;re already losing. Your interviewers are expecting you to finish a task in a certain amount of time and once finished will compare your time and performance to that of your peers.  They are not looking for things that will impress them but rather for things that will reduce their opinion of you.  There is no way to &lsquo;win&rsquo; an interview, only a way to lose the least. Say too many things that rub the interviewer the wrong way and you&rsquo;re out of the race.</p>
+
+<h2>The odds are stacked against you</h2>
+
+
+<p>A typical technical interview path usually involves five or more gatekeepers you have to pass. You usually have to impress each of the following people in order to advance to the next level</p>
+
+<ol>
+  <li>non technical Company Recruiter</li>
+  <li>technical phone interviewer #1</li>
+  <li>technical phone interviewer #2</li>
+  <li>CTO/manager</li>
+  <li>Take home assignment</li>
+  <li>onsite interviewer #1</li>
+  <li>onsite interviewer #2</li>
+  <li>onsite interviewer #3</li>
+  <li>onsite interviewer #4</li>
+  <li>onsite interviewer #5</li>
+  <li>onsite interviewer #6</li>
+  <li>day two onsite interviewer #1</li>
+  <li>day two onsite interviewer #2</li>
+  <li>day two onsite interviewer #3</li>
+  <li>day two onsite interviewer #4</li>
+  <li>day two onsite interviewer #5</li>
+  <li>day two onsite interviewer #6</li>
+  <li>Congrats you got the job!</li>
+</ol>
+
+
+<p><i>The amount of interviewers has been expanded to indicate a nightmare interviewing scenario. Your interviews will probably not look like this, but is not outside the realm of impossibility</i></p>
+
+<p>Remember earlier when I said that technical interviews is a losing game? Imagine a scenario where you are actually a really good engineer (unlike me haha!), and you have a 99% chance of passing through each gatekeeper. This means that you ultimately have an 84% (.99<sup>17</sup>) chance of passing through each gatekeeper and landing that job.  The odds are good, but not guaranteed.  Now imagine if you&rsquo;re a good engineer but you&rsquo;re no Linus Torvalds and you have a 95% chance of making it through each phase. That means you ultimately have a 41% (.95<sup>17</sup>) chance of impressing everyone and getting the job of your dreams. If you&rsquo;re not within the top echelons of programming you might as well start practicing burger flipping because the only thing you&rsquo;ll be engineering is the perfect .99c cheeseburger at McDonalds. Okay, that was mean, but my point is, you can be very good at what you do and still be rejected because of an interview with a gatekeeper going very wrong, and that&rsquo;s okay!</p>
+
+<h2>Fail Fast. Try, Try Again</h2>
+
+
+<p>Its okay to fail at these interviews. Failing a phone screen doesn&rsquo;t say anything about your character or intelligence. Say you have a 40% chance of getting past all the gatekeepers and landing a job. The probability of you landing that job at the first company you interview at is 40%, <code>1 - P(successive failures)</code>. The probability of you landing that job after two seperate company interviews is at 64%. The probability of landing the job after three seperate company interviews is 79%! Okay lets say you&rsquo;re a average engineer and you have an 80% chance of making it through each interview and there&rsquo;s 8 interviews to get through.  We first calculate the probability of you getting past each gatekeeper and landing the job (.80<sup>8</sup>) 16%. Ouch, not good. You have a 84% chance at failing to get a job at a company with 8 gatekeepers. Now we figure out if you only apply to companies that all use 8 gatekeepers in their employee process then you will have a 16% (1 - .84<sup>1</sup>) chance getting in on your first try 30% (1 - .84<sup>2</sup>) chance on your second, 41% (1 - .84<sup>3</sup>) on your third , 51% (1 - .84<sup>4</sup>)on your fourth okay you get the picture.  Apply more to different companies and the odds start turning in your favor. You will make it. The thing is, is that interviews are not all cut and dry like a math problem.  There&rsquo;s a lot of things you can&rsquo;t control such as the amount of interview gatekeepers and your probability of passing through each interview.  While we can&rsquo;t ever get our acceptance probability to 100%, we can definitely do some things to improve those odds.</p>
+
+<h2>Do not be yourself</h2>
+
+
+<p>Its kind of psychopathic, but do not be yourself.  Be prepared to take on a persona of the most attractice engineer that has ever graced this planet. Never willingly give away anything that might expose your humanity.  Technical interviews are like a reverse <a href="http://en.wikipedia.org/wiki/Turing_test">Turing Test</a>.  Instead of tricking the user that you the are human, you have to trick the interviewer that you are in fact a robot. You do not make syntax errors, you do not need to consult apis, you do not need a calculator, you make informed decisions on every aspect of engineering. Working for a company is not an opportunity to research or make mistakes, companies don&rsquo;t want to hear that, they don&rsquo;t want to pay you for that. Its an opportunity for the company to buy you to offload work on the current team much like how they may buy an additional server for their load balancer. You are viewed as an additional core to their server cluster and you will act that way. You are not valued for your ability to learn quickly or your knowledge of all these cute esoteric language features. You are valued on how much raw computing you can do for the team. After you get the job feel free to be yourself and share all those cute little quirks about your favorite dead language, but until then, you must give off the persona that you are perfect.</p>
+
+<h2>Do not panic</h2>
+
+
+<p>We are not perfect. Nobody is. We are flawed as human beings. We are not a compiler. We are not an interpreter. We are not a server core. We do not know every computer science principle, algorithm, strategy, pattern, data struct, language api, language feature. There is so much we don&rsquo;t know, and that&rsquo;s okay.  If you don&rsquo;t know something and a gatekeeper deems you unworthy, so what. Who cares, you failed, move on.  Its almost a guarantee that you will be asked something you don&rsquo;t know and even after an hour of thinking about it and problem solving around it you still won&rsquo;t know.  It happens.  The important thing is to not panic. You don&rsquo;t think well, or even think at all when you&rsquo;re panicking.  Stay calm, stay cool, don&rsquo;t look at the clock, don&rsquo;t freak out.  You will get questions you don&rsquo;t know the answer to, you will feel like an idiot after hours of interviews, you will realize your ignorance.  Its cool, it happens, just make sure you&rsquo;re the calmest idiot in the room. Interviewers interview tons of people that don&rsquo;t know the answer to their question. They ultimately want to see if you can figure it out in less than an hour but do so by being calm and collected. Don&rsquo;t give the gatekeeper more ammunition to not let you move on to the next level by appearing hysterical.</p>
+
+<h2>Do not talk</h2>
+
+
+<p>Do not talk too much that is.  Say you&rsquo;re asked about a subject that you know truckloads about.  Do not drone on and on and on hoping to impress your interviewer.  They probably don&rsquo;t care.  Remember, they are only looking for things to dock points off of and talking too much is actually a negative. Give the general answer, then ask if you can go further in depth. Every single technical interview help book/guide recommends to keep talking during your interview because your interviewer doesn&rsquo;t know if you&rsquo;re thinking or if you&rsquo;re just stuck. This doesn&rsquo;t mean talk all the time. Its incredibly difficult to blurt out a stream of consciousness and think at the same time. Take the time to close the yap and think. Let your interviewer know you&rsquo;re going to think for a little bit and actually do it.</p>
+
+<h2>And Lastly, Culture Fit</h2>
+
+
+<p>One of the most disparaging reads I&rsquo;ve read was about an interviewer that was gunning for Google. If you haven&rsquo;t read this blog, take a look at some of the <a href="http://iwillgetthatjobatgoogle.tumblr.com/archive">articles</a>. This person is dedicated, has a goal, and a company in mind, seems pretty intelligent and very motivated.   <a href="http://iwillgetthatjobatgoogle.tumblr.com/post/19790649528/unfortunately">Unfortunately</a> about four months into the blog creation and after ~120 articles about programming and computer science concepts, he does not make it.  Even after answering all the questions correctly he was not offered the position(granted, there is no way to validate this other than taking his word for it).  Even if you are Steve Wozniak, Bill Gates, Linus Torvalds, Tim Berners-Lee, or Al Gore, sometimes they will reject you just because you didn&rsquo;t gel with one of the gatekeepers.  Maybe the gatekeeper was threatened by your intelligence, your smile, your dashing good looks, your charming voice, your chiseled chin, your flowing hair, whatever the case sometimes you get denied because you said, wrote, or did the wrong thing that may or may not be related to programming. It sucks, it happens, move on.</p>
+
+<p>A way to get past this culture fit criteria is to be legitimately excited for the produce the company works on.  Remind the interviewer before and after the interview about how excited you are about the product by asking questions about the product. How does it work, who builds it, who decides what goes in it? And if you aren&rsquo;t actually interested in the product, then feign interest. &lsquo;Wow creating A/B testing for ancient email web app to serve ads to a demographic that&rsquo;s age 50+ sounds like the opportunity of a lifetime!&rsquo;.</p>
+
+<h2>Conclusion</h2>
+
+
+<p>Be cool, remain positive, keep trying.</p>
+
+
+        <hr class="divider-short"/>
+
+        
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2015/02/12/javascript-inheritance/" title="Previous Post: JavaScript Inheritance">&laquo; Previous: JavaScript Inheritance</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2015/03/30/practical-programming-practice-services/" title="Next Post: Codewars, Leetcode, Hackerrank. Online Judges Reviews">Next: Codewars, Leetcode, Hackerrank. Online Judges Reviews &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+
+    
+    <a href="https://github.com/lee-jason"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+    <a href="mailto:lee.jason930@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
+    
+      
+    
+    <a href="http://tindeck.com/users/jihoon222"><img src="/images/glyphicons_017_music.png"/></a>
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+      
+
+<script type="text/javascript">
+      var disqus_shortname = 'jihoon222';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://jasonjl.me/blog/2015/03/11/things-i-learned-from-failing-all-my-technical-phone-interviews/';
+        var disqus_url = 'http://jasonjl.me/blog/2015/03/11/things-i-learned-from-failing-all-my-technical-phone-interviews/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+  </body>
+</html>

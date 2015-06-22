@@ -1,0 +1,576 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>What Is This? - Wow this blog looks fancy</title>
+  <meta name="author" content="Jason Lee">
+
+  
+  <meta name="description" content="What Is This? written December 24, 2014 in guide, javascript The this keyword in JavaScript is probably one of the most confusing and misunderstood &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://jasonjl.me/blog/2014/12/24/what-is-this">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Wow this blog looks fancy" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-50368577-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>What Is This?</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2014-12-24T21:49:29-08:00" pubdate data-updated="true">December 24, 2014
+</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/guide/'>guide</a>, <a class='category' href='/blog/categories/javascript/'>javascript</a>
+  
+</span>
+
+
+        </div>
+        <p>The <code>this</code> keyword in JavaScript is probably one of the most confusing and misunderstood fundamental concepts of the language.  The use of <code>this</code> allows for repeatable creation of objects and flexibility in method sharing, but its often the source of many problems through misuse and misunderstanding. It&rsquo;s honestly not something that&rsquo;s too terribly intuitive or something that&rsquo;s understood even after reading several articles and putting in the actual effort to learn it.  The process of completely learning about <code>this</code> and its uses to the language is a long journey of reading and experimenting.  Here&rsquo;s another effort in explaining <code>this</code>. As a preface, you will be introduced to <code>calls</code> and <code>binds</code>as well as <code>this</code> so get ready.</p>
+
+<!-- more -->
+
+
+<p>If you come primarily from a classical object-oriented programming background, ignore everything you already know about <code>this</code>. The reference to <code>this</code> is very dynamic.  <code>this</code> can reference any object depending on whether we specify the reference explicitly in the code, or whether we leave it up to the interpreter to assume what we want <code>this</code> to reference.  Most of the times we choose not to explicitly set <code>this</code> leaving the reference to be decided by the interpreter which is where most of our issues and confusion comes in. While you <i>can</i> memorize every instance in how <code>this</code> is going to be resolved by the interpreter, there are only a few context and concepts to know about  <code>this</code> where you can come to a conclusion yourself in any situation. Here&rsquo;s the main contexts where you&rsquo;ll be seeing <code>this</code> used in and how you can make it work predictably for you every time.</p>
+
+<h2><code>this</code> in a constructor</h2>
+
+
+<p>Here&rsquo;s what happens when you use the <code>new</code> keyword to create a new object in JavaScript.  The following text is an altered and truncated version from the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new">Mozilla Developer Network</a> on what happens when creating objects with the <code>new</code> keyword.</p>
+
+<ol>
+<li>A new object is created, inheriting from Object.prototype.</li>
+<li>The constructor function Object is called with the specified arguments and this bound to the newly created object&hellip;</li>
+</ol>
+
+
+<p>The MDN docs uses an interesting word, &lsquo;bound&rsquo;.  From this point on, whenever you see the word bound or bind, you should associate it with setting the <code>this</code> reference.  If I say functionA is bound to ObjectA then you should think that whenever functionA uses <code>this</code> it should always reference ObjectA.  The MDN documentation says that it first creates an object using Object.create(), this step is not really that interesting as it relates to <code>this</code>, it&rsquo;s just merely setting up a shell of an object for us to bind to. Then it executes the constructor function where we start assigning properties to <code>this</code>, or rather the new object shell we just created in step 1.  What this means is that when the function is executed, the interpreter starts attaching properties to the shell object. The example below codes out what the MDN doc is saying</p>
+
+<figure class='code'><figcaption><span>Creating a new Person with the new keyword  </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;Jason&#39;</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="c1">//20</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span> <span class="c1">//&#39;Jason&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The above code is equivalent to the code below</p>
+
+<figure class='code'><figcaption><span>Creating a new Person using Object create and object binding  </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;Jason&#39;</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">);</span>
+</span><span class='line'>    <span class="c1">//this is where the binding happens </span>
+</span><span class='line'>    <span class="nx">Person</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="c1">//20</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span> <span class="c1">//&#39;Jason&#39;)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note in the code above this line <code>Person.call(person)</code>.  What that line means is that the <code>Person</code> function is executing and explicitly making the empty <code>person</code> object equal to <code>this</code>. This means that after that function call, the once empty <code>person</code> object now has two properties that were applied to it, <code>person.age</code> and <code>person.name</code>. The following bit of code is identical to what the line <code>Person.call(person)</code> is doing above without the use of <code>this</code>.</p>
+
+<figure class='code'><figcaption><span>Call Comparison  </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>        <span class="nx">person</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+</span><span class='line'>        <span class="nx">person</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;Jason&#39;</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="nx">Person</span><span class="p">();</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="c1">//20</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span> <span class="c1">//&#39;Jason&#39;)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you need more information about the function method <code>call</code> consult the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call">documentation</a>.</p>
+
+<p>You may be asking, what if the function was just executed without specifically binding the <code>this</code> reference? Well that&rsquo;s what we will find out in the next topic</p>
+
+<h2><code>this</code> without binding</h2>
+
+
+<p>So what if we execute a function with <code>this</code> without explicitly defining a binding?  Then we leave it up to the mercy of the interpreter.  Most of the time, <code>this</code> will be refered to the global object.  The global object varies between JavaScript interpreters. In the browser the global object will refer to the <code>window</code> object, in Node.js it&rsquo;ll refer to <code>global</code> object.  In either case, unknowingly attaching objects to the global object is probably not what you wanted to do.</p>
+
+<figure class='code'><figcaption><span>Executing unbound function </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">unboundFunction</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">param1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">param2</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="nx">unboundFunction</span><span class="p">();</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">param1</span><span class="p">)</span> <span class="c1">//1</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">param2</span><span class="p">)</span> <span class="c1">//2</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note how when the function was executed without a binding, it automatically defaulted to the global object which in this case is <code>window</code>.  There are many situations in where you&rsquo;ll be wondering why your <code>this</code> reference didn&rsquo;t work, usually its because you didn&rsquo;t specify a binding to <code>this</code> and made the interpreter guess. While this is the main problems that arises from the improper uses of <code>this</code> the following can give you a head start on some of the more common tricky uses of this.</p>
+
+<h2>Bind when passing around functions</h2>
+
+
+<p>A good rule of thumb is to always bind objects to functions when passing them around as parameters or when returning them.  Often times functions are passed around and users are shocked to see that their <code>this</code> doesn&rsquo;t actually reference their expected object.  To prevent this from happening to you, use the function method <code>bind</code>.</p>
+
+<p>The following example passes a function to an <code>Executor</code> function that runs any function that gets passed into it.  We create a person object and pass in its <code>growUp</code> function to the Executor where we think it will update our person&rsquo;s age.</p>
+
+<figure class='code'><figcaption><span>Executing unbounded function </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="c1">//a function that executes any function passed into it</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">Callbacker</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">callback</span><span class="p">){</span>
+</span><span class='line'>        <span class="c1">//do some logic</span>
+</span><span class='line'>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;executing callback function&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="c1">//then execute callback function</span>
+</span><span class='line'>        <span class="nx">callback</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">//creation of a person object with a growUp method that ages the person object by 1.</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">growUp</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>            <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">//confirm the property window.age to see that its undefined before method execution</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="c1">//undefined</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">Callbacker</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">growUp</span><span class="p">);</span> <span class="c1">//&#39;executing function&#39;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="c1">//10(</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="c1">//NaN</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you can see from the example above, passing the person&rsquo;s growUp function to be executed by the <code>Executor</code> causes the function to bind the global object to <code>this</code> by default.  That is why <code>person.age</code> doesn&rsquo;t change, and <code>window.age</code> went from <code>undefined</code> to <code>NaN</code> (since undefined + 1 = NaN). If we explicitly define the binding before passing the function, then we can ensure that the <code>growUp</code> function will use the person object no matter where it&rsquo;s executed.</p>
+
+<figure class='code'><figcaption><span>Callback executing binded function </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="c1">//a function that executes any function passed into it</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">Callbacker</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">callback</span><span class="p">){</span>
+</span><span class='line'>        <span class="c1">//do some logic</span>
+</span><span class='line'>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;executing callback function&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="c1">//then execute callback function</span>
+</span><span class='line'>        <span class="nx">callback</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">//creation of a person object with a growUp method that ages the person object by 1.</span>
+</span><span class='line'>    <span class="c1">//note the .bind at the end of the growUp function</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">growUp</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>            <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">//confirm the property window.age to see that its undefined before method execution</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="c1">//undefined</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">Callbacker</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">growUp</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="c1">//11</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="c1">//undefined</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note how the age now properly adds on the person object and how the window object is not affected.  This is because we use the <code>bind</code> method that every function has.  This specifies which object to use to reference <code>this</code> in the function.<br/>
+This example is a little contrived but it&rsquo;s definitely important to keep in mind especially when dealing with callback code or asynchronous JavaScript where functions are passed around like candy and the flow and scenario is exactly like that in the examples above.</p>
+
+<h2>Careful about functions that return anonymous functions</h2>
+
+
+<p>Be careful about your <code>this</code> reference when dealing with functions within functions.  The following example is super contrived but here&rsquo;s the rundown.  Imagine a person object that&rsquo;s at a holiday party and has a property for which drink he&rsquo;s having.  A person that&rsquo;s under 21 will be drinking eggnog while a person 21 or over would be drinking booze. The person has a <code>drinkFunction</code> that will return him another function that updates the state of his drink to either &lsquo;eggnog&rsquo; or &lsquo;booze&rsquo;. (I understand that this can be done with a single function but please bear with me.)</p>
+
+<figure class='code'><figcaption><span>Executing function that returns an unbounded function </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">drinking</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span><span class='line'>        <span class="c1">//top level functions like these are autobinded by default to whatever they&#39;re attached to.  In this case, the same &#39;this&#39; object that the constructor binds to.</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">drinkFunction</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>            <span class="c1">//&#39;this.age&#39; resolves correctly and pulls the age property of the current object due to the function properly binding to the corresponding person object.</span>
+</span><span class='line'>            <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">&lt;</span> <span class="mi">21</span><span class="p">){</span>
+</span><span class='line'>                <span class="c1">//this function is not bound to anything. It defaults to binding &#39;this&#39; to the global object</span>
+</span><span class='line'>                <span class="k">return</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>                    <span class="k">this</span><span class="p">.</span><span class="nx">drinking</span> <span class="o">=</span> <span class="s1">&#39;eggnog&#39;</span><span class="p">;</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="k">else</span><span class="p">{</span>
+</span><span class='line'>                <span class="c1">//this function is not bound to anything. It defaults to binding &#39;this&#39; to the global object</span>
+</span><span class='line'>                <span class="k">return</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>                    <span class="k">this</span><span class="p">.</span><span class="nx">drinking</span> <span class="o">=</span> <span class="s1">&#39;booze&#39;</span><span class="p">;</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">//confirm the property window.drinking to see that its undefined before method execution</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">drinking</span><span class="p">)</span> <span class="c1">//undefined</span>
+</span><span class='line'>    <span class="c1">//execute the drinkFunction as well as the function that it returns</span>
+</span><span class='line'>    <span class="nx">person</span><span class="p">.</span><span class="nx">drinkFunction</span><span class="p">()();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">drinking</span><span class="p">)</span> <span class="c1">//&#39;&#39;</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">drinking</span><span class="p">)</span> <span class="c1">//&#39;eggnog&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note how once again, the person.drinking object wasn&rsquo;t the one that was affected, but rather the one in the global window.  This is because we executed the function that we returned in the global state meaning the <code>this.drinking</code> property in the inner returned function was by default bound to the <code>window</code> object when we executed it. If we want the <code>this</code> object to reference the same person object that&rsquo;s executing it, we either need to <code>bind</code> the internal returned function or <code>call</code> the function when executing.  Take a look how at the example below.</p>
+
+<figure class='code'><figcaption><span>Executing function with anonymous function by &#8216;bind&#8217;ing </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">drinking</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">drinkFunction</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>            <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">&lt;</span> <span class="mi">21</span><span class="p">){</span>
+</span><span class='line'>                <span class="c1">//note the binds to the same top level &#39;this&#39; object.  This ensures that the anonymous function references the same &#39;this&#39; object that gets created when new Person is constructed</span>
+</span><span class='line'>                <span class="k">return</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>                    <span class="k">this</span><span class="p">.</span><span class="nx">drinking</span> <span class="o">=</span> <span class="s1">&#39;eggnog&#39;</span><span class="p">;</span>
+</span><span class='line'>                <span class="p">}.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="k">else</span><span class="p">{</span>
+</span><span class='line'>                <span class="c1">//note the binds to the same top level &#39;this&#39; object.  This ensures that the anonymous function references the same &#39;this&#39; object that gets created when new Person is constructed</span>
+</span><span class='line'>                <span class="k">return</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>                    <span class="k">this</span><span class="p">.</span><span class="nx">drinking</span> <span class="o">=</span> <span class="s1">&#39;booze&#39;</span><span class="p">;</span>
+</span><span class='line'>                <span class="p">}.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
+</span><span class='line'>    <span class="c1">//execute the drinkFunction as well as the function that it returns</span>
+</span><span class='line'>    <span class="nx">person</span><span class="p">.</span><span class="nx">drinkFunction</span><span class="p">()();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">drinking</span><span class="p">)</span> <span class="c1">//&#39;eggnog&#39;</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">drinking</span><span class="p">)</span> <span class="c1">//undefined</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The code up top is also equivalent to the following</p>
+
+<figure class='code'><figcaption><span>Executing function with anonymous function by &#8216;call&#8217;ing </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">drinking</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">drinkFunction</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>            <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">&lt;</span> <span class="mi">21</span><span class="p">){</span>
+</span><span class='line'>                <span class="k">return</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>                    <span class="k">this</span><span class="p">.</span><span class="nx">drinking</span> <span class="o">=</span> <span class="s1">&#39;eggnog&#39;</span><span class="p">;</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="k">else</span><span class="p">{</span>
+</span><span class='line'>                <span class="k">return</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>                    <span class="k">this</span><span class="p">.</span><span class="nx">drinking</span> <span class="o">=</span> <span class="s1">&#39;booze&#39;</span><span class="p">;</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
+</span><span class='line'>    <span class="c1">//note how even without binds we can set the &#39;this&#39; object inside the anonymous functions using call</span>
+</span><span class='line'>    <span class="nx">person</span><span class="p">.</span><span class="nx">drinkFunction</span><span class="p">().</span><span class="nx">call</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">drinking</span><span class="p">)</span> <span class="c1">//&#39;eggnog&#39;</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">drinking</span><span class="p">)</span> <span class="c1">//undefined</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I know that even when trying to explain it in the most normal non technical terms possible, there definitely is still a lot of confusion that arises from understanding <code>this</code> entirely.  What I highly recommend is to open up your JavaScript console, <a href="http://repl.it/">REPL</a>, inspector, whatever and seriously try creating constructors, functions, functions in functions, things outside of your comfort zone as it relates to <code>this</code> and executing them using binds, calls or applies (which I know we didn&rsquo;t talk about in the article but its functionality is very similar to call), and see how they affect the object that you bind to. If you want to learn more about binding, consult the documentation for <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind">bind</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call">call</a>, and <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply">apply</a>. Each are applicable in their own uses which exceed the scope of this guide.</p>
+
+
+        <hr class="divider-short"/>
+
+        
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2014/12/10/organizing-object-oriented-javascript/" title="Previous Post: Organizing Object Oriented Javascript">&laquo; Previous: Organizing Object Oriented Javascript</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2015/01/12/a-basic-rundown-of-how-the-internet-works/" title="Next Post: A basic rundown of how the internet works">Next: A basic rundown of how the internet works &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+
+    
+    <a href="https://github.com/lee-jason"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+    <a href="mailto:lee.jason930@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
+    
+      
+    
+    <a href="http://tindeck.com/users/jihoon222"><img src="/images/glyphicons_017_music.png"/></a>
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+      
+
+<script type="text/javascript">
+      var disqus_shortname = 'jihoon222';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://jasonjl.me/blog/2014/12/24/what-is-this/';
+        var disqus_url = 'http://jasonjl.me/blog/2014/12/24/what-is-this/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+  </body>
+</html>

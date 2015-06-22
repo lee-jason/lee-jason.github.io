@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Java | Wow this blog looks fancy]]></title>
+  <link href="http://jasonjl.me/blog/categories/java/atom.xml" rel="self"/>
+  <link href="http://jasonjl.me/"/>
+  <updated>2015-06-21T20:06:15-07:00</updated>
+  <id>http://jasonjl.me/</id>
+  <author>
+    <name><![CDATA[Jason Lee]]></name>
+    <email><![CDATA[lee.jason930@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How Much Stuff Can You Fit in Memory?]]></title>
+    <link href="http://jasonjl.me/blog/2015/02/04/how-much-stuff-can-you-fit-in-memory/"/>
+    <updated>2015-02-04T14:22:47-08:00</updated>
+    <id>http://jasonjl.me/blog/2015/02/04/how-much-stuff-can-you-fit-in-memory</id>
+    <content type="html"><![CDATA[<p>So you&#8217;re given a limit on the amount of random access memory your program can use, how much stuff (ints, chars, booleans, bytes) can you cache in there before having to store it in physical media?</p>
+
+
+
+
+<!-- more -->
+
+
+
+
+
+
+<table>
+    <tr>
+        <th>Exponent Form</th>
+        <th>Exact Value</th>
+        <th>Approx Value</th>
+        <th>Bytes</th>
+        <th>bits (Bytes * 8)</th>
+        <th>ints (Bytes / 4)</th>
+        <th>chars (Bytes / 2)</th>
+    </tr>
+    <tr>
+        <td>2<sup>0</sup></td>
+        <td>1</td>
+        <td></td>
+        <td>1B</td>
+        <td>8b</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>2<sup>1</sup></td>
+        <td>2</td>
+        <td></td>
+        <td>2B</td>
+        <td>16b</td>
+        <td></td>
+        <td>1 char</td>
+    </tr>
+    <tr>
+        <td>2<sup>2</sup></td>
+        <td>4</td>
+        <td></td>
+        <td>4B</td>
+        <td>32b</td>
+        <td>1 int</td>
+        <td>2 chars</td>
+    </tr>
+    <tr>
+        <td>2<sup>10</sup></td>
+        <td>1024</td>
+        <td>1 thousand</td>
+        <td>1KB</td>
+        <td>8Kb</td>
+        <td>~250 ints</td>
+        <td>~500 chars</td>
+    </tr>
+    <tr>
+        <td>2<sup>16</sup></td>
+        <td>65,536</td>
+        <td></td>
+        <td>64KB</td>
+        <td>512Kb</td>
+        <td>16K ints</td>
+        <td>32K chars</td>
+    </tr>
+        <tr>
+        <td>2<sup>20</sup></td>
+        <td>1,048,576</td>
+        <td>1 million</td>
+        <td>1MB</td>
+        <td>8Mb</td>
+        <td>250K ints</td>
+        <td>500K chars</td>
+    </tr>
+        <tr>
+        <td>2<sup>30</sup></td>
+        <td>1,073,741,824</td>
+        <td>1 billion</td>
+        <td>1GB</td>
+        <td>8Gb</td>
+        <td>250M ints</td>
+        <td>500M chars</td>
+    </tr>
+        <tr>
+        <td>2<sup>32</sup></td>
+        <td>4,294,967,296</td>
+        <td>4 billion</td>
+        <td>4GB</td>
+        <td>32Gb</td>
+        <td>1G ints</td>
+        <td>2G chars</td>
+    </tr>
+        <tr>
+        <td>2<sup>40</sup></td>
+        <td>1,099,511,627,776</td>
+        <td>1 trillion</td>
+        <td>1TB</td>
+        <td>8Tb</td>
+        <td>250G ints</td>
+        <td>500G chars</td>
+    </tr>
+</table>
+
+
+
+
+<p>In case if you forgot&#8230;</p>
+
+
+<ul>
+    <li>Data types are represented by bits</li>
+    <li>8 bits make a byte</li>
+    <li>1 byte (or 8 bits) make a boolean</li>
+    <li>2 bytes (or 16 bits) make a char</li>
+    <li>4 bytes (or 32 bits) make an int</li>
+    <li>8 bytes (or 64 bits) make a long [this is not shown in the chart]</li>
+    <li>There are a total of 2^16 (~65k) character representation in Java</li>
+    <li>There are a total of 2^32 (~4 billion) int representation in Java</li>
+    <li>Each character and integer can be represented through hex</li>
+    <li>\u0000, \uFFFF represent characters where each character represents a byte</li>
+    <li>0x00000000, 0xFFFFFFFF represent integers where each character represents a byte</li>
+    <li>Each 2^(10*n) breaks another thousand barrier</li>
+</ul>
+
+
+
+
+<p>So say you have N amount of bytes to work with. If we want to know how many ints we can fit in there, we take N/4 since each integer uses four bytes.</p>
+
+
+<p>Say we want to fit all integers into an array in memory.  How much memory to do we need?  we take all the integers (2^32) then multiply it by 4 since each integer is represented by four bytes. We would need roughly 16GBytes of memory to put all representable integers into an array</p>
+
+
+<p>The conversions are for the most part simple, it just requires careful calculation around big numbers.</p>
+
+
+<p><small><i>note: all primitive types are based on the Java language. Table is an extension of Gayle Laakmann Mcdowell&rsquo;s Powers of 2 in <a href="http://www.careercup.com/book">Crack the Coding Interview 5th edition</a></i></small></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Executing Highlighted Code in Eclipse Debugger]]></title>
+    <link href="http://jasonjl.me/blog/2014/12/07/executing-highlighted-code-in-eclipse-debugger/"/>
+    <updated>2014-12-07T20:21:20-08:00</updated>
+    <id>http://jasonjl.me/blog/2014/12/07/executing-highlighted-code-in-eclipse-debugger</id>
+    <content type="html"><![CDATA[<p>Just a short one for my sake since I keep forgetting. <br/>
+Highlight a segment of Java code while on a breakpoint and press <code>ctrl+u</code> to execute, or <code>ctrl+shift+d</code> to execute and display the result. Helpful for when you want to check if a certain conditional that&rsquo;s coming up in the next lines will return what you believe for it to return.</p>
+
+<p>Having this is super handy and something I miss when jumping from Chrome&rsquo;s javascript debugger that allows you to execute any arbitrary code in the console.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Bejeweled Bot]]></title>
+    <link href="http://jasonjl.me/blog/2014/11/24/bejeweled-bot/"/>
+    <updated>2014-11-24T20:06:39-08:00</updated>
+    <id>http://jasonjl.me/blog/2014/11/24/bejeweled-bot</id>
+    <content type="html"><![CDATA[<p><video muted autoplay loop width="400px" poster="https://s3.amazonaws.com/jasonjlblog/bejeweledbot.jpg">
+    <source src="https://s3.amazonaws.com/jasonjlblog/bejeweledbot.mp4" type="video/mp4">
+    <source src="https://s3.amazonaws.com/jasonjlblog/bejeweledbot.webm" type="video/webm">
+    <img src="https://s3.amazonaws.com/jasonjlblog/bejeweledbot.jpg">
+</video></p>
+
+<p><a href="https://github.com/lee-jason/BejeweledBot">source code</a> <br/>
+<a href="https://apps.facebook.com/bejeweledblitz/?fb_source=search&ref=br_tf">source game</a></p>
+
+<p>Bejeweled Bot is a bot that automatically plays Bejeweled Blitz as fast as possible.  Once executed, the bot will orient itself with the origin of the game board, determine the current gems on the grid, parse the possible matches, then move the appropriate gems in the game to create matches.  I forked the repository from <a href="https://github.com/kklemm91/BejeweledBot">kklemm91</a> and improved on code organization, naming, and execution efficiency.</p>
+
+<!-- more -->
+
+
+
+
+<h2>Execution</h2>
+
+
+<p>Upon initial execution, the bot looks for two identifying pixels indicating the upper left origin of the bejeweled grid.  Once found we can then determine the location of all the jewels on the grid. Each jewel is a set pixel width and height apart from each other which makes it easy to sequentially check each pixel color that&rsquo;s at the center of each jewel. Each jewel color is given an identifying enumerable int and placed into a 2d int array.  This array is then parsed index by index to find any potential matches.  If a match is found, the program immediately takes action and matches the jewels in the game and then continues looking for more matches.</p>
+
+<p>While gaining a score of 500,000 is considered to be the most impressive feat, the bejeweled bot regularly is able to score greater than a million consistently without assistance.</p>
+
+<h2>Issues</h2>
+
+
+<p>Unfortunately, there are moments where the program may stall or softlock. Bejeweled doesn&rsquo;t use any fancy dynamic filters meaning that checking the same pixel location of the same type of jewel will produce the same result every time.  The only exclusion to this rule would be when the jewel is dynamic such as the lightning jewel or the hypercube which is animated to spin producing inconsistent results. These inconsistent results mean that the matcher may miss these matches due to the pixel not being caught and parsed. Multiplier jewels <i>are</i> consistent but not all of them have been documented due to the tedious nature of the work.  This means that matches involving multiplier jewels may be missed due to the program not knowing that the multiplier pixel is that of a matching color.  This is easily fixable but tedious due to having to play enough bejeweled matches to find the randomized multiplier jewel color.  This means that the bot does have tendencies where it stalls due to not being able to detect a match on the board, requiring human intervention so that it can move forward. This form of pixel detection is also dependent on PopCap not changing the art of the game, otherwise the bot will no longer be able to determine the matches.</p>
+
+<p>Instances where the game freezes may also softlock the computer&rsquo;s mouse due to the game attempting to match a jewel indefinitely.  Exercise caution if executing this on a slow machine.</p>
+
+<h2>Improvements</h2>
+
+
+<p>While <a href="https://github.com/kklemm91/BejeweledBot">kklemm91&rsquo;s</a> initial program was a good start I wanted to see if I could make it better. When executed, the initial base program would make all the matches visible in the screen, then wait roughly half a second before making the next set of matches. This was good but I wanted the bot to be inhumanly fast.</p>
+
+<p>In this base program, there was a line that would make the current thread sleep for around a quarter of a second.  I noticed that modifying this to be shorter or removing it entirely didn&rsquo;t make the matches happen any faster.  I was wondering what the hold up was in the program so I created a rudimentary profiler where I would log out start and end timings into each important method (I&rsquo;m pretty sure there&rsquo;s better ways to profile Java methods).  I noticed that most methods ran almost instantaneously but the problem method that was running slowly was the match finder.  It wasn&rsquo;t the act of finding matches that was slow itself, but the fact that it was recapturing a snapshot of the board for each pixel that it checks. This is completely unnecessary and the program was changed to take an initial snapshot, determine all pixel colors from this snapshot, then find matches, based off that board, repeat.  This act was like removing the handicap from an olympic sprinter in a children&rsquo;s fun run. The bot went zooming and was matching at an insane pace.</p>
+
+<p>Another improvement involved the search for the origin point of the board.  There was an issue where the program would inconsistently determine the correct origin point.  Sometimes it would find it correctly, other times it would offset the origin a few columns to the right, skewing the vision of the bot.  Initially the bot determined the location of the origin of the board by detecting whether the pixel was one of the jewel colors.  Once found, it then checked to see if several of its neighbors were also has jewel pixel colors.  This for some reason produced inconsistent results in determining the origin of the game board and to be honest its absolutely confusing as to why it would do this. I was unable to find the root of the problem so I created a new origin determining method that checks for a sequence of pixels.  It&rsquo;s the same concept as the original implementation but when it&rsquo;s based off the color of the gems itself, it appears to produce inconsistent results.</p>
+
+<p>An improvement in color matching that would remove our dependency on PopCap not changing its colors would be to use average color detection.  Instead of identifying colors based off pixels, we could use an average of the color that falls within the bounds of a block in a grid.  This means that the colors don&rsquo;t have to be pixel perfect so if PopCap decides one day to update the art but keep the same color of the jewels, it&rsquo;ll most likely continue to keep working.  This improvement seems a bit overkill though and is not necessary at the time due to the nature of the project.  If I had a bigger budget though I&rsquo;d gladly like to implement a basic color detector.  I&rsquo;d imagine the performance would take a hit but it would be interesting to see the program dynamically decide similar looking colors.</p>
+
+<p>Well there you have it.  Thanks to <a href="https://github.com/kklemm91">kklemm91</a> for showing me the awesome Java Robot class and building out the base of the program.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Text Twist Bot]]></title>
+    <link href="http://jasonjl.me/blog/2014/11/21/text-twist-bot/"/>
+    <updated>2014-11-21T23:28:34-08:00</updated>
+    <id>http://jasonjl.me/blog/2014/11/21/text-twist-bot</id>
+    <content type="html"><![CDATA[<p><video muted autoplay loop width="400px" poster="https://s3.amazonaws.com/jasonjlblog/texttwistbot.jpg">
+    <source src="https://s3.amazonaws.com/jasonjlblog/texttwistbot.mp4" type="video/mp4">
+    <source src="https://s3.amazonaws.com/jasonjlblog/texttwistbot.webm" type="video/webm">
+    <img src="https://s3.amazonaws.com/jasonjlblog/texttwistbot.jpg">
+</video></p>
+
+<p><a href="https://github.com/lee-jason/TextTwistBot">source code</a> <br/>
+<a href="http://zone.msn.com/en/texttwist/default.htm?intgid=hp_word_1">source game</a></p>
+
+<p>Text Twist Bot is a bot made to play the anagram solving game Text Twist. Once ran, the bot will auto detect the location of the window, parse the current letters on the board, and automatically input all anagrams that can be found from those six letters.  Of course solving anagrams is not new in the field of programming but whatever, revel in its glory!</p>
+
+<!-- more -->
+
+
+<p>In its most basic form, the Text Twist Bot is simply an anagram solver wrapped in a robot that detects the game board and inputs the letters.  Upon execution, the program reads in an extensive list of english words.  These words are placed as a value into a HashMap where their keys are the letters of the word but alphabetically ordered.  This means that words like &lsquo;eat&rsquo; and &lsquo;tea&rsquo; will both have the keys of &lsquo;aet&rsquo;.  You might then ask &ldquo;But Jason, doesn&rsquo;t HashMaps only accept unique key values?&rdquo; then I&rsquo;ll answer back &ldquo;Why yes, that&rsquo;s correct, that&rsquo;s why I extended the base HashMap class with a MultiValueMap that automatically creates a Collection as a value when new values are added to the same key&rdquo;.  This means that no value with the same key will be overwritten but rather added onto in the collection.  Initially I used a <a href="https://commons.apache.org/proper/commons-collections/javadocs/api-3.2.1/org/apache/commons/collections/map/MultiValueMap.html">MultiValueMap</a> from the apache commons collection library, but after being asked to implement it in an interview (that I bombed) I felt compelled to go back and re-implement it by extending the base HashMap class. Hashing and adding a word to the MultiValueMap takes constant time O(1) for each english word in the list meaning the whole process of adding all the words in the list runs in linear time O(n) where n is the number of words in the list. Now that all the words are processed in the map, I can now lookup anagrams of each groupings of letters at constant speed! Amazing!</p>
+
+<p>Finding the location of the game board and the letters to use was another challenge.  The Java class Robot definitely comes in handy when doing these kinds of screen reading actions.  To determine the location of the board, I take a full screen picture of the primary monitor where I then go pixel by pixel looking for two specific origin pixels.  Once these pixels are found, then I would know the origin of the game board as well as the location of the letters since the letter location is positioned relatively to the origin.  I&rsquo;m still not sure if doing these pixel by pixel searches to find something is the best way to go about it but after seeing how fast it goes about the search, I felt that it was a good enough solution for the problem at hand.</p>
+
+<p>Now that I had the location of the game board I needed to find out the letters to solve an anagram for.  Since I didn&rsquo;t use any OCR technologies for this project, I needed a way to determine which letters were currently on the board. In Text Twist, the letters are represented by spheres.  These spheres initially appear on the base row.  When pressed, the letter then shifts up to the input row leaving behind an empty yellow sphere. Knowing this, I had the Robot type the alphabet multiple times for each letter in order then press enter.  This would sort the letters and bring them back to the base row.  I would then slowly type the alphabet in sequence and determine whether a letter was shifted to the input row by using pixel detection.  If a letter had shifted, then we know the letter that was just typed is in play.  This would continue until all letters were found.  The letters would then be alphabetically sorted then passed into a <a href="http://en.wikipedia.org/wiki/Power_set">Powerset</a> generator where each set represents a key in the MultiValueMap. Once the values were found, it was game time and the Robot will feverishly type in the letters as fast as the game would take them, only stopping once it finished with inputting all words found.</p>
+
+<h2>Issues and Improvements</h2>
+
+
+<p>Of course everything isn&rsquo;t all sunshine and rainbows.  If the robot inputs the text too quickly, the game can&rsquo;t process it and will ignore it often mucking up an answer and causing the game to stall. Delays were implemented to make the Robot delay each keypress by 15ms.  Also, the word list that I found sometimes doesn&rsquo;t have pluralized versions of the word meaning it usually will find a word but not its plural form.  I had a create a cheap word pluraliser that doesn&rsquo;t cover every instance. Also a word just may be missing from the word list which means I add it in manually after the game lets me know which words I missed.  In short the bot isn&rsquo;t perfect.  More work can be put into it to make it have 100% word coverage but I think it does the job pretty well for now.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Problems: Binary Tree Designs]]></title>
+    <link href="http://jasonjl.me/blog/2014/11/06/problems-binary-tree-designs/"/>
+    <updated>2014-11-06T19:35:39-08:00</updated>
+    <id>http://jasonjl.me/blog/2014/11/06/problems-binary-tree-designs</id>
+    <content type="html"><![CDATA[<div><img src="https://s3.amazonaws.com/jasonjlblog/herobinarytreeexample.png" alt="sample binary tree structures based off threez nodes"></div>
+
+
+<p>So I&rsquo;ve been brushing up and working with binary trees recently and I was pleasantly reminded how binary trees can flex and change while still maintaining the same data. It was fun testing self balancing trees when they would keep changing up on me. I got a little annoyed and my mind started to wander and wondered just how many different kinds of trees can a set of numbers create?</p>
+
+<p><strong>Problem:</strong> Given the amount of nodes in a set, how many different binary tree structures can be made from it?</p>
+
+<!-- more -->
+
+
+<p>The picture above shows three different tree examples based off three nodes.  If we keep going, we find out that there&rsquo;s five total unique tree structures just through brute force. I don&rsquo;t care about which numbers fill in which node in this problem (although that does sound like quite the problem) I just care about the shape of the tree structure. With that said, I was having trouble figuring out all the different tree types for four nodes and I didn&rsquo;t even try for five nodes. That&rsquo;s the point where we give up and ask the computer</p>
+
+<p><figure class='code'><figcaption><span>Recursive solution to tree pattern count </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'>    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">binaryTreeCount</span><span class="o">(</span><span class="kt">int</span> <span class="n">nodes</span><span class="o">,</span> <span class="kt">int</span> <span class="n">count</span><span class="o">){</span>
+</span><span class='line'>        <span class="k">if</span><span class="o">(</span><span class="n">nodes</span><span class="o">==</span><span class="mi">1</span><span class="o">){</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">count</span><span class="o">+</span><span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="c1">//simulate left node path</span>
+</span><span class='line'>        <span class="n">count</span><span class="o">=</span><span class="n">binaryCount</span><span class="o">(</span><span class="n">nodes</span><span class="o">-</span><span class="mi">1</span><span class="o">,</span> <span class="n">count</span><span class="o">);</span>
+</span><span class='line'>        <span class="c1">//simulate right node path</span>
+</span><span class='line'>        <span class="n">count</span><span class="o">=</span><span class="n">binaryCount</span><span class="o">(</span><span class="n">nodes</span><span class="o">-</span><span class="mi">1</span><span class="o">,</span> <span class="n">count</span><span class="o">);</span>
+</span><span class='line'>        <span class="c1">//simulate left right node path</span>
+</span><span class='line'>        <span class="k">if</span><span class="o">(</span><span class="n">nodes</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="o">){</span>
+</span><span class='line'>            <span class="n">count</span><span class="o">=</span><span class="n">binaryCount</span><span class="o">(</span><span class="n">nodes</span><span class="o">-</span><span class="mi">2</span><span class="o">,</span> <span class="n">count</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">count</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>This recursive function is simulating a depth first search that&rsquo;s limited by the amount of nodes available to it.  Once it reaches the end of a path, it adds one to the &lsquo;count&rsquo; counter that gets passed back up and down the recursive stack.  The function goes down the left path, and the right path, and also considers paths that can be generated from a node that branches into two paths with the third condition. I&rsquo;m not a mathmagician but the runtime of this isn&rsquo;t so hot.  I&rsquo;m pretty sure I can make it better by storing the path counts for amount of nodes down a certain path in a reference table so I don&rsquo;t have to calculate the repeated calculations every time but I&rsquo;m just kind of glad right now that I got the answer I wanted.</p>
+]]></content>
+  </entry>
+  
+</feed>

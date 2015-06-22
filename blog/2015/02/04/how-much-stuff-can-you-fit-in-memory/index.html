@@ -1,0 +1,302 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>How Much Stuff Can You Fit in Memory? - Wow this blog looks fancy</title>
+  <meta name="author" content="Jason Lee">
+
+  
+  <meta name="description" content="How Much Stuff Can You Fit in Memory? written February 4, 2015 in guide, java So you're given a limit on the amount of random access memory your &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://jasonjl.me/blog/2015/02/04/how-much-stuff-can-you-fit-in-memory">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Wow this blog looks fancy" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-50368577-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>How Much Stuff Can You Fit in Memory?</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2015-02-04T14:22:47-08:00" pubdate data-updated="true">February 4, 2015
+</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/guide/'>guide</a>, <a class='category' href='/blog/categories/java/'>java</a>
+  
+</span>
+
+
+        </div>
+        <p>So you&#8217;re given a limit on the amount of random access memory your program can use, how much stuff (ints, chars, booleans, bytes) can you cache in there before having to store it in physical media?</p>
+
+<!-- more -->
+<style type="text/css">
+    table, th{
+        border: 1px solid black;
+    }
+    tr:nth-child(odd) {
+        background-color: aliceblue;
+    }
+</style>
+
+<table>
+    <tr>
+        <th>Exponent Form</th>
+        <th>Exact Value</th>
+        <th>Approx Value</th>
+        <th>Bytes</th>
+        <th>bits (Bytes * 8)</th>
+        <th>ints (Bytes / 4)</th>
+        <th>chars (Bytes / 2)</th>
+    </tr>
+    <tr>
+        <td>2<sup>0</sup></td>
+        <td>1</td>
+        <td></td>
+        <td>1B</td>
+        <td>8b</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>2<sup>1</sup></td>
+        <td>2</td>
+        <td></td>
+        <td>2B</td>
+        <td>16b</td>
+        <td></td>
+        <td>1 char</td>
+    </tr>
+    <tr>
+        <td>2<sup>2</sup></td>
+        <td>4</td>
+        <td></td>
+        <td>4B</td>
+        <td>32b</td>
+        <td>1 int</td>
+        <td>2 chars</td>
+    </tr>
+    <tr>
+        <td>2<sup>10</sup></td>
+        <td>1024</td>
+        <td>1 thousand</td>
+        <td>1KB</td>
+        <td>8Kb</td>
+        <td>~250 ints</td>
+        <td>~500 chars</td>
+    </tr>
+    <tr>
+        <td>2<sup>16</sup></td>
+        <td>65,536</td>
+        <td></td>
+        <td>64KB</td>
+        <td>512Kb</td>
+        <td>16K ints</td>
+        <td>32K chars</td>
+    </tr>
+        <tr>
+        <td>2<sup>20</sup></td>
+        <td>1,048,576</td>
+        <td>1 million</td>
+        <td>1MB</td>
+        <td>8Mb</td>
+        <td>250K ints</td>
+        <td>500K chars</td>
+    </tr>
+        <tr>
+        <td>2<sup>30</sup></td>
+        <td>1,073,741,824</td>
+        <td>1 billion</td>
+        <td>1GB</td>
+        <td>8Gb</td>
+        <td>250M ints</td>
+        <td>500M chars</td>
+    </tr>
+        <tr>
+        <td>2<sup>32</sup></td>
+        <td>4,294,967,296</td>
+        <td>4 billion</td>
+        <td>4GB</td>
+        <td>32Gb</td>
+        <td>1G ints</td>
+        <td>2G chars</td>
+    </tr>
+        <tr>
+        <td>2<sup>40</sup></td>
+        <td>1,099,511,627,776</td>
+        <td>1 trillion</td>
+        <td>1TB</td>
+        <td>8Tb</td>
+        <td>250G ints</td>
+        <td>500G chars</td>
+    </tr>
+</table>
+
+<p>In case if you forgot&#8230;</p>
+<ul>
+    <li>Data types are represented by bits</li>
+    <li>8 bits make a byte</li>
+    <li>1 byte (or 8 bits) make a boolean</li>
+    <li>2 bytes (or 16 bits) make a char</li>
+    <li>4 bytes (or 32 bits) make an int</li>
+    <li>8 bytes (or 64 bits) make a long [this is not shown in the chart]</li>
+    <li>There are a total of 2^16 (~65k) character representation in Java</li>
+    <li>There are a total of 2^32 (~4 billion) int representation in Java</li>
+    <li>Each character and integer can be represented through hex</li>
+    <li>\u0000, \uFFFF represent characters where each character represents a byte</li>
+    <li>0x00000000, 0xFFFFFFFF represent integers where each character represents a byte</li>
+    <li>Each 2^(10*n) breaks another thousand barrier</li>
+</ul>
+
+<p>So say you have N amount of bytes to work with. If we want to know how many ints we can fit in there, we take N/4 since each integer uses four bytes.</p>
+<p>Say we want to fit all integers into an array in memory.  How much memory to do we need?  we take all the integers (2^32) then multiply it by 4 since each integer is represented by four bytes. We would need roughly 16GBytes of memory to put all representable integers into an array</p>
+<p>The conversions are for the most part simple, it just requires careful calculation around big numbers.</p>
+
+<small><i>note: all primitive types are based on the Java language. Table is an extension of Gayle Laakmann Mcdowell&#8217;s Powers of 2 in <a href="http://www.careercup.com/book">Crack the Coding Interview 5th edition</a></i></small>
+
+        <hr class="divider-short"/>
+
+        
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2015/01/27/6-dot-82-visualizer-postmortem/" title="Previous Post: 6.82 Visualizer Postmortem">&laquo; Previous: 6.82 Visualizer Postmortem</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2015/02/12/javascript-inheritance/" title="Next Post: JavaScript Inheritance">Next: JavaScript Inheritance &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+
+    
+    <a href="https://github.com/lee-jason"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+    <a href="mailto:lee.jason930@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
+    
+      
+    
+    <a href="http://tindeck.com/users/jihoon222"><img src="/images/glyphicons_017_music.png"/></a>
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+      
+
+<script type="text/javascript">
+      var disqus_shortname = 'jihoon222';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://jasonjl.me/blog/2015/02/04/how-much-stuff-can-you-fit-in-memory/';
+        var disqus_url = 'http://jasonjl.me/blog/2015/02/04/how-much-stuff-can-you-fit-in-memory/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+  </body>
+</html>

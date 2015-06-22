@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Project | Wow this blog looks fancy]]></title>
+  <link href="http://jasonjl.me/blog/categories/project/atom.xml" rel="self"/>
+  <link href="http://jasonjl.me/"/>
+  <updated>2015-06-21T20:06:15-07:00</updated>
+  <id>http://jasonjl.me/</id>
+  <author>
+    <name><![CDATA[Jason Lee]]></name>
+    <email><![CDATA[lee.jason930@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[6.82 Visualizer Postmortem]]></title>
+    <link href="http://jasonjl.me/blog/2015/01/27/6-dot-82-visualizer-postmortem/"/>
+    <updated>2015-01-27T16:22:06-08:00</updated>
+    <id>http://jasonjl.me/blog/2015/01/27/6-dot-82-visualizer-postmortem</id>
+    <content type="html"><![CDATA[<p><video muted autoplay loop width="550px" poster="https://s3.amazonaws.com/jasonjlblog/682visualizer.jpg">
+    <source src="https://s3.amazonaws.com/jasonjlblog/682visualizer.mp4" type="video/mp4">
+    <source src="https://s3.amazonaws.com/jasonjlblog/682visualizer.webm" type="video/webm">
+    <img src="https://s3.amazonaws.com/jasonjlblog/682visualizer.jpg">
+</video></p>
+
+<p><a href="http://jasonjl.me/682Visualizer">website</a> <br/>
+<a href="https://github.com/lee-jason/682Visualizer">source code</a></p>
+
+<p>6.82 Visualizer is a gold and experience data visualizer (grapher) for the game Dota 2.  There was a controversial update to the game where the game would give the losing team drastic advantages so that they would be able to catch up to the leader. The changes are difficult to imagine due to the amount of variables so this program was created to show the data on how much the game had changed.</p>
+
+<!-- more -->
+
+
+<p></p>
+
+<p>For those unfamiliar to the game of Dota, there are two teams of five that duke it out against each other to ultimately destroy their opponents base. Just like a real war, the way for a team to gain an advantage is to have more money, that&rsquo;s essentially what Dota&rsquo;s gold and experience is. Many members in the community were worried that the change to give the poorer team a boost to their economy would change their game for the worse. Many who were vocal about this had personal anecdotes but very few had the hard data. I sought to provide the community with the hard facts in an easy to view format of how the experience and gold were exactly affected so that we could see clearly just how much it altered the game.</p>
+
+<h2>The Backend</h2>
+
+
+<p>Backend? What backend? There actually is no backend to this site.  The entire application is self-contained in the html and js file.  The page is served through GitHub&rsquo;s project pages much like this blog you&rsquo;re reading.</p>
+
+<h2>The Frontend</h2>
+
+
+<p>The front end was built using a charting library <a href="http://www.chartjs.org/">chart.js</a> as well as <a href="https://angularjs.org/">angular.js</a> for the data binding. In the angular file, I have one controller for the form that maintains all the adjustable data. I knew that angular would be a good fit for this project since it very easily binds changeable data to the view. I also created a &lsquo;chart&rsquo; directive attribute tag. This chart directive contains code to initialize whatever element it was inserted into to become a chart. And finally I had one factory that contained all the formulas for calculating the data. I tried using as much as angular offered in intelligently splitting up the tasks of the site.</p>
+
+<h2>The good, the bad</h2>
+
+
+<p>This is actually the first site I made that was incredibly well received. Unlike my other sites, marketing this one was no problem. I posted it once on reddit/r/dota2 where it quickly rose through the ranks with nothing but positive praise. I felt very alive after receiving the first bits of feedback. I quickly continued to work after the initial release creating more graphs, more analysis, preset configurations, sharable configurations, layout changes (you can actually see the <a href="https://github.com/lee-jason/682Visualizer/commits/gh-pages">history here</a>). I keep realizing that community feedback really drives me forward and motivates me to a degree that I can&rsquo;t find anywhere else. Community figures were tweeting about my site, forums and fan pages in China, Germany and Russia were referring to my page, the page was being shared organically through Twitter and Facebook. It was actually quite amazing for me. I&rsquo;m really proud of the fact that I was finally first to market in something. Usually most of my ideas are imitations or alterations on an already existing idea, but this time I got lucky.</p>
+
+<p>That&rsquo;s all well and good but of course there&rsquo;s some bad.  The bad is that the page is not optimized in a degree that I would be proud of. Granted, the application is very JavaScript heavy in the amount of calculation and redraws required from both the charting library and angular but playing with the sliders produces choppy animation. Optimizing that page to for its redraws to be at 60  frames per second was not my highest priority but it would be a good assignment to bury myself in (later). I&rsquo;m also a little ashamed that I wasn&rsquo;t able to produce a proper mobile/tablet view.  According to Google Analytics, about 10-15% of hits were coming in from tablets which is expected. I anticipated a mobile design view would have taken too much effort for it to be worth it. I could only have imagined a site redesign with unique scripts to support a program with this many charts, knobs, and buttons.</p>
+
+<p>Well there you have it. Although this site might not be useful to you random reader but it definitely should be useful to the Dota 2 enthusiast.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Share Codes Postmortem]]></title>
+    <link href="http://jasonjl.me/blog/2015/01/27/share-codes-postmortem/"/>
+    <updated>2015-01-27T14:40:13-08:00</updated>
+    <id>http://jasonjl.me/blog/2015/01/27/share-codes-postmortem</id>
+    <content type="html"><![CDATA[<p><video muted autoplay loop width="550px" poster="https://s3.amazonaws.com/jasonjlblog/sharecodes.jpg">
+    <source src="https://s3.amazonaws.com/jasonjlblog/sharecodes.mp4" type="video/mp4">
+    <source src="https://s3.amazonaws.com/jasonjlblog/sharecodes.webm" type="video/webm">
+    <img src="https://s3.amazonaws.com/jasonjlblog/sharecodes.jpg">
+</video></p>
+
+<p><a href="http://sharecodes.jasonjl.me">website</a> <br/>
+<a href="https://github.com/lee-jason/ShareCodes">source code</a></p>
+
+<p>Share Codes is a site for people to trade beta/alpha/early access codes. The premise is simple, people with codes post their email and people who want codes post their emails. Match made in heaven!</p>
+
+<!-- more -->
+
+
+<p></p>
+
+<p>This site was originally created for people to share the early access demo code for the video game Super Smash Brothers for 3DS. Only a few privileged people were able to receive an early access code from Nintendo and had a few codes to share.  Internet communities across the web were going wild on searching for a spare code while those fortunate ones with the codes had the opportunity to get something in return for having such a rare commodity. I felt a site like this was needed to help people filter all the noise into something more digestible. The site was furiously written and released and it even helped some people find and give away codes.</p>
+
+<h2>The Backend</h2>
+
+
+<p>The backend was made with node with the express framework.  Once again I tried to make a proper REST API style endpoints that my front end would connect to. All emails are stored in mongodb through mongoose. The server has a scheduled timed function that prunes emails from the email list if the email is older than 30 minutes. That&rsquo;s it, there&rsquo;s nothing more interesting to say about the backend.</p>
+
+<h2>The Frontend</h2>
+
+
+<p>The front end was created with plain old html with the bootstrap framework for styling.  I don&rsquo;t really like using the bootstrap grid layout feature so I don&rsquo;t use that and make my own responsive layout using flexible containers and media queries. The form posting of the emails is not actually asynchronous. I know the experience would have probably been better if emails asynchronously updated without a page refresh but I haven&rsquo;t worked on a non-asynchronous site in so long that I really wanted to remind myself how to do it using traditional forms, actions, and methods.  Its funny, I&rsquo;m a developer born into the web 2.0 world that I have little project experience on how to do things in the web 1.0 world. I also wanted users to keep refreshing their pages to simulate heavy load to test how much strain a single Heroku dyno can take.</p>
+
+<h2>The good, the bad</h2>
+
+
+<p>The micro app was a blast to make. I knew that there was a time limit of relevancy since the codes would expire in a week. I churned this site out in around six hours just to see if I could. I think I felt that this would be kind of a proving ground whether I&rsquo;m comfortable enough with node to create a basic web application relatively quickly. Fortunately I was able to reuse the framework from my other node projects that already had the configurations I wanted.  The site worked and I felt really alive after I saw actual users on the site. I continued to make small improvements to the layout, adding extra fields, cleaning up text, making it responsive, all within the first hour of being live. If I wanted to generalize this, I can just swap out the title and make it apply for any kind of pre-access code sharing site.</p>
+
+<p>So here&rsquo;s the bad. The bad involved the marketing. Once I was done, I sent it around to my friends, then I made a post on Reddit in the primary thread and any other thread involved in trading of codes. Unfortunately for me, these threads were already filled to the brim with people looking for codes. It was a storm of fish desperately trying to gobble the bait. I think it was the largest Reddit thread I&rsquo;ve seen at 20,000 comments since I last seen it. Every time I would make a post in a thread I would check the analytics and I was fortunate to even get a few bites. Someone even posted it on their Facebook wall thereby getting a few more bites. It was pretty swell, my site was actually being used by real people. Many of them posted their email looking for codes but nobody posted their email giving away their code. It was a seller&rsquo;s market at a rate of 1 seller to 50 buyers. Some users kept reposting their email when it got pruned but then eventually the site would be empty.</p>
+
+<p>Well, there you have it. I&rsquo;m glad that some people were helped by the site, but it didn&rsquo;t spread even when I hopped around forums posting the link. I think the clarity of the share codes service is actually really helpful but when people are already ingrained in their communities it seems that they can&rsquo;t be bothered to use anything else.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Quiz With Me Postmortem]]></title>
+    <link href="http://jasonjl.me/blog/2015/01/27/quiz-with-me-postmortem/"/>
+    <updated>2015-01-27T12:20:43-08:00</updated>
+    <id>http://jasonjl.me/blog/2015/01/27/quiz-with-me-postmortem</id>
+    <content type="html"><![CDATA[<p><video muted autoplay loop width="550px" poster="https://s3.amazonaws.com/jasonjlblog/quizwithme.jpg">
+    <source src="https://s3.amazonaws.com/jasonjlblog/quizwithme.mp4" type="video/mp4">
+    <source src="https://s3.amazonaws.com/jasonjlblog/quizwithme.webm" type="video/webm">
+    <img src="https://s3.amazonaws.com/jasonjlblog/quizwithme.jpg">
+</video></p>
+
+<p><a href="http://quiz.jasonjl.me">website</a> <br/>
+<a href="https://github.com/lee-jason/QuizWithMe">source code</a></p>
+
+<p>Quiz With Me is a community generated trivia site. Each user competes against the people around the world to test themselves with the trivia questions that they submit. Quiz With Me brings the joy of answering and creating trivia questions vs the entire world!</p>
+
+<!-- more -->
+
+
+<p></p>
+
+<p>Every player on Quiz With Me are all competing against each other directly in the same trivia game. Each player gets time to answer the same question as everyone else. Once time is up, the polls are tallied and users can compare their choice to those of their peers. Players can play anonymously or sign-up to keep track of their points. Each player can also submit their own multiple choice trivia question with at least four or more potential answers. Each question can also be judged by the community as to whether it is factually correct or just nonsensical BS.</p>
+
+<h2>The Backend</h2>
+
+
+<p>The backend is ran on node.js with the express framework with a mongo+mongoose persistence layer.  This is my second project working with node and I wanted to follow REST API guidelines when creating endpoints. You would think I would use socket.io again to create real-time experience but I really wanted to practice working on creating a RESTful API. Its funny, all API creation guides recommend making your server server-side content stateless.  The problem here is that I needed to synchronize all users to the server&rsquo;s state, the time remaining on the current question, and the question itself. I think its easy to create a stateless REST endpoints when dealing with normal documents, but when we&rsquo;re creating a game of sorts, its kind of assumed that we&rsquo;re going to be maintaining a state that all clients have to synchronize to right?</p>
+
+<h2>The Frontend</h2>
+
+
+<p>The front end is composed of a single index.html page that contains a bootstrapped themed skeleton and an angular.js app file that fills it all in.  The angular.js file has all the routes inside providers that asynchronously contact the server endpoints to get new questions, or handle logins and registrations, or create new questions. There&rsquo;s controllers for the questions segment, a controller for the poll segment, and controller for the header bar.  Each of these controllers does what angular does best which is watch for changes to objects inside the controller which automatically update the  tags in the front end. The page is also responsive in that the buttons and content will reorganize themselves based off the window size.  There&rsquo;s slight display issues regarding the header bar in the mobile view but I&rsquo;m generally happy with how I finally got to try out this new framework everyone <a href="http://larseidnes.com/2014/11/05/angularjs-the-bad-parts/">loves</a> <a href="https://medium.com/este-js-framework/whats-wrong-with-angular-js-97b0a787f903">to</a> <a href="http://www.thoughtworks.com/insights/blog/angularjs-bad-bits">hate</a>.</p>
+
+<h2>The good, the bad</h2>
+
+
+<p>Of course, competing with your friends and strangers across the world would be the most ideal scenario but the problem is the lack of a user base.  The site functions well with all the features of account management, question submission, question tribunal, in an acceptable presentation but all of this doesn&rsquo;t really matter unless someone is using it.  The design is also very bare. At this point I&rsquo;m happy that the functionality works as making the front end look polished was never the goal. The site suffers from terrible SEO due to the angular generated front end that dynamically fills in content. I tried to remedy this by adding an &lsquo;about&rsquo; light box describing the site but it doesn&rsquo;t seem to help. I&rsquo;m still unsure how to organically get hits for web applications like these without actually doing the work of marketing it first. Its making me believe that the new Google SEO algorithm is dependent heavily on public impression and how well it does on social network sites, Twitter, Facebook, Reddit and so on. The goal of this project was to continue working with node web applications and to get my feet wet with angular.  With the completion of this site, I feel like I graduated from the kiddy pool and ended up in the deep-end.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Confess.me Postmortem]]></title>
+    <link href="http://jasonjl.me/blog/2015/01/27/confess-dot-me-postmortem/"/>
+    <updated>2015-01-27T09:47:57-08:00</updated>
+    <id>http://jasonjl.me/blog/2015/01/27/confess-dot-me-postmortem</id>
+    <content type="html"><![CDATA[<p><video muted autoplay loop width="550px" poster="https://s3.amazonaws.com/jasonjlblog/confessme.jpg">
+    <source src="https://s3.amazonaws.com/jasonjlblog/confessme.mp4" type="video/mp4">
+    <source src="https://s3.amazonaws.com/jasonjlblog/confessme.webm" type="video/webm">
+    <img src="https://s3.amazonaws.com/jasonjlblog/confessme.jpg">
+</video></p>
+
+<p><a href="http://confess.jasonjl.me">website</a> <br/>
+<a href="https://github.com/lee-jason/confess.me">source code</a></p>
+
+<p>Confess.me is an anonymous real-time secret posting website. Other supportive members can send comforting messages of support to the anonymous secret sharer. The secret sharer can thank these anonymous eyes and ears for their support in turn. All of this is done in real time letting users have an outlet for those things that they hide to themselves.</p>
+
+<!-- more -->
+
+
+
+
+<h2>The Backend</h2>
+
+
+<p>This site was made with node with express with the addition of the socket.io plugin for websockets.  One of the tricky things to manage was sessions. Websockets aren&rsquo;t actually remembered within the same session so it was necessary to create a session to websocket object storage in the server memory.  This ensures that users maintain the same websocket identity as long as they keep the same session identity. After that it was smooth sailing.  The socket.io documentation is very basic but explains all there is to know about real-time communication.  Set the server up to listen for events, have the client send those events. Have the client listen for events, make the server send those events. Its very basic but I can imagine so much more could be done with sockets ranging from real-time games, polls, data, and even parallel computing.</p>
+
+<p>In terms of persistence, there wasn&rsquo;t supposed to be any message persistence.  Lacking message persistence gives each message a fleeting property as if your secret will be seen but soon let go and forgotten. This was the initial plan, but since there is a severe lack of a userbase many new users would be confused and see nothing on the homepage. I felt the need to store some of the latest messages so that new visitors will see that there&rsquo;s actually some content. I use the hip new document storage system mongo wrapped with the mongoose framework.  The mongoose framework includes the ability to create object schemas for the mongo database. Even though mongo is naturally a schemaless storage system, I feel like it gives too much freedom for the user which would ultimately result in errors and confusion. Mongo as itself is a pretty simple concept to understand for people already familiar with JavaScript objects.  My only wish is that it would carry some familiar SQL syntax for table searching but unfortunately its a new syntax, still simple, but new. Mongoose required a bit more reading to understand though. Its documentation is decent but <a href="http://jasonjl.me/blog/2014/10/17/framework-frustration/">I never really liked frameworks</a>.</p>
+
+<h2>The Frontend</h2>
+
+
+<p>The front end is pretty simple, uses the client side javascript for socket.io and some extra javascript to accomodate the multi-column layout.  The front end is media query responsive so it&rsquo;ll shrink itself to as many or little columns needed on smaller devices.  It was fun trying to get the messages to organize themselves based on a multi-column layout vs a single column mobile layout. My rule for the multi-column layout was to always places the message in the smallest column as well as have newer messages up top, that way all column heights would be relatively even. When users resize their window, messages get reorganized so that it always follows this rule. I also used google&rsquo;s third party library on html sanitization to prevent the page from accepting links and to protect users against XSS attacks.  The problem with this real time updating of content is that the site has zero SEO. All content is dynamically injected through javascript so there is no content to scrape on the index.html page. To be fair though, I didn&rsquo;t really optimize the page to be picked up by search engines, otherwise I would have included an about page, or help, or a blog, or something with actual content, or server side rendering, but at this moment I&rsquo;m just happy that its primary function works, even when there&rsquo;s no audience.</p>
+
+<p>I&rsquo;ve always been fascinated with real time communication and what that could mean for the web.  I thought for this project having someone respond with immediate results would be better than having to refresh the page constantly to see if someone replied to your secret.</p>
+
+<h2>The good, the bad</h2>
+
+
+<p>The good part about the site is that it works. The bad part about the site is that it has no user base so it can&rsquo;t really function as intended.  Ideally there will always be more than a single person on, but at this point it has no user base other than my multiple testing browser windows. At this point I&rsquo;m not sure if it can even handle more than five people at a time much less a hundred or even a thousand. Currently the code is sitting on a free Heroku dyno, I never intend on taking it to a real production level plan unless it happens to explode with popularity which I doubt. This was also my first experience in javascript server side programming.  It was interesting imagining how code jumps around to different functions in a non-sequential manner and to be honest, I&rsquo;m still not entirely sure how to handle errors.  I haven&rsquo;t yet fallen into callback hell but I can imagine that it can get pretty nasty in larger applications.</p>
+
+<p>Well there you have it. I hope this site will be useful as an outlet for the things that trouble you.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[NicoNicoTwitch Postmortem]]></title>
+    <link href="http://jasonjl.me/blog/2015/01/26/niconicotwitch-postmortem/"/>
+    <updated>2015-01-26T18:52:05-08:00</updated>
+    <id>http://jasonjl.me/blog/2015/01/26/niconicotwitch-postmortem</id>
+    <content type="html"><![CDATA[<p><video muted autoplay loop width="550px" poster="https://s3.amazonaws.com/jasonjlblog/niconicotwitch.jpg">
+    <source src="https://s3.amazonaws.com/jasonjlblog/niconicotwitch.mp4" type="video/mp4">
+    <source src="https://s3.amazonaws.com/jasonjlblog/niconicotwitch.webm" type="video/webm">
+    <img src="https://s3.amazonaws.com/jasonjlblog/niconicotwitch.jpg">
+</video></p>
+
+<p><a href="https://github.com/lee-jason/Random_Projects/tree/master/niconicotwitch">Source code</a></p>
+
+<p>NicoNicoTwitch is a JavaScript canvas project that&rsquo;s meant to bring over the unique on-screen scrolling commentary feature of <a href="http://niconico.jp">Nico Nico Douga</a> onto the popular game live streaming platform <a href="http://twitch.tv">twitch.tv</a>.</p>
+
+<!-- more -->
+
+
+<p>I made this because I always loved Nico&rsquo;s unique text-on-video overlay of community comments and wanted to bring that over to Twitch who also sports a vibrant community. I personally think that bringing the chat closer to the video gives us a closer connection to those on the people on the web as you can relate when you both find a certain scene uproariously hilarious, or another particular scene sad. Twitch was the perfect video playing platform to emulate this feature on due to the chat being in real-time as well as being quite infectious with its commentary.</p>
+
+<p>The basic rundown of how NicoNicoTwitch works is pretty straightforward. Set a timer to read any updates in the chat, when there&rsquo;s new messages, parse and process them for any emoticons, send them to the display sorter where it&rsquo;ll find a spot for them to &lsquo;marquee&rsquo;, then update and animate the text.  The jQuery library was used for its convenience in dom selection and traversal through all the chat elements and the HTML5 canvas feature was used to paint the text over the video. The following will go into a bit further detail about the intricacies of the program.</p>
+
+<h2>Running it</h2>
+
+
+<p>So how do you run it? Well, at this point there is no proper executable.  Its simply a hack that&rsquo;s supposed to be ran through the browser JavaScript console.  Just go to a twitch streamer page with chat (i.e. not the homepage) open the console (f12) and paste the code in. I&rsquo;m not exactly sure how to package this up if I want to release it publically.  I hear Chrome Apps is pretty easy to use in terms of packaging up JavaScript applications but to be honest, sharing this wasn&rsquo;t my priority, it was mainly done for the practice.</p>
+
+<h2>The Nitty Gritty</h2>
+
+
+<p>So what happens when you paste the code in your console?  First, I use jQuery to identify where the video flash element is on the screen and overlay a new Canvas element directly over it. This canvas element is transparent and will be used for our flying text. I insert the &lsquo;Initialized&rsquo; text message into the message processing queue where the message is then processed and inserted into a TextObject where it is given its current x and y coordinates as well as the width of the message, the speed at which it&rsquo;ll be flying across the screen, the color of its user, and of course the text message itself.</p>
+
+<h3>Inserting the Text</h3>
+
+
+<p>The <code>insertText</code> function decides the initial location of the text on the screen. New messages captured from the dom get passed into this function.  I gave two rules to deciding the text location.</p>
+
+<ol>
+    <li>1. new text shall be placed as close to the top as possible</li>
+    <li>2. text should never overlap each other.</li>
+</ol>
+
+
+<p>Ensuring that text wouldn&rsquo;t overlap each other essentially required that any incoming message wouldn&rsquo;t start to leave before the already outgoing message left the screen. This required a bit of math involving the velocity of text, the frame rate, the canvas width, the width of the text itself, and the width of any emoticons inside it. I was very fortunate that canvas already supplies a method that measures the width of any supplied text with <code>context.measureText(&ldquo;text&rdquo;)</code>.  This took out the grunt work of measuring each pixel width of each letter individually and calculating the width of text messages letter by letter. I was unsure of whether my <code>insertText</code> function was going to work until I implemented my animator.</p>
+
+<h3>Updating the Screen</h3>
+
+
+<p>My animate function is pretty straight forward.  Clear the canvas screen, update the location of each active text objects based on their given velocity, draw the text back on the screen. When all is over, it calls a global function <code>requestAnimFrame</code> that calculates when to call the animate function again. Currently the Frames Per Second (FPS) is set at 30, so each animation frame triggers every 33.3ms. The FPS is completely adjustable through a variable but I think it looks best at 30.  If I didn&rsquo;t time the animation frames to run in a constant manner, text would probably speed by unnaturally fast as the program would be running the animate function as fast as it could.</p>
+
+<h3>Parsing the DOM + Messages</h3>
+
+
+<p>Okay! We got our animate and we have our insertText function, now we just need to read the messages from the chat box.  There&rsquo;s another timer that triggers every second to read messages from the chat box. It only reads up to the latest message that it hasn&rsquo;t seen before and sends it to the <code>insertText</code> function. This is entirely done with jQuery doing the searching in the DOM tree.  What was probably the most challenging here was parsing the html to grab only the information I wanted with regular expressions.  I&rsquo;m not particular with regular expressions but it was good to practice my matching abilities. What was most surprising to me though was that JavaScript&rsquo;s <code>RegExp.prototype.exec()</code> only returns the first match.  If there are multiple matches in the text for the same regular expression, you need to keep going in a while loop until the exec() returns a null.  Why was it designed this way?  I think that&rsquo;s very counter intuitive. The reason why I needed to exec multiple times on the same string was to catch multiple uses of emoticons in the same message which as we know Twitch chat loves spamming which makes this a very valid use case.</p>
+
+<h3>Parsing the Emoticons</h3>
+
+
+<p>Of course getting emoticons to appear on the canvas object was not as easy as I thought. I needed to parse out the emoticon html, identify the graphic url, identify the graphic keyword, and have the animate function insert a picture in between the text messages. Before the recent update, Twitch used to display their emoticons using &lt;span> tags that had background-images in CSS. Since Twitch has an ever updating emoticon list, I had to preload all possible emoticons and identify each emoticon&rsquo;s url by going through each loaded span and identifying its background-image. Of course this wasn&rsquo;t really that great due to having to pre-load more than 10,000 emoticons before running the program. With the recent emoticon update (which according to the blog updated 4 days ago) Twitch made it way easier to identify the url for each emoticon since they now use an actual &lt;img> tag that has the src right inside it.  Now I use a system that lazily loads the needed emoticon as soon as someone uses it in chat.</p>
+
+<h2>The Annoyances</h2>
+
+
+<p>Of course with such a successful project there are always some things I&rsquo;d like to improve on. It can always be more polished obviously but I&rsquo;m happy at the point that it&rsquo;s at now. I can put further filters in text parsing to remove anchor tags. I can create an actual emoticon object that keeps track of each unique emoticon&rsquo;s width since as of now I give each emoticon around 40 pixels of space. I can refactor the code just sitting out in the open in the NicoNicoTwitch function into its respective config, init, or manager classes instead of barfing everything in the same js file (of course this was before I knew about require.js). I can also clean up comments.  As of writing this :) and &lt;3 are not processed correctly by the emoticon parsing system. I also think there&rsquo;s a better way to read new messages from the chat box than to check it every second.</p>
+
+<p>But with all these annoyances that are actually under my control, the one true annoyance is with Twitch itself.  It&rsquo;s not that I can blame them, but every time they update their system to use a different identifier, different dom structure, different emoticon keyword, different emoticon url, my program breaks. The fact that my program is completely dependent on them not changing anything to their site is the greatest annoyance.  Of course, this was before I knew about their public API that exposes each channel&rsquo;s chat. Regardless, I really can&rsquo;t complain since it is expected that Twitch works on their site to make it better.</p>
+
+<p>Well that was a long boring read but actually watching it come together is something like magic.  Its fun seeing two messages on the same line coming close to colliding but actually just barely miss each other.  It&rsquo;s also fun when there&rsquo;s a lot of chatters filling up the entire screen cheering with excitement or sharing sympathy with a solitary BibleThump.</p>
+]]></content>
+  </entry>
+  
+</feed>

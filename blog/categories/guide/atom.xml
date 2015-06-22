@@ -1,0 +1,1061 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Guide | Wow this blog looks fancy]]></title>
+  <link href="http://jasonjl.me/blog/categories/guide/atom.xml" rel="self"/>
+  <link href="http://jasonjl.me/"/>
+  <updated>2015-06-21T20:06:15-07:00</updated>
+  <id>http://jasonjl.me/</id>
+  <author>
+    <name><![CDATA[Jason Lee]]></name>
+    <email><![CDATA[lee.jason930@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Rendering List of Elements in React With JSX]]></title>
+    <link href="http://jasonjl.me/blog/2015/04/18/rendering-list-of-elements-in-react-with-jsx/"/>
+    <updated>2015-04-18T19:43:14-07:00</updated>
+    <id>http://jasonjl.me/blog/2015/04/18/rendering-list-of-elements-in-react-with-jsx</id>
+    <content type="html"><![CDATA[<p>Understanding how JSX is processed can be slightly tricky to understand. Knowing when its appropriate to use JavaScript code and when to use HTML in your JSX can be very nuanced when writing React code. Understanding how the JSX will compile is critical in writing basic React that will render in predictable ways every time. This guide will go over the slightly tricky scenario of getting a list to render and how it can help us understand more about React and JSX.</p>
+
+<!-- more -->
+
+
+
+
+<script src="http://fb.me/react-0.13.1.js"></script>
+
+
+<script src="http://fb.me/JSXTransformer-0.13.1.js"></script>
+
+
+<p><b><i>Preface:</i></b> Unfortunately, the JSX code highlighting may not be perfect. Each JSX React code example is followed by the transformed version to JavaScript, followed by the actual rendered code in the page. Feel free to inspect the elements to get a better idea of how React renders your code.</p>
+
+<p>You may have landed here because you tried to render a list in React and wondered why it didn&rsquo;t work. You may have tried passing and rendering the list as a prop and wondered why your list is still all inline. You may feel this way if you came from an Angular background where rendering with ng-repeat was largely left to magic. React gives you a finer level of control that makes using it more easier to understand.</p>
+
+<p>The following example shows what happens when simply rendering a list in React without any processing. Inspect the code and notice how all the elements are displayed in a single list item.</p>
+
+<h3>Bad Example</h3>
+
+
+<h4>JSX</h4>
+
+
+<p><figure class='code'><figcaption><span>Unexpected Incorrect rendering of list in JSX </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">IncorrectListRender</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
+</span><span class='line'>    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="p">(</span>
+</span><span class='line'>        <span class="o">&lt;</span><span class="nx">ul</span><span class="o">&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
+</span><span class='line'>        <span class="o">&lt;</span><span class="err">/ul&gt;</span>
+</span><span class='line'>      <span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">IncorrectListRender</span> <span class="nx">list</span><span class="o">=</span><span class="p">{[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]}</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">incorrect</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h4>Compiled to JavaScript</h4>
+
+
+<p><figure class='code'><figcaption><span>Unexpected Incorrect rendering of list in JavaScript </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">IncorrectListRender</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span><span class="nx">displayName</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">IncorrectListRender</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span>
+</span><span class='line'>    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="p">(</span>
+</span><span class='line'>        <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">ul</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">li</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">)</span>
+</span><span class='line'>      <span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">IncorrectListRender</span><span class="p">,</span> <span class="p">{</span><span class="nx">list</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]}),</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">incorrect</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h4>Rendered Result</h4>
+
+
+<div class="react-example" id="incorrect-list-render"></div>
+
+
+<script type="text/jsx">
+  var IncorrectListRender = React.createClass({
+    render: function() {
+      return (
+        <ul>
+          <li>{this.props.list}</li>
+        </ul>
+      )
+    }
+  });
+  React.render(<IncorrectListRender  list={[1,2,3,4,5]} />, document.getElementById('incorrect-list-render'));
+</script>
+
+
+<p>The above example doesn&rsquo;t cut it.</p>
+
+<p>You may also have tried to individually pick out elements in the array and plant them in your render code. This would work, but its not very flexible. Notice how the second render call with the longer list is only able to display the first five elements.</p>
+
+<h3>Bad Example</h3>
+
+
+<h4>JSX</h4>
+
+
+<p><figure class='code'><figcaption><span>Inflexible way of rendering lists in JSX </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">InflexibleListRender</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
+</span><span class='line'>    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="p">(</span>
+</span><span class='line'>        <span class="o">&lt;</span><span class="nx">ul</span><span class="o">&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">0</span><span class="p">]}</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">1</span><span class="p">]}</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">2</span><span class="p">]}</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">3</span><span class="p">]}</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">4</span><span class="p">]}</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
+</span><span class='line'>        <span class="o">&lt;</span><span class="err">/ul&gt;</span>
+</span><span class='line'>      <span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">InflexibleListRender</span> <span class="nx">list</span><span class="o">=</span><span class="p">{[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]}</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">inflexible</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render1</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
+</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">InflexibleListRender</span> <span class="nx">list</span><span class="o">=</span><span class="p">{[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]}</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">inflexible</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render2</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h4>Compiled to JavaScript</h4>
+
+
+<p><figure class='code'><figcaption><span>Inflexible way of rendering lists in JavaScript </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'> <span class="kd">var</span> <span class="nx">InflexibleListRender</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span><span class="nx">displayName</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">InflexibleListRender</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span>
+</span><span class='line'>    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="p">(</span>
+</span><span class='line'>        <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">ul</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">li</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+</span><span class='line'>          <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">li</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+</span><span class='line'>          <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">li</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+</span><span class='line'>          <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">li</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span>
+</span><span class='line'>          <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">li</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+</span><span class='line'>        <span class="p">)</span>
+</span><span class='line'>      <span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">InflexibleListRender</span><span class="p">,</span> <span class="p">{</span><span class="nx">list</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]}),</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">inflexible</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render1</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
+</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">InflexibleListRender</span><span class="p">,</span> <span class="p">{</span><span class="nx">list</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]}),</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">inflexible</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render2</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h4>Rendered Result</h4>
+
+
+<div class="react-example" id="inflexible-list-render1"></div>
+
+
+<div class="react-example" id="inflexible-list-render2"></div>
+
+
+<script type="text/jsx">
+  var InflexibleListRender = React.createClass({
+    render: function() {
+      return (
+        <ul>
+          <li>{this.props.list[0]}</li>
+          <li>{this.props.list[1]}</li>
+          <li>{this.props.list[2]}</li>
+          <li>{this.props.list[3]}</li>
+          <li>{this.props.list[4]}</li>
+        </ul>
+      )
+    }
+  });
+  React.render(<InflexibleListRender list={[1,2,3,4,5]} />, document.getElementById('inflexible-list-render1'));
+  React.render(<InflexibleListRender list={[1,2,3,4,5]} />, document.getElementById('inflexible-list-render2'));
+</script>
+
+
+<p>A good solution would be flexible to the amount of items in a list and would render with its own containing element in a repeating fashion. Notice how the following render function is able to accomodate arrays of all sizes. This is due to rendering in a list of React Elements created from the list of numbers coming in from the props.</p>
+
+<h3>Good Example</h3>
+
+
+<h4>JSX</h4>
+
+
+<p><figure class='code'><figcaption><span>Properly Repeatable React Elements in JSX </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">ProperListRender</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
+</span><span class='line'>    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="p">(</span>
+</span><span class='line'>        <span class="o">&lt;</span><span class="nx">ul</span><span class="o">&gt;</span>
+</span><span class='line'>          <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">listValue</span><span class="p">){</span>
+</span><span class='line'>            <span class="k">return</span> <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">listValue</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/li&gt;;</span>
+</span><span class='line'>          <span class="p">})}</span>
+</span><span class='line'>        <span class="o">&lt;</span><span class="err">/ul&gt;</span>
+</span><span class='line'>      <span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">ProperListRender</span> <span class="nx">list</span><span class="o">=</span><span class="p">{[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]}</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">proper</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render1</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
+</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">ProperListRender</span> <span class="nx">list</span><span class="o">=</span><span class="p">{[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]}</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">proper</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render2</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h4>Compiled to JavaScript</h4>
+
+
+<p><figure class='code'><figcaption><span>Properly repeatable React Elements in JavaScript </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">ProperListRender</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span><span class="nx">displayName</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">ProperListRender</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span>
+</span><span class='line'>    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="p">(</span>
+</span><span class='line'>        <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">ul</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span>
+</span><span class='line'>          <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">listValue</span><span class="p">){</span>
+</span><span class='line'>            <span class="k">return</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">li</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">listValue</span><span class="p">);</span>
+</span><span class='line'>          <span class="p">})</span>
+</span><span class='line'>        <span class="p">)</span>
+</span><span class='line'>      <span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">ProperListRender</span><span class="p">,</span> <span class="p">{</span><span class="nx">list</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]}),</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">proper</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render1</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
+</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">ProperListRender</span><span class="p">,</span> <span class="p">{</span><span class="nx">list</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]}),</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">proper</span><span class="o">-</span><span class="nx">list</span><span class="o">-</span><span class="nx">render2</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;));</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h4>Rendered Result</h4>
+
+
+<div class="react-example" id="proper-list-render1"></div>
+
+
+<div class="react-example" id="proper-list-render2"></div>
+
+
+<script type="text/jsx">
+  var ProperListRender = React.createClass({
+    render: function() {
+      return (
+        <ul>
+          {this.props.list.map(function(listValue){
+            return <li>{listValue}</li>;
+          })}
+        </ul>
+      )
+    }
+  });
+  React.render(<ProperListRender list={[1,2,3,4,5]} />, document.getElementById('proper-list-render1'));
+  React.render(<ProperListRender list={[1,2,3,4,5,6,7,8,9,10]} />, document.getElementById('proper-list-render2'));
+</script>
+
+
+<p>The solution above is flexible enough to accomodate as many or as little list items that comes from the props field.</p>
+
+<p>Lets break it down to see why it works</p>
+
+<p>First each React class object needs to have a render function. Think of the render like a screen refresh. The render function is supposed to return a value or list of values (most commonly composed of React Elements) that will be drawn onto the screen. The render function is automatically called whenever the object&rsquo;s state is signalled to change. States are outside the scope of this guide but you can read more about state <a href="https://facebook.github.io/react/docs/tutorial.html#reactive-state">here</a>.</p>
+
+<p>Notice how HTML is plainly inserted into a JavaScript function. The JSX transformer/compiler will automatically detect HTML and React tags inside JavaScript and convert them to the equivalent JavaScript expression. If you would like to read more about the end result feel free to <a href="https://facebook.github.io/react/jsx-compiler.html">try out</a> the compiler and <a href="https://facebook.github.io/react/docs/jsx-in-depth.html">read up</a> on what it does to your tags.</p>
+
+<p>Also take note of the curly brackets peppered through out the HTML tags. The brackets signify to the JSX transformer that there is actual JavaScript inside of it. Combining JSX and JavaScript together allows us to use the ease of HTML tagging and the logical power of JavaScript to create dynamic HTML templates right inside of our React code. In the case of the list example, note how we start with a containing <code>&lt;ul>&hellip;&lt;/ul></code> block. This <code>&lt;/ul></code> block is then split with a pair of brackets that perform a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map">mapping</a> to create and return a new list of React Elements <code>&lt;li>{listValue}&lt;/li></code>.  Also notice again how <code>{listValue}</code> had to be surrounded again in brackets since its embedded within HTML elements. If you want to know more about what you can do with React Elements take a look <a href="https://facebook.github.io/react/docs/top-level-api.html#react.createelement">here</a>.</p>
+
+<h2>Conclusion</h2>
+
+
+<p>The React renderer is actually quite flexible. You don&rsquo;t necessarily have to feed it just Numbers or just React Elements but can mix and match all sorts of JavaScript objects. You can filter and parse the original objects in your list and use JavaScript logic to render a completely new list with dynamic React Elements. You can even plug in your own Custom React components in your render function as well, but you already knew that didn&rsquo;t you. Truly understanding how your JSX code will be compiled to plain old JavaScript is the key to writing predictable React everytime.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[JavaScript Inheritance]]></title>
+    <link href="http://jasonjl.me/blog/2015/02/12/javascript-inheritance/"/>
+    <updated>2015-02-12T15:56:16-08:00</updated>
+    <id>http://jasonjl.me/blog/2015/02/12/javascript-inheritance</id>
+    <content type="html"><![CDATA[<p>As you may already know, Javascript has an interesting inheritance pattern called prototypal inheritance. You too can start using prototyping powers of Javascript with this one weird trick found by an Orange County mom. James Gosling creator of Java hates it!</p>
+
+<!-- more -->
+
+
+<p>Prototypal inheritance is similar to classical language&rsquo;s concept of extending. It has some of the same concepts of subclassing such as inheriting parent fields, overriding, and creating new fields. Here&rsquo;s a small example of how to subclass a JavaScript class.</p>
+
+<p><figure class='code'><figcaption><span>Creating a Child subclass from Parent class by extending Prototype chain  </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>   <span class="c1">//Parent class</span>
+</span><span class='line'>   <span class="kd">var</span> <span class="nx">Parent</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">parent</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">adult</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;;</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">species</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">human</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;;</span>
+</span><span class='line'>    <span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="c1">//Child class</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">Child</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;child&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="s2">&quot;infant&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//set Child&#39;s prototype to a new Parent object</span>
+</span><span class='line'><span class="nx">Child</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Parent</span><span class="p">();</span>
+</span><span class='line'><span class="c1">//re-set the Child&#39;s constructor to itself, since it was overwritten in the previous statement</span>
+</span><span class='line'><span class="nx">Child</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">constructor</span> <span class="o">=</span> <span class="nx">Child</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">child</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Child</span><span class="p">();</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">child</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span> <span class="c1">//&quot;child&quot;</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">child</span><span class="p">.</span><span class="nx">status</span><span class="p">)</span> <span class="c1">//&quot;infant&quot;</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">child</span><span class="p">.</span><span class="nx">species</span><span class="p">)</span> <span class="c1">//&quot;human&quot; taken from Parent.species</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">child</span> <span class="k">instanceof</span> <span class="nx">Parent</span><span class="p">)</span> <span class="c1">//true</span>
+</span><span class='line'><span class="k">delete</span> <span class="nx">child</span><span class="p">.</span><span class="nx">name</span> <span class="c1">//true removed Child&#39;s name</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">child</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span> <span class="c1">//&quot;parent&quot; taken from Parent.name</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>This is the basic structure. Each function has a <code>prototype</code> property. This <code>prototype</code> field is an object that is applied to all objects created from that function using the <code>new</code> keyword. Setting the prototype of the Child class to that of the Parent class will create a prototype chain which would then allow the <code>instanceof</code> feature to work. The Child class would also borrow any attributes it didn&rsquo;t have that the Parent object would supply. Deleting overriden attributes in the Child class would revert back to use the assigned Parent&rsquo;s attributes.</p>
+
+<p>Prototypal inheritance in JavaScript is slightly more flexible than in a classical inheritance pattern due to the ability to extend Parent functionality without the Child knowing about it. Its not needed in a class signature but rather a simple assignment to Child&rsquo;s prototype attribute. Its also possible to selectively choose which attributes to inherit from the parent.  Not all public attributes need to be in the prototype object before assigning it to the Child.</p>
+
+<p>Javascript inheritance is definitely not as straightforward as Java&rsquo;s but there are ways to get the job done.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How Much Stuff Can You Fit in Memory?]]></title>
+    <link href="http://jasonjl.me/blog/2015/02/04/how-much-stuff-can-you-fit-in-memory/"/>
+    <updated>2015-02-04T14:22:47-08:00</updated>
+    <id>http://jasonjl.me/blog/2015/02/04/how-much-stuff-can-you-fit-in-memory</id>
+    <content type="html"><![CDATA[<p>So you&#8217;re given a limit on the amount of random access memory your program can use, how much stuff (ints, chars, booleans, bytes) can you cache in there before having to store it in physical media?</p>
+
+
+
+
+<!-- more -->
+
+
+
+
+
+
+<table>
+    <tr>
+        <th>Exponent Form</th>
+        <th>Exact Value</th>
+        <th>Approx Value</th>
+        <th>Bytes</th>
+        <th>bits (Bytes * 8)</th>
+        <th>ints (Bytes / 4)</th>
+        <th>chars (Bytes / 2)</th>
+    </tr>
+    <tr>
+        <td>2<sup>0</sup></td>
+        <td>1</td>
+        <td></td>
+        <td>1B</td>
+        <td>8b</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>2<sup>1</sup></td>
+        <td>2</td>
+        <td></td>
+        <td>2B</td>
+        <td>16b</td>
+        <td></td>
+        <td>1 char</td>
+    </tr>
+    <tr>
+        <td>2<sup>2</sup></td>
+        <td>4</td>
+        <td></td>
+        <td>4B</td>
+        <td>32b</td>
+        <td>1 int</td>
+        <td>2 chars</td>
+    </tr>
+    <tr>
+        <td>2<sup>10</sup></td>
+        <td>1024</td>
+        <td>1 thousand</td>
+        <td>1KB</td>
+        <td>8Kb</td>
+        <td>~250 ints</td>
+        <td>~500 chars</td>
+    </tr>
+    <tr>
+        <td>2<sup>16</sup></td>
+        <td>65,536</td>
+        <td></td>
+        <td>64KB</td>
+        <td>512Kb</td>
+        <td>16K ints</td>
+        <td>32K chars</td>
+    </tr>
+        <tr>
+        <td>2<sup>20</sup></td>
+        <td>1,048,576</td>
+        <td>1 million</td>
+        <td>1MB</td>
+        <td>8Mb</td>
+        <td>250K ints</td>
+        <td>500K chars</td>
+    </tr>
+        <tr>
+        <td>2<sup>30</sup></td>
+        <td>1,073,741,824</td>
+        <td>1 billion</td>
+        <td>1GB</td>
+        <td>8Gb</td>
+        <td>250M ints</td>
+        <td>500M chars</td>
+    </tr>
+        <tr>
+        <td>2<sup>32</sup></td>
+        <td>4,294,967,296</td>
+        <td>4 billion</td>
+        <td>4GB</td>
+        <td>32Gb</td>
+        <td>1G ints</td>
+        <td>2G chars</td>
+    </tr>
+        <tr>
+        <td>2<sup>40</sup></td>
+        <td>1,099,511,627,776</td>
+        <td>1 trillion</td>
+        <td>1TB</td>
+        <td>8Tb</td>
+        <td>250G ints</td>
+        <td>500G chars</td>
+    </tr>
+</table>
+
+
+
+
+<p>In case if you forgot&#8230;</p>
+
+
+<ul>
+    <li>Data types are represented by bits</li>
+    <li>8 bits make a byte</li>
+    <li>1 byte (or 8 bits) make a boolean</li>
+    <li>2 bytes (or 16 bits) make a char</li>
+    <li>4 bytes (or 32 bits) make an int</li>
+    <li>8 bytes (or 64 bits) make a long [this is not shown in the chart]</li>
+    <li>There are a total of 2^16 (~65k) character representation in Java</li>
+    <li>There are a total of 2^32 (~4 billion) int representation in Java</li>
+    <li>Each character and integer can be represented through hex</li>
+    <li>\u0000, \uFFFF represent characters where each character represents a byte</li>
+    <li>0x00000000, 0xFFFFFFFF represent integers where each character represents a byte</li>
+    <li>Each 2^(10*n) breaks another thousand barrier</li>
+</ul>
+
+
+
+
+<p>So say you have N amount of bytes to work with. If we want to know how many ints we can fit in there, we take N/4 since each integer uses four bytes.</p>
+
+
+<p>Say we want to fit all integers into an array in memory.  How much memory to do we need?  we take all the integers (2^32) then multiply it by 4 since each integer is represented by four bytes. We would need roughly 16GBytes of memory to put all representable integers into an array</p>
+
+
+<p>The conversions are for the most part simple, it just requires careful calculation around big numbers.</p>
+
+
+<p><small><i>note: all primitive types are based on the Java language. Table is an extension of Gayle Laakmann Mcdowell&rsquo;s Powers of 2 in <a href="http://www.careercup.com/book">Crack the Coding Interview 5th edition</a></i></small></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[A Basic Rundown of How the Internet Works]]></title>
+    <link href="http://jasonjl.me/blog/2015/01/12/a-basic-rundown-of-how-the-internet-works/"/>
+    <updated>2015-01-12T16:54:01-08:00</updated>
+    <id>http://jasonjl.me/blog/2015/01/12/a-basic-rundown-of-how-the-internet-works</id>
+    <content type="html"><![CDATA[<p>So how does the internet work? How does your desktop, phone, laptop, Xbox, television, all get access to YouTube or Facebook? It&rsquo;s actually kind of miraculous that something that was once used as a long distance communication protocol to share research amongst universities is now being used as what I think is the hottest commodity of the modern world. What&rsquo;s even more miraculous is that the internet is just a bunch of machines playing the largest game of telephone at an incredibly blistering rate.</p>
+
+<!-- more -->
+
+
+<h2 id="TOP">Sections</h2>
+
+
+<ol>
+    <li><a href="#DNS">Finding the IP with DNS</a></li>
+    <li><a href="#TCP">Creating a connection with TCP</a></li>
+    <li><a href="#HTTP">Requesting and Sending data with HTTP</a></li>
+    <li><a href="#DOM">Rendering the DOM</a></li>
+</ol>
+
+
+
+
+<h2 id="DNS">Finding the IP address with DNS</h2>
+
+
+<p>So the first thing your browser needs is a website hyperlink so it can ask it to bring back what it finds there. Okay perfect, you got one, youtube.com, google.com, facebook.com, all your favorite sites all have names. Unfortunately, computers don&rsquo;t handle people names very well, what they need is an IP address, a series of four separate numbers from [0-255] divided by periods.  Fortunately for the browser there is a distributed library of domain names to IP address mappings that the browser can use to find out the IP address behind the domain. This &lsquo;library&rsquo; is called the Domain Name Server (DNS).</p>
+
+<p>If I may extend that terrible library analogy, think of the configured DNS as a librarian and all the domains and IP addresses in the internet as the books.  There are many Domain Name Servers in the library of IP addresses just like there are many librarians in a library.  When you ask your local librarian to find a book for you, they may know where it is immediately, or they may need to ask someone higher.  Same with DNS&rsquo;s. This someone higher is mainly just a manager of all the other librarians that fall under their specific domain and will redirect you to a higher librarian that might have the knowledge. This can repeat several times up the chain as there are a lot of higher level librarians to consult.  Each higher level librarian may have the answer, but if they don&rsquo;t, then the query goes all the way up to the Head Librarian.  The same applies for DNS&rsquo;s. Each DNS might not have the answer but each has a list of several others it can consult to find the answer. This asking around continues until it reaches the Root Domain. Root Domain&rsquo;s don&rsquo;t have the answer directly, but they know the perfect librarian who does. The way that Root Domains know which DNS to use is by checking the domain of the url, or the rightmost part of the url.  If you&rsquo;re asking for a url that ends in .com the root domain give you a name server that specializes in domains that end in .com, if you&rsquo;re asking for a url that ends in .net the root domain will give you a name server that specializes in domains that end in .net. Your original librarian or DNS will finally get their answer and pass it back to the requestor, or the browser.  You can query the DNS yourself to find out the IP address of your favorite sites with a tool like <a href="https://who.is/dns/">who.is</a>. Try putting your favorite site in there and copying and pasting the IP address in your url.  It may seem strange to put a bunch of cryptic numbers in your browser but that&rsquo;s essentially what&rsquo;s happening in the background whenever you type in your favorite site.</p>
+
+<h2 id="TCP">Creating a connection with TCP</h2>
+
+
+<p>So now that the browser has the IP address we just need to send a message asking the server that&rsquo;s hosting the website to give us the webpage, but before we do that, we need to check if anybody is even there to respond.</p>
+
+<p>If we may continue using terrible analogies imagine if your browser and the server are testing a snail-mail delivery system for the first time and they want to validate that they are able to successfully send each other letters accurately. Your browser initiates the conversation by sending a letter to the server&rsquo;s IP address that has a header saying &ldquo;Hello, my name is &lsquo;Browser Client&rsquo;. My sequence number is 10000. Please acknowledge back with my sequence number + 1, and your sequence number so that I know you got this message accurately&rdquo;. Days pass after sending the letter until finally the mailman comes with a response from the server. Browser hurriedly scans the headers of the letter which reads &ldquo;Hello &lsquo;Browser Client&rsquo;, my name is &lsquo;Server&rsquo;. I acknowledge your sequence number is now 10001, my sequence number is 90000. Please respond back with my sequence number + 1 to confirm if you got my message clearly&rdquo;. Finally the Browser Client sends one final handshake to seal the deal and open a connection, this message contains something like &ldquo;Hello &lsquo;Server&rsquo; nice to hear from you. I acknowledge that your sequence number is now 90001&rdquo;.  The acknowledgements that each client and server send to each other let them know that their message has been received and that they are now synched to each other and ready to receive more data. So as you might have guessed, the letters represent TCP packets, the header of the letters represent the packet flags, there really is no body in the letters yet since we&rsquo;re just trying to establish a connection and have not yet passed data (other than the information provided in the packet headers), and the postal service are the routers and switches that deliver the letters. A successful TCP connection allows both Browser Client and Server to start sending each other data.</p>
+
+<p>An open connection means both client and server can start sending each other text, images, videos, binary files, anything as long as it can be serialized into bits. Sequence numbers are randomly generated by both sides and the amount of bytes that are passed are remembered and added to the initial sequence numbers.  This ensures that each side has a way to ensure that the proper amount of bytes have been received by checking the updated sequence numbers from the receiver being equal to the amount of bytes sent in the previous transmission. This is why TCP is considered to be a reliable protocol because it will catch and fix broken packets containing incorrect messages.</p>
+
+<h2 id="HTTP">Requesting and Sending Data with HTTP</h2>
+
+
+<p>So now we know the address, and now we&rsquo;ve secured a connection, its time to start checking what our friends are doing on Facebook or check out that new movie on Netflix. The way that information is passed between the client and the server is through the HyperText Transfer Protocol (HTTP). The protocol kind of defines the language that both client and server will be using when communicating with each other. There&rsquo;s a set amount of agreed upon actions that can be used when communicating through HTTP. The most commonly used words used are GET and POST. GET usually indicates the client receiving a file from the server, its akin to a READ action in terms of local storage. POST usually indicates a transference of data that will change something on the server, akin to a WRITE action. Lets simulate a GET request.</p>
+
+<p>The Browser Client sends a GET request asking for some content lets say an index.html file. This GET request contains information that the server program would use to process and send back the appropriate file/text/image/binary file. The server software can read extra parameters like the URL, the attached cookies, and the user-agent to decide which kind of response to send back. The server then responds back with a response packet usually with a data payload along with important headers like the status code, content-type, and content-length so that whoever is receiving it can interpret the data correctly. In this case, the browser sends the GET request for index.html to the server and waits for a response. The server receives the GET request for index.html and sends back a response packet with the index.html in the body and sets the status to &lsquo;200 OK&rsquo; and the content-type to text-html. The browser then receives the response packet, identifies that it is an html file and displays it to the user appropriately. If the content type is an image, it&rsquo;ll try to render an image from the data, if the content-type is JSON it&rsquo;ll render try to keep it in JavaScript Object form, if the content-type is XML it&rsquo;ll try to display the XML, but usually, the content type is plain old html.</p>
+
+<p>POST requests are kind of sent in the same way.  The primary difference between a POST request and a GET request is that POSTs are not restricted in the type and size of data they can send. As I said earlier POSTs are usually used to indicate to the server to change or update something. Usually the role of POST gets a little muddled with other HTTP request methods such as PUT and DELETE which places and deletes the requested URI resource respectively. This has kind of been a problem with the web as these HTTP actions are not hard rules but rather guidelines open to interpretation.  Most of the action verbs do the same thing, carry a URI with the same headers with an attached data body. This is why it&rsquo;s up to the developer of the server software to decide how to handle the action verbs.  Most of the time it just boils down to, if it changes something on the server, make it a POST.</p>
+
+<p>Why do we use HTTP and not a protocol that&rsquo;s more suited toward the modern web? Why do we still use a protocol that can only send one file per request and have to open a new connection with the same three-way handshake for each request? From what I&rsquo;ve read, it&rsquo;s because of legacy reasons and pretty much the fact that the web grew up with the protocol. People are just used to it now and are slow to change.  Firewalls have been defaulted to accept requests from the standard http port 80 which allows communication to occur between server and browser. There has been a push for an upgrade to the http protocol called <a href="https://http2.github.io/">HTTP/2</a> which is working on reducing the constant request overhead by compressing header information, minimizing constant handshaking, stuffing all needed data into a single TCP connection, proactive server responses, amongst other cool things that&rsquo;s certain to speed up the web even more. The great thing is that modern browsers and web companies  are actively trying to support this new protocol in the race to be the fastest browser as well as be able to serve their content as quick as possible.</p>
+
+<h2 id="DOM">Rendering the DOM</h2>
+
+
+<p>So we have the address, we have the connection, we sent the request and now we have our index.html file, now all the browser needs to do is show it to you. Since the content-type is an html file, the browser will do what it does best and that&rsquo;s create the Document Object Model (DOM). The DOM is a constructed object tree created from the nodes in the html file that&rsquo;s used by the browser to more easily process the current html file. While the browser parses through the html file and creates the DOM it also creates new http GET requests for each extra resource it comes upon such as CSS files, js files, images, tracking tags, Iframed content, and so on. The browser grabs all available CSS files and generates a corresponding CSS Object Model (CSSOM). The CSSOM is applied on the DOM which ultimately creates the Render Tree. The Render Tree notes the dimensions, layout, and location of each document object awaits the draw phase.  If we want to continue with the analogies, I guess we can compare the Render Tree to say the final sketch of painting before we color it in permanently on the canvas that is our browser window. The end result is your fully painted index.html homepage.</p>
+
+<p>Of course this how it might have been fifteen years ago on very generic simple pages, but today we&rsquo;re using a ton of cool technologies that calculate and create custom generated Facebook feeds, selective YouTube recommendations, Netflix movie suggestions, tailored Amazon shopping experiences, all within milliseconds. Today, html pages are rarely ever static, but are influenced by a wide range of things from the movies that you watch to the things that you buy to the sites that you visit. All of this advanced and cool things are still possible just by the simple bits of data that&rsquo;s passed along with the very basic HTTP requests. We haven&rsquo;t even got to the ability for sites to dynamically update with the inclusion of JavaScript but you can imagine how that adds another level of interactivity to a web page.</p>
+
+<h2>And That&#8217;s That</h2>
+
+
+<p>This explanation really is just the start of it.  There&rsquo;s so much more that goes down in each phase that its pretty incredible how something like this can even come together at a speed that&rsquo;s actually somewhat fast. The arms race for browsers to render even faster and companies to serve their content as fast as possible is well underway and is definitely going to be the focal point of web development in the coming years. Its amazing that even with such a simple communication protocol we&rsquo;re able to get the web to where it is today, as a marketplace, as entertainment, as a collaborative platform&hellip; Communication at the speed of light sure can achieve great things.</p>
+
+<h3>Resources</h3>
+
+
+<p><a href="http://wiki.bravenet.com/How_the_domain_name_system_works">More information about DNS</a> <br/>
+<a href="https://support.microsoft.com/kb/172983/en-us">More information about the Three Way Handshake</a> <br/>
+<a href="http://www.tutorialspoint.com/http/http_header_fields.htm">More information about Request and Response headers</a> <br/>
+<a href="http://taligarsiel.com/Projects/howbrowserswork1.htm">More information on how browser rendering work</a> <br/>
+<a href="https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-tree-construction?hl=en">A more simpler version on how browser rendering works</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[What Is This?]]></title>
+    <link href="http://jasonjl.me/blog/2014/12/24/what-is-this/"/>
+    <updated>2014-12-24T21:49:29-08:00</updated>
+    <id>http://jasonjl.me/blog/2014/12/24/what-is-this</id>
+    <content type="html"><![CDATA[<p>The <code>this</code> keyword in JavaScript is probably one of the most confusing and misunderstood fundamental concepts of the language.  The use of <code>this</code> allows for repeatable creation of objects and flexibility in method sharing, but its often the source of many problems through misuse and misunderstanding. It&rsquo;s honestly not something that&rsquo;s too terribly intuitive or something that&rsquo;s understood even after reading several articles and putting in the actual effort to learn it.  The process of completely learning about <code>this</code> and its uses to the language is a long journey of reading and experimenting.  Here&rsquo;s another effort in explaining <code>this</code>. As a preface, you will be introduced to <code>calls</code> and <code>binds</code>as well as <code>this</code> so get ready.</p>
+
+<!-- more -->
+
+
+<p>If you come primarily from a classical object-oriented programming background, ignore everything you already know about <code>this</code>. The reference to <code>this</code> is very dynamic.  <code>this</code> can reference any object depending on whether we specify the reference explicitly in the code, or whether we leave it up to the interpreter to assume what we want <code>this</code> to reference.  Most of the times we choose not to explicitly set <code>this</code> leaving the reference to be decided by the interpreter which is where most of our issues and confusion comes in. While you <i>can</i> memorize every instance in how <code>this</code> is going to be resolved by the interpreter, there are only a few context and concepts to know about  <code>this</code> where you can come to a conclusion yourself in any situation. Here&rsquo;s the main contexts where you&rsquo;ll be seeing <code>this</code> used in and how you can make it work predictably for you every time.</p>
+
+<h2><code>this</code> in a constructor</h2>
+
+
+<p>Here&rsquo;s what happens when you use the <code>new</code> keyword to create a new object in JavaScript.  The following text is an altered and truncated version from the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new">Mozilla Developer Network</a> on what happens when creating objects with the <code>new</code> keyword.</p>
+
+<ol>
+<li>A new object is created, inheriting from Object.prototype.</li>
+<li>The constructor function Object is called with the specified arguments and this bound to the newly created object&hellip;</li>
+</ol>
+
+
+<p>The MDN docs uses an interesting word, &lsquo;bound&rsquo;.  From this point on, whenever you see the word bound or bind, you should associate it with setting the <code>this</code> reference.  If I say functionA is bound to ObjectA then you should think that whenever functionA uses <code>this</code> it should always reference ObjectA.  The MDN documentation says that it first creates an object using Object.create(), this step is not really that interesting as it relates to <code>this</code>, it&rsquo;s just merely setting up a shell of an object for us to bind to. Then it executes the constructor function where we start assigning properties to <code>this</code>, or rather the new object shell we just created in step 1.  What this means is that when the function is executed, the interpreter starts attaching properties to the shell object. The example below codes out what the MDN doc is saying</p>
+
+<p><figure class='code'><figcaption><span>Creating a new Person with the new keyword  </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">Jason</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="c1">//20</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span> <span class="c1">//&amp;lsquo;Jason&amp;rsquo;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>The above code is equivalent to the code below</p>
+
+<p><figure class='code'><figcaption><span>Creating a new Person using Object create and object binding  </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">Jason</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">);</span>
+</span><span class='line'>    <span class="c1">//this is where the binding happens</span>
+</span><span class='line'>    <span class="nx">Person</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="c1">//20</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span> <span class="c1">//&amp;lsquo;Jason&amp;rsquo;)</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>Note in the code above this line <code>Person.call(person)</code>.  What that line means is that the <code>Person</code> function is executing and explicitly making the empty <code>person</code> object equal to <code>this</code>. This means that after that function call, the once empty <code>person</code> object now has two properties that were applied to it, <code>person.age</code> and <code>person.name</code>. The following bit of code is identical to what the line <code>Person.call(person)</code> is doing above without the use of <code>this</code>.</p>
+
+<p><figure class='code'><figcaption><span>Call Comparison  </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>        <span class="nx">person</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+</span><span class='line'>        <span class="nx">person</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">Jason</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="nx">Person</span><span class="p">();</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="c1">//20</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span> <span class="c1">//&amp;lsquo;Jason&amp;rsquo;)</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>If you need more information about the function method <code>call</code> consult the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call">documentation</a>.</p>
+
+<p>You may be asking, what if the function was just executed without specifically binding the <code>this</code> reference? Well that&rsquo;s what we will find out in the next topic</p>
+
+<h2><code>this</code> without binding</h2>
+
+
+<p>So what if we execute a function with <code>this</code> without explicitly defining a binding?  Then we leave it up to the mercy of the interpreter.  Most of the time, <code>this</code> will be refered to the global object.  The global object varies between JavaScript interpreters. In the browser the global object will refer to the <code>window</code> object, in Node.js it&rsquo;ll refer to <code>global</code> object.  In either case, unknowingly attaching objects to the global object is probably not what you wanted to do.</p>
+
+<p><figure class='code'><figcaption><span>Executing unbound function </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">unboundFunction</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">param1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">param2</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="nx">unboundFunction</span><span class="p">();</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">param1</span><span class="p">)</span> <span class="c1">//1</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">param2</span><span class="p">)</span> <span class="c1">//2</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>Note how when the function was executed without a binding, it automatically defaulted to the global object which in this case is <code>window</code>.  There are many situations in where you&rsquo;ll be wondering why your <code>this</code> reference didn&rsquo;t work, usually its because you didn&rsquo;t specify a binding to <code>this</code> and made the interpreter guess. While this is the main problems that arises from the improper uses of <code>this</code> the following can give you a head start on some of the more common tricky uses of this.</p>
+
+<h2>Bind when passing around functions</h2>
+
+
+<p>A good rule of thumb is to always bind objects to functions when passing them around as parameters or when returning them.  Often times functions are passed around and users are shocked to see that their <code>this</code> doesn&rsquo;t actually reference their expected object.  To prevent this from happening to you, use the function method <code>bind</code>.</p>
+
+<p>The following example passes a function to an <code>Executor</code> function that runs any function that gets passed into it.  We create a person object and pass in its <code>growUp</code> function to the Executor where we think it will update our person&rsquo;s age.</p>
+
+<p><figure class='code'><figcaption><span>Executing unbounded function </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="c1">//a function that executes any function passed into it</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">Callbacker</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">callback</span><span class="p">){</span>
+</span><span class='line'>        <span class="c1">//do some logic</span>
+</span><span class='line'>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">executing</span> <span class="nx">callback</span> <span class="kd">function</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;);</span>
+</span><span class='line'>        <span class="c1">//then execute callback function</span>
+</span><span class='line'>        <span class="nx">callback</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">//creation of a person object with a growUp method that ages the person object by 1.</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">growUp</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>            <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="c1">//confirm the property window.age to see that its undefined before method execution</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="c1">//undefined</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">Callbacker</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">growUp</span><span class="p">);</span> <span class="c1">//&#39;executing function&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="c1">//10(</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="c1">//NaN</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>As you can see from the example above, passing the person&rsquo;s growUp function to be executed by the <code>Executor</code> causes the function to bind the global object to <code>this</code> by default.  That is why <code>person.age</code> doesn&rsquo;t change, and <code>window.age</code> went from <code>undefined</code> to <code>NaN</code> (since undefined + 1 = NaN). If we explicitly define the binding before passing the function, then we can ensure that the <code>growUp</code> function will use the person object no matter where it&rsquo;s executed.</p>
+
+<p><figure class='code'><figcaption><span>Callback executing binded function </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="c1">//a function that executes any function passed into it</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">Callbacker</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">callback</span><span class="p">){</span>
+</span><span class='line'>        <span class="c1">//do some logic</span>
+</span><span class='line'>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">executing</span> <span class="nx">callback</span> <span class="kd">function</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;);</span>
+</span><span class='line'>        <span class="c1">//then execute callback function</span>
+</span><span class='line'>        <span class="nx">callback</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">//creation of a person object with a growUp method that ages the person object by 1.</span>
+</span><span class='line'>    <span class="c1">//note the .bind at the end of the growUp function</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">growUp</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>            <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="c1">//confirm the property window.age to see that its undefined before method execution</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="c1">//undefined</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">Callbacker</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">growUp</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="c1">//11</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="c1">//undefined</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>Note how the age now properly adds on the person object and how the window object is not affected.  This is because we use the <code>bind</code> method that every function has.  This specifies which object to use to reference <code>this</code> in the function.<br/>
+This example is a little contrived but it&rsquo;s definitely important to keep in mind especially when dealing with callback code or asynchronous JavaScript where functions are passed around like candy and the flow and scenario is exactly like that in the examples above.</p>
+
+<h2>Careful about functions that return anonymous functions</h2>
+
+
+<p>Be careful about your <code>this</code> reference when dealing with functions within functions.  The following example is super contrived but here&rsquo;s the rundown.  Imagine a person object that&rsquo;s at a holiday party and has a property for which drink he&rsquo;s having.  A person that&rsquo;s under 21 will be drinking eggnog while a person 21 or over would be drinking booze. The person has a <code>drinkFunction</code> that will return him another function that updates the state of his drink to either &lsquo;eggnog&rsquo; or &lsquo;booze&rsquo;. (I understand that this can be done with a single function but please bear with me.)</p>
+
+<p><figure class='code'><figcaption><span>Executing function that returns an unbounded function </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">drinking</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;;</span>
+</span><span class='line'>        <span class="c1">//top level functions like these are autobinded by default to whatever they&amp;rsquo;re attached to.  In this case, the same &amp;lsquo;this&amp;rsquo; object that the constructor binds to.</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">drinkFunction</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>            <span class="c1">//&amp;lsquo;this.age&amp;rsquo; resolves correctly and pulls the age property of the current object due to the function properly binding to the corresponding person object.</span>
+</span><span class='line'>            <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">&amp;</span><span class="nx">lt</span><span class="p">;</span> <span class="mi">21</span><span class="p">){</span>
+</span><span class='line'>                <span class="c1">//this function is not bound to anything. It defaults to binding &amp;lsquo;this&amp;rsquo; to the global object</span>
+</span><span class='line'>                <span class="k">return</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>                    <span class="k">this</span><span class="p">.</span><span class="nx">drinking</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">eggnog</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;;</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="k">else</span><span class="p">{</span>
+</span><span class='line'>                <span class="c1">//this function is not bound to anything. It defaults to binding &amp;lsquo;this&amp;rsquo; to the global object</span>
+</span><span class='line'>                <span class="k">return</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>                    <span class="k">this</span><span class="p">.</span><span class="nx">drinking</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">booze</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;;</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="c1">//confirm the property window.drinking to see that its undefined before method execution</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">drinking</span><span class="p">)</span> <span class="c1">//undefined</span>
+</span><span class='line'><span class="c1">//execute the drinkFunction as well as the function that it returns</span>
+</span><span class='line'><span class="nx">person</span><span class="p">.</span><span class="nx">drinkFunction</span><span class="p">()();</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">drinking</span><span class="p">)</span> <span class="c1">//&#39;&#39;</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">drinking</span><span class="p">)</span> <span class="c1">//&#39;eggnog&#39;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>Note how once again, the person.drinking object wasn&rsquo;t the one that was affected, but rather the one in the global window.  This is because we executed the function that we returned in the global state meaning the <code>this.drinking</code> property in the inner returned function was by default bound to the <code>window</code> object when we executed it. If we want the <code>this</code> object to reference the same person object that&rsquo;s executing it, we either need to <code>bind</code> the internal returned function or <code>call</code> the function when executing.  Take a look how at the example below.</p>
+
+<p><figure class='code'><figcaption><span>Executing function with anonymous function by &lsquo;bind&#8217;ing </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">drinking</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;;</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">drinkFunction</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>            <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">&amp;</span><span class="nx">lt</span><span class="p">;</span> <span class="mi">21</span><span class="p">){</span>
+</span><span class='line'>                <span class="c1">//note the binds to the same top level &#39;this&amp;rsquo; object.  This ensures that the anonymous function references the same &amp;lsquo;this&amp;rsquo; object that gets created when new Person is constructed</span>
+</span><span class='line'>                <span class="k">return</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>                    <span class="k">this</span><span class="p">.</span><span class="nx">drinking</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">eggnog</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;;</span>
+</span><span class='line'>                <span class="p">}.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="k">else</span><span class="p">{</span>
+</span><span class='line'>                <span class="c1">//note the binds to the same top level &amp;lsquo;this&amp;rsquo; object.  This ensures that the anonymous function references the same &amp;lsquo;this&amp;rsquo; object that gets created when new Person is constructed</span>
+</span><span class='line'>                <span class="k">return</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>                    <span class="k">this</span><span class="p">.</span><span class="nx">drinking</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">booze</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;;</span>
+</span><span class='line'>                <span class="p">}.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
+</span><span class='line'>    <span class="c1">//execute the drinkFunction as well as the function that it returns</span>
+</span><span class='line'>    <span class="nx">person</span><span class="p">.</span><span class="nx">drinkFunction</span><span class="p">()();</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">drinking</span><span class="p">)</span> <span class="c1">//&#39;eggnog&#39;</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">drinking</span><span class="p">)</span> <span class="c1">//undefined</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>The code up top is also equivalent to the following</p>
+
+<p><figure class='code'><figcaption><span>Executing function with anonymous function by &lsquo;call&#8217;ing </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">drinking</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;;</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">drinkFunction</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>            <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">&amp;</span><span class="nx">lt</span><span class="p">;</span> <span class="mi">21</span><span class="p">){</span>
+</span><span class='line'>                <span class="k">return</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>                    <span class="k">this</span><span class="p">.</span><span class="nx">drinking</span> <span class="o">=</span> <span class="s1">&#39;eggnog&amp;rsquo;;</span>
+</span><span class='line'><span class="s1">                }</span>
+</span><span class='line'><span class="s1">            }</span>
+</span><span class='line'><span class="s1">            else{</span>
+</span><span class='line'><span class="s1">                return function(){</span>
+</span><span class='line'><span class="s1">                    this.drinking = &amp;lsquo;booze&amp;rsquo;;</span>
+</span><span class='line'><span class="s1">                }</span>
+</span><span class='line'><span class="s1">            }</span>
+</span><span class='line'><span class="s1">        }</span>
+</span><span class='line'><span class="s1">    }</span>
+</span><span class='line'><span class="s1">    var person = new Person();</span>
+</span><span class='line'><span class="s1">    //note how even without binds we can set the &amp;lsquo;this&amp;rsquo; object inside the anonymous functions using call</span>
+</span><span class='line'><span class="s1">    person.drinkFunction().call(person);&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">&lt;pre&gt;&lt;code&gt;console.log(person.drinking) //&#39;</span><span class="nx">eggnog</span><span class="err">&#39;</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">drinking</span><span class="p">)</span> <span class="c1">//undefined</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>I know that even when trying to explain it in the most normal non technical terms possible, there definitely is still a lot of confusion that arises from understanding <code>this</code> entirely.  What I highly recommend is to open up your JavaScript console, <a href="http://repl.it/">REPL</a>, inspector, whatever and seriously try creating constructors, functions, functions in functions, things outside of your comfort zone as it relates to <code>this</code> and executing them using binds, calls or applies (which I know we didn&rsquo;t talk about in the article but its functionality is very similar to call), and see how they affect the object that you bind to. If you want to learn more about binding, consult the documentation for <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind">bind</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call">call</a>, and <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply">apply</a>. Each are applicable in their own uses which exceed the scope of this guide.</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Bejeweled Bot - Wow this blog looks fancy</title>
+  <meta name="author" content="Jason Lee">
+
+  
+  <meta name="description" content="Bejeweled Bot written November 24, 2014 in bots, java, postmortem, project source code source game Bejeweled Bot is a bot that automatically plays &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://jasonjl.me/blog/2014/11/24/bejeweled-bot">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Wow this blog looks fancy" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-50368577-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Bejeweled Bot</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2014-11-24T20:06:39-08:00" pubdate data-updated="true">November 24, 2014
+</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/bots/'>bots</a>, <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/postmortem/'>postmortem</a>, <a class='category' href='/blog/categories/project/'>project</a>
+  
+</span>
+
+
+        </div>
+        <p><video muted autoplay loop width="400px" poster="https://s3.amazonaws.com/jasonjlblog/bejeweledbot.jpg">
+    <source src="https://s3.amazonaws.com/jasonjlblog/bejeweledbot.mp4" type="video/mp4">
+    <source src="https://s3.amazonaws.com/jasonjlblog/bejeweledbot.webm" type="video/webm">
+    <img src="https://s3.amazonaws.com/jasonjlblog/bejeweledbot.jpg">
+</video></p>
+
+<p><a href="https://github.com/lee-jason/BejeweledBot">source code</a> <br/>
+<a href="https://apps.facebook.com/bejeweledblitz/?fb_source=search&ref=br_tf">source game</a></p>
+
+<p>Bejeweled Bot is a bot that automatically plays Bejeweled Blitz as fast as possible.  Once executed, the bot will orient itself with the origin of the game board, determine the current gems on the grid, parse the possible matches, then move the appropriate gems in the game to create matches.  I forked the repository from <a href="https://github.com/kklemm91/BejeweledBot">kklemm91</a> and improved on code organization, naming, and execution efficiency.</p>
+
+<!-- more -->
+
+
+
+
+<h2>Execution</h2>
+
+
+<p>Upon initial execution, the bot looks for two identifying pixels indicating the upper left origin of the bejeweled grid.  Once found we can then determine the location of all the jewels on the grid. Each jewel is a set pixel width and height apart from each other which makes it easy to sequentially check each pixel color that&rsquo;s at the center of each jewel. Each jewel color is given an identifying enumerable int and placed into a 2d int array.  This array is then parsed index by index to find any potential matches.  If a match is found, the program immediately takes action and matches the jewels in the game and then continues looking for more matches.</p>
+
+<p>While gaining a score of 500,000 is considered to be the most impressive feat, the bejeweled bot regularly is able to score greater than a million consistently without assistance.</p>
+
+<h2>Issues</h2>
+
+
+<p>Unfortunately, there are moments where the program may stall or softlock. Bejeweled doesn&rsquo;t use any fancy dynamic filters meaning that checking the same pixel location of the same type of jewel will produce the same result every time.  The only exclusion to this rule would be when the jewel is dynamic such as the lightning jewel or the hypercube which is animated to spin producing inconsistent results. These inconsistent results mean that the matcher may miss these matches due to the pixel not being caught and parsed. Multiplier jewels <i>are</i> consistent but not all of them have been documented due to the tedious nature of the work.  This means that matches involving multiplier jewels may be missed due to the program not knowing that the multiplier pixel is that of a matching color.  This is easily fixable but tedious due to having to play enough bejeweled matches to find the randomized multiplier jewel color.  This means that the bot does have tendencies where it stalls due to not being able to detect a match on the board, requiring human intervention so that it can move forward. This form of pixel detection is also dependent on PopCap not changing the art of the game, otherwise the bot will no longer be able to determine the matches.</p>
+
+<p>Instances where the game freezes may also softlock the computer&rsquo;s mouse due to the game attempting to match a jewel indefinitely.  Exercise caution if executing this on a slow machine.</p>
+
+<h2>Improvements</h2>
+
+
+<p>While <a href="https://github.com/kklemm91/BejeweledBot">kklemm91&rsquo;s</a> initial program was a good start I wanted to see if I could make it better. When executed, the initial base program would make all the matches visible in the screen, then wait roughly half a second before making the next set of matches. This was good but I wanted the bot to be inhumanly fast.</p>
+
+<p>In this base program, there was a line that would make the current thread sleep for around a quarter of a second.  I noticed that modifying this to be shorter or removing it entirely didn&rsquo;t make the matches happen any faster.  I was wondering what the hold up was in the program so I created a rudimentary profiler where I would log out start and end timings into each important method (I&rsquo;m pretty sure there&rsquo;s better ways to profile Java methods).  I noticed that most methods ran almost instantaneously but the problem method that was running slowly was the match finder.  It wasn&rsquo;t the act of finding matches that was slow itself, but the fact that it was recapturing a snapshot of the board for each pixel that it checks. This is completely unnecessary and the program was changed to take an initial snapshot, determine all pixel colors from this snapshot, then find matches, based off that board, repeat.  This act was like removing the handicap from an olympic sprinter in a children&rsquo;s fun run. The bot went zooming and was matching at an insane pace.</p>
+
+<p>Another improvement involved the search for the origin point of the board.  There was an issue where the program would inconsistently determine the correct origin point.  Sometimes it would find it correctly, other times it would offset the origin a few columns to the right, skewing the vision of the bot.  Initially the bot determined the location of the origin of the board by detecting whether the pixel was one of the jewel colors.  Once found, it then checked to see if several of its neighbors were also has jewel pixel colors.  This for some reason produced inconsistent results in determining the origin of the game board and to be honest its absolutely confusing as to why it would do this. I was unable to find the root of the problem so I created a new origin determining method that checks for a sequence of pixels.  It&rsquo;s the same concept as the original implementation but when it&rsquo;s based off the color of the gems itself, it appears to produce inconsistent results.</p>
+
+<p>An improvement in color matching that would remove our dependency on PopCap not changing its colors would be to use average color detection.  Instead of identifying colors based off pixels, we could use an average of the color that falls within the bounds of a block in a grid.  This means that the colors don&rsquo;t have to be pixel perfect so if PopCap decides one day to update the art but keep the same color of the jewels, it&rsquo;ll most likely continue to keep working.  This improvement seems a bit overkill though and is not necessary at the time due to the nature of the project.  If I had a bigger budget though I&rsquo;d gladly like to implement a basic color detector.  I&rsquo;d imagine the performance would take a hit but it would be interesting to see the program dynamically decide similar looking colors.</p>
+
+<p>Well there you have it.  Thanks to <a href="https://github.com/kklemm91">kklemm91</a> for showing me the awesome Java Robot class and building out the base of the program.</p>
+
+
+        <hr class="divider-short"/>
+
+        
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2014/11/21/text-twist-bot/" title="Previous Post: Text Twist Bot">&laquo; Previous: Text Twist Bot</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2014/12/07/executing-highlighted-code-in-eclipse-debugger/" title="Next Post: Executing Highlighted Code in Eclipse Debugger">Next: Executing Highlighted Code in Eclipse Debugger &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+
+    
+    <a href="https://github.com/lee-jason"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+    <a href="mailto:lee.jason930@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
+    
+      
+    
+    <a href="http://tindeck.com/users/jihoon222"><img src="/images/glyphicons_017_music.png"/></a>
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+      
+
+<script type="text/javascript">
+      var disqus_shortname = 'jihoon222';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://jasonjl.me/blog/2014/11/24/bejeweled-bot/';
+        var disqus_url = 'http://jasonjl.me/blog/2014/11/24/bejeweled-bot/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+  </body>
+</html>

@@ -1,0 +1,518 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Adding Validation for Embedded Array in Array Objects in Mongoose - Wow this blog looks fancy</title>
+  <meta name="author" content="Jason Lee">
+
+  
+  <meta name="description" content="Adding Validation for Embedded Array in Array Objects in Mongoose written October 23, 2014 in guide, javascript, mongoose Surprisingly there was &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://jasonjl.me/blog/2014/10/23/adding-validation-for-embedded-objects-in-mongoose">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Wow this blog looks fancy" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-50368577-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Adding Validation for Embedded Array in Array Objects in Mongoose</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2014-10-23T23:12:09-07:00" pubdate data-updated="true">October 23, 2014
+</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/guide/'>guide</a>, <a class='category' href='/blog/categories/javascript/'>javascript</a>, <a class='category' href='/blog/categories/mongoose/'>mongoose</a>
+  
+</span>
+
+
+        </div>
+        <p>Surprisingly there was very little information I could find when googling this issue.  Granted, it&rsquo;s a very niche issue but here&rsquo;s what I personally found when trying things out.  If you&rsquo;re unfamiliar with mongoose&rsquo;s validation please consult the <a href="http://mongoosejs.com/docs/validation.html">guide</a> first.  This document assumes some familiarity with mongoose schemas, embedded schemas, and validation.</p>
+
+<!-- more -->
+
+
+<p>There&rsquo;s a lot of pre-explanation. if you want to go directly to the answer head to the <a href="#arrayInArray">end of the page</a></p>
+
+<p>So in mongoose, there&rsquo;s several ways to define a schema.  Once a Schema is defined, you can require mongoose to put custom validation on the object before it gets saved into the database. Mongoose documentation recommends you use the <a href="http://mongoosejs.com/docs/api.html#schema_Schema-path"><code>Schema#path(path, constructor)</code></a> function to get the SchemaType object where you can then use <a href="http://mongoosejs.com/docs/api.html#schematype_SchemaType-validate"><code>SchemaType#validate(obj, [errorMsg])</code></a> on.  The problem occurs when your path branches into an array.</p>
+
+<p>The following examples are attempting to model a Car object that can have one or more features.</p>
+
+<figure class='code'><figcaption><span>creating a schema with an array of an embedded object </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">mongoose</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">Schema</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">CarSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Schema</span><span class="p">({</span>
+</span><span class='line'>    <span class="nx">name</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+</span><span class='line'>        <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nx">features</span><span class="o">:</span> <span class="p">[{</span>
+</span><span class='line'>        <span class="nx">name</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+</span><span class='line'>            <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span> <span class="c1">//this &#39;required&#39; option only implies that if creating an object in the features array, the object better have a &#39;name&#39; attribute in it.  Does not mean that the &#39;features&#39; array is required.</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}]</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;Car&#39;</span><span class="p">,</span> <span class="nx">CarSchema</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>the following below creates two schemas, car and features, and puts a reference of features in cars similar to how typical RDBMS work.</p>
+
+<figure class='code'><figcaption><span>creating a schema with an array by creating multiple schemas </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">mongoose</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">Schema</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">CarSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Schema</span><span class="p">({</span>
+</span><span class='line'>    <span class="nx">name</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+</span><span class='line'>        <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nx">features</span><span class="o">:</span> <span class="p">[{</span>
+</span><span class='line'>        <span class="nx">type</span><span class="o">:</span> <span class="nx">Schema</span><span class="p">.</span><span class="nx">ObjectId</span><span class="p">,</span>
+</span><span class='line'>        <span class="nx">ref</span><span class="o">:</span> <span class="nx">Feature</span>
+</span><span class='line'>        <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span><span class="p">;</span> <span class="c1">//will make it so that the feature&#39;s array will be required to save this document</span>
+</span><span class='line'>    <span class="p">}]</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">FeatureSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Schema</span><span class="p">({</span>
+</span><span class='line'>    <span class="nx">name</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+</span><span class='line'>        <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;Car&#39;</span><span class="p">,</span> <span class="nx">CarSchema</span><span class="p">);</span>
+</span><span class='line'><span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;Feature&#39;</span><span class="p">,</span> <span class="nx">FeatureSchema</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Each method of creating mongoose objects has some benefits and tradeoffs.</p>
+
+<h4>Embedded Object in Single Schema</h4>
+
+
+<h5>Pros</h5>
+
+
+<ul>
+    <li>data access is simpler, requires no joining of documents</li>
+    <li>less boilerplate code to write</li>
+</ul>
+
+
+<h5>Cons</h5>
+
+
+<ul>
+    <li>If data is large, can get messy</li>
+    <li>Not possible to set SchemaType options directly in Schema</li>
+</ul>
+
+
+
+
+<h4>Objects split between multiple Schemas</h4>
+
+
+<h5>Pros</h5>
+
+
+<ul>
+    <li>Similar to RDBMS normalization structure</li>
+    <li>data is more scalable and reusable</li>
+    <li>Mongoose supports the addition of validation through SchemaType options in the Schema declaration itself</li>
+</ul>
+
+
+<h5>Cons</h5>
+
+
+<ul>
+    <li>Increased amount of boilerplate code needed for Schema creation.</li>
+    <li>filesystem can get messy with large amount of tables required for a simple object.</li>
+</ul>
+
+
+
+
+<h2>Lets talk about adding validation</h2>
+
+
+<p>Lets say that we&rsquo;re trying to add a &lsquo;required&rsquo; validation.  This validation will check to see if the Car object has a features array with a feature in it.  If it doesn&rsquo;t, the save will fail, if it does, then the document will be stored in the database.</p>
+
+<figure class='code'><figcaption><span>Adding validation to embedded Schema objects </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">mongoose</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">Schema</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">CarSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Schema</span><span class="p">({</span>
+</span><span class='line'>    <span class="nx">name</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+</span><span class='line'>        <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nx">features</span><span class="o">:</span> <span class="p">[{</span>
+</span><span class='line'>        <span class="nx">name</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+</span><span class='line'>            <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}]</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">CarSchema</span><span class="p">.</span><span class="nx">path</span><span class="p">(</span><span class="s1">&#39;features&#39;</span><span class="p">).</span><span class="nx">validate</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">features</span><span class="p">){</span>
+</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">features</span><span class="p">){</span><span class="k">return</span> <span class="kc">false</span><span class="p">}</span>
+</span><span class='line'>    <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">features</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">){</span><span class="k">return</span> <span class="kc">false</span><span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class='line'><span class="p">},</span> <span class="s1">&#39;Car needs to have at least one feature&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;Car&#39;</span><span class="p">,</span> <span class="nx">CarSchema</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When embedded objects are used to define a schema, you first have to use <a href="http://mongoosejs.com/docs/api.html#schema_Schema-path"><code>Schema#path(path, constructor)</code></a> to get the Schema object and then use its validate function.</p>
+
+<p>As for the second example, the validation is already set with the &lsquo;required&rsquo; option being set on the &lsquo;features&rsquo; attribute.  By not declaring the Schema internally, you can place options such as &lsquo;required&rsquo; and &lsquo;validate&rsquo; in the Schema declaration. Refer to <a href="http://mongoosejs.com/docs/api.html#schematype-js">this page</a> to see what other <code>SchemaType</code> options there are.</p>
+
+<figure class='code'><figcaption><span>Adding validation module Schema declarations </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">mongoose</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">Schema</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//the custom validation that will get applied to the features attribute.</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">notEmpty</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">features</span><span class="p">){</span>
+</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="nx">features</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">){</span><span class="k">return</span> <span class="kc">false</span><span class="p">}</span>
+</span><span class='line'>    <span class="k">else</span> <span class="p">{</span><span class="k">return</span> <span class="kc">true</span><span class="p">};</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">CarSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Schema</span><span class="p">({</span>
+</span><span class='line'>    <span class="nx">name</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+</span><span class='line'>        <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nx">features</span><span class="o">:</span> <span class="p">[{</span>
+</span><span class='line'>        <span class="nx">type</span><span class="o">:</span> <span class="nx">Schema</span><span class="p">.</span><span class="nx">ObjectId</span><span class="p">,</span>
+</span><span class='line'>        <span class="nx">ref</span><span class="o">:</span> <span class="nx">Feature</span>
+</span><span class='line'>        <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span><span class="p">;</span> <span class="c1">//this will prevent a Car model from being saved without a features array.</span>
+</span><span class='line'>        <span class="nx">validate</span><span class="o">:</span> <span class="p">[</span><span class="nx">notEmpty</span><span class="p">,</span> <span class="s1">&#39;Please add at least one feature in the features array&#39;</span><span class="p">]</span> <span class="c1">//this adds custom validation through the function check of notEmpty.</span>
+</span><span class='line'>    <span class="p">}]</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">FeatureSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Schema</span><span class="p">({</span>
+</span><span class='line'>    <span class="nx">name</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+</span><span class='line'>        <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span> <span class="c1">//this will prevent a Feature model from being saved without a name attribute.</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;Car&#39;</span><span class="p">,</span> <span class="nx">CarSchema</span><span class="p">);</span>
+</span><span class='line'><span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;Feature&#39;</span><span class="p">,</span> <span class="nx">FeatureSchema</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h2 id="arrayInArray">Adding validation to a Schema with an array in an array</h2>
+
+
+<p>What if you had an embedded Schema that declared an embedded object in an array that declared another embedded object inside of another array.  This is the tricky part that&rsquo;s not very well documented.</p>
+
+<figure class='code'><figcaption><span>Adding validation to embedded Schema objects </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">mongoose</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">Schema</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">CarSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Schema</span><span class="p">({</span>
+</span><span class='line'>    <span class="nx">name</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+</span><span class='line'>        <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nx">features</span><span class="o">:</span> <span class="p">[{</span>
+</span><span class='line'>        <span class="nx">name</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+</span><span class='line'>            <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>        <span class="nx">model</span><span class="o">:</span> <span class="p">[{</span>
+</span><span class='line'>            <span class="nx">year</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">type</span><span class="o">:</span> <span class="nb">Number</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}]</span>
+</span><span class='line'>    <span class="p">}]</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">CarSchema</span><span class="p">.</span><span class="nx">path</span><span class="p">(</span><span class="s1">&#39;features&#39;</span><span class="p">).</span><span class="nx">schema</span><span class="p">.</span><span class="nx">path</span><span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">).</span><span class="nx">schema</span><span class="p">.</span><span class="nx">path</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">).</span><span class="nx">validate</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">features</span><span class="p">){</span>
+</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">features</span><span class="p">){</span><span class="k">return</span> <span class="kc">false</span><span class="p">}</span>
+</span><span class='line'>    <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">features</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">){</span><span class="k">return</span> <span class="kc">false</span><span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class='line'><span class="p">},</span> <span class="s1">&#39;Car needs to have at least one feature&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;Car&#39;</span><span class="p">,</span> <span class="nx">CarSchema</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You&rsquo;re unable to specify the path when the object is behind arrays.  Accessing the Schema in the array itself cannot be accessed like <code>CarSchema.path(&lsquo;features.model.year&rsquo;)</code>, but it can be accessed by grabbing the <code>schema</code> attribute which returns the <code>SchemaType</code> of the object in the array.  Now that we have the <code>SchemaType</code> object we apply its path to continue the chain until we get the attribute that we want to apply the validation for. As far as I know, the <code>DocumentArray.schema</code> attribute is not a documented feature.</p>
+
+
+        <hr class="divider-short"/>
+
+        
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2014/10/17/framework-frustration/" title="Previous Post: Framework frustration">&laquo; Previous: Framework frustration</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2014/10/31/problems-halloween-edition/" title="Next Post: Problems: Halloween Edition">Next: Problems: Halloween Edition &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+
+    
+    <a href="https://github.com/lee-jason"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+    <a href="mailto:lee.jason930@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
+    
+      
+    
+    <a href="http://tindeck.com/users/jihoon222"><img src="/images/glyphicons_017_music.png"/></a>
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+      
+
+<script type="text/javascript">
+      var disqus_shortname = 'jihoon222';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://jasonjl.me/blog/2014/10/23/adding-validation-for-embedded-objects-in-mongoose/';
+        var disqus_url = 'http://jasonjl.me/blog/2014/10/23/adding-validation-for-embedded-objects-in-mongoose/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+  </body>
+</html>

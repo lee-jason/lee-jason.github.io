@@ -1,0 +1,493 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Rendering List of Elements in React With JSX - Wow this blog looks fancy</title>
+  <meta name="author" content="Jason Lee">
+
+  
+  <meta name="description" content="Rendering List of Elements in React With JSX written April 18, 2015 in guide, javascript, jsx, react Understanding how JSX is processed can be &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://jasonjl.me/blog/2015/04/18/rendering-list-of-elements-in-react-with-jsx">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Wow this blog looks fancy" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-50368577-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Rendering List of Elements in React With JSX</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2015-04-18T19:43:14-07:00" pubdate data-updated="true">April 18, 2015
+</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/guide/'>guide</a>, <a class='category' href='/blog/categories/javascript/'>javascript</a>, <a class='category' href='/blog/categories/jsx/'>jsx</a>, <a class='category' href='/blog/categories/react/'>react</a>
+  
+</span>
+
+
+        </div>
+        <p>Understanding how JSX is processed can be slightly tricky to understand. Knowing when its appropriate to use JavaScript code and when to use HTML in your JSX can be very nuanced when writing React code. Understanding how the JSX will compile is critical in writing basic React that will render in predictable ways every time. This guide will go over the slightly tricky scenario of getting a list to render and how it can help us understand more about React and JSX.</p>
+
+<!-- more -->
+
+
+
+
+<script src="http://fb.me/react-0.13.1.js"></script>
+
+
+<script src="http://fb.me/JSXTransformer-0.13.1.js"></script>
+
+
+<p><b><i>Preface:</i></b> Unfortunately, the JSX code highlighting may not be perfect. Each JSX React code example is followed by the transformed version to JavaScript, followed by the actual rendered code in the page. Feel free to inspect the elements to get a better idea of how React renders your code.</p>
+
+<p>You may have landed here because you tried to render a list in React and wondered why it didn&rsquo;t work. You may have tried passing and rendering the list as a prop and wondered why your list is still all inline. You may feel this way if you came from an Angular background where rendering with ng-repeat was largely left to magic. React gives you a finer level of control that makes using it more easier to understand.</p>
+
+<p>The following example shows what happens when simply rendering a list in React without any processing. Inspect the code and notice how all the elements are displayed in a single list item.</p>
+
+<h3>Bad Example</h3>
+
+
+<h4>JSX</h4>
+
+
+<figure class='code'><figcaption><span>Unexpected Incorrect rendering of list in JSX </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">IncorrectListRender</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
+</span><span class='line'>    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="p">(</span>
+</span><span class='line'>        <span class="o">&lt;</span><span class="nx">ul</span><span class="o">&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
+</span><span class='line'>        <span class="o">&lt;</span><span class="err">/ul&gt;</span>
+</span><span class='line'>      <span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">IncorrectListRender</span> <span class="nx">list</span><span class="o">=</span><span class="p">{[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]}</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;incorrect-list-render&#39;</span><span class="p">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Compiled to JavaScript</h4>
+
+
+<figure class='code'><figcaption><span>Unexpected Incorrect rendering of list in JavaScript </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">IncorrectListRender</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span><span class="nx">displayName</span><span class="o">:</span> <span class="s2">&quot;IncorrectListRender&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="p">(</span>
+</span><span class='line'>        <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;ul&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;li&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">)</span>
+</span><span class='line'>      <span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">IncorrectListRender</span><span class="p">,</span> <span class="p">{</span><span class="nx">list</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]}),</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;incorrect-list-render&#39;</span><span class="p">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Rendered Result</h4>
+
+
+<div class="react-example" id="incorrect-list-render"></div>
+
+
+<script type="text/jsx">
+  var IncorrectListRender = React.createClass({
+    render: function() {
+      return (
+        <ul>
+          <li>{this.props.list}</li>
+        </ul>
+      )
+    }
+  });
+  React.render(<IncorrectListRender  list={[1,2,3,4,5]} />, document.getElementById('incorrect-list-render'));
+</script>
+
+
+<p>The above example doesn&rsquo;t cut it.</p>
+
+<p>You may also have tried to individually pick out elements in the array and plant them in your render code. This would work, but its not very flexible. Notice how the second render call with the longer list is only able to display the first five elements.</p>
+
+<h3>Bad Example</h3>
+
+
+<h4>JSX</h4>
+
+
+<figure class='code'><figcaption><span>Inflexible way of rendering lists in JSX </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">InflexibleListRender</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
+</span><span class='line'>    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="p">(</span>
+</span><span class='line'>        <span class="o">&lt;</span><span class="nx">ul</span><span class="o">&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">0</span><span class="p">]}</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">1</span><span class="p">]}</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">2</span><span class="p">]}</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">3</span><span class="p">]}</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">4</span><span class="p">]}</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
+</span><span class='line'>        <span class="o">&lt;</span><span class="err">/ul&gt;</span>
+</span><span class='line'>      <span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">InflexibleListRender</span> <span class="nx">list</span><span class="o">=</span><span class="p">{[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]}</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;inflexible-list-render1&#39;</span><span class="p">));</span>
+</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">InflexibleListRender</span> <span class="nx">list</span><span class="o">=</span><span class="p">{[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]}</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;inflexible-list-render2&#39;</span><span class="p">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Compiled to JavaScript</h4>
+
+
+<figure class='code'><figcaption><span>Inflexible way of rendering lists in JavaScript </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'> <span class="kd">var</span> <span class="nx">InflexibleListRender</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span><span class="nx">displayName</span><span class="o">:</span> <span class="s2">&quot;InflexibleListRender&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="p">(</span>
+</span><span class='line'>        <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;ul&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;li&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+</span><span class='line'>          <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;li&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+</span><span class='line'>          <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;li&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+</span><span class='line'>          <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;li&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span>
+</span><span class='line'>          <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;li&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+</span><span class='line'>        <span class="p">)</span>
+</span><span class='line'>      <span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">InflexibleListRender</span><span class="p">,</span> <span class="p">{</span><span class="nx">list</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]}),</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;inflexible-list-render1&#39;</span><span class="p">));</span>
+</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">InflexibleListRender</span><span class="p">,</span> <span class="p">{</span><span class="nx">list</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]}),</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;inflexible-list-render2&#39;</span><span class="p">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Rendered Result</h4>
+
+
+<div class="react-example" id="inflexible-list-render1"></div>
+
+
+<div class="react-example" id="inflexible-list-render2"></div>
+
+
+<script type="text/jsx">
+  var InflexibleListRender = React.createClass({
+    render: function() {
+      return (
+        <ul>
+          <li>{this.props.list[0]}</li>
+          <li>{this.props.list[1]}</li>
+          <li>{this.props.list[2]}</li>
+          <li>{this.props.list[3]}</li>
+          <li>{this.props.list[4]}</li>
+        </ul>
+      )
+    }
+  });
+  React.render(<InflexibleListRender list={[1,2,3,4,5]} />, document.getElementById('inflexible-list-render1'));
+  React.render(<InflexibleListRender list={[1,2,3,4,5]} />, document.getElementById('inflexible-list-render2'));
+</script>
+
+
+<p>A good solution would be flexible to the amount of items in a list and would render with its own containing element in a repeating fashion. Notice how the following render function is able to accomodate arrays of all sizes. This is due to rendering in a list of React Elements created from the list of numbers coming in from the props.</p>
+
+<h3>Good Example</h3>
+
+
+<h4>JSX</h4>
+
+
+<figure class='code'><figcaption><span>Properly Repeatable React Elements in JSX </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">ProperListRender</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
+</span><span class='line'>    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="p">(</span>
+</span><span class='line'>        <span class="o">&lt;</span><span class="nx">ul</span><span class="o">&gt;</span>
+</span><span class='line'>          <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">listValue</span><span class="p">){</span>
+</span><span class='line'>            <span class="k">return</span> <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">listValue</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/li&gt;;</span>
+</span><span class='line'>          <span class="p">})}</span>
+</span><span class='line'>        <span class="o">&lt;</span><span class="err">/ul&gt;</span>
+</span><span class='line'>      <span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">ProperListRender</span> <span class="nx">list</span><span class="o">=</span><span class="p">{[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]}</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;proper-list-render1&#39;</span><span class="p">));</span>
+</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">ProperListRender</span> <span class="nx">list</span><span class="o">=</span><span class="p">{[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]}</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;proper-list-render2&#39;</span><span class="p">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Compiled to JavaScript</h4>
+
+
+<figure class='code'><figcaption><span>Properly repeatable React Elements in JavaScript </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">ProperListRender</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span><span class="nx">displayName</span><span class="o">:</span> <span class="s2">&quot;ProperListRender&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="p">(</span>
+</span><span class='line'>        <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;ul&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span>
+</span><span class='line'>          <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">list</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">listValue</span><span class="p">){</span>
+</span><span class='line'>            <span class="k">return</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;li&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">listValue</span><span class="p">);</span>
+</span><span class='line'>          <span class="p">})</span>
+</span><span class='line'>        <span class="p">)</span>
+</span><span class='line'>      <span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">ProperListRender</span><span class="p">,</span> <span class="p">{</span><span class="nx">list</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]}),</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;proper-list-render1&#39;</span><span class="p">));</span>
+</span><span class='line'>  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">ProperListRender</span><span class="p">,</span> <span class="p">{</span><span class="nx">list</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]}),</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;proper-list-render2&#39;</span><span class="p">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Rendered Result</h4>
+
+
+<div class="react-example" id="proper-list-render1"></div>
+
+
+<div class="react-example" id="proper-list-render2"></div>
+
+
+<script type="text/jsx">
+  var ProperListRender = React.createClass({
+    render: function() {
+      return (
+        <ul>
+          {this.props.list.map(function(listValue){
+            return <li>{listValue}</li>;
+          })}
+        </ul>
+      )
+    }
+  });
+  React.render(<ProperListRender list={[1,2,3,4,5]} />, document.getElementById('proper-list-render1'));
+  React.render(<ProperListRender list={[1,2,3,4,5,6,7,8,9,10]} />, document.getElementById('proper-list-render2'));
+</script>
+
+
+<p>The solution above is flexible enough to accomodate as many or as little list items that comes from the props field.</p>
+
+<p>Lets break it down to see why it works</p>
+
+<p>First each React class object needs to have a render function. Think of the render like a screen refresh. The render function is supposed to return a value or list of values (most commonly composed of React Elements) that will be drawn onto the screen. The render function is automatically called whenever the object&rsquo;s state is signalled to change. States are outside the scope of this guide but you can read more about state <a href="https://facebook.github.io/react/docs/tutorial.html#reactive-state">here</a>.</p>
+
+<p>Notice how HTML is plainly inserted into a JavaScript function. The JSX transformer/compiler will automatically detect HTML and React tags inside JavaScript and convert them to the equivalent JavaScript expression. If you would like to read more about the end result feel free to <a href="https://facebook.github.io/react/jsx-compiler.html">try out</a> the compiler and <a href="https://facebook.github.io/react/docs/jsx-in-depth.html">read up</a> on what it does to your tags.</p>
+
+<p>Also take note of the curly brackets peppered through out the HTML tags. The brackets signify to the JSX transformer that there is actual JavaScript inside of it. Combining JSX and JavaScript together allows us to use the ease of HTML tagging and the logical power of JavaScript to create dynamic HTML templates right inside of our React code. In the case of the list example, note how we start with a containing <code>&lt;ul>&hellip;&lt;/ul></code> block. This <code>&lt;/ul></code> block is then split with a pair of brackets that perform a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map">mapping</a> to create and return a new list of React Elements <code>&lt;li>{listValue}&lt;/li></code>.  Also notice again how <code>{listValue}</code> had to be surrounded again in brackets since its embedded within HTML elements. If you want to know more about what you can do with React Elements take a look <a href="https://facebook.github.io/react/docs/top-level-api.html#react.createelement">here</a>.</p>
+
+<h2>Conclusion</h2>
+
+
+<p>The React renderer is actually quite flexible. You don&rsquo;t necessarily have to feed it just Numbers or just React Elements but can mix and match all sorts of JavaScript objects. You can filter and parse the original objects in your list and use JavaScript logic to render a completely new list with dynamic React Elements. You can even plug in your own Custom React components in your render function as well, but you already knew that didn&rsquo;t you. Truly understanding how your JSX code will be compiled to plain old JavaScript is the key to writing predictable React everytime.</p>
+
+
+        <hr class="divider-short"/>
+
+        
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2015/04/11/a-review-of-hired/" title="Previous Post: A Review of Hired">&laquo; Previous: A Review of Hired</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2015/06/21/taking-action-on-browser-crashes/" title="Next Post: Logging information on browser crashes">Next: Logging information on browser crashes &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+
+    
+    <a href="https://github.com/lee-jason"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+    <a href="mailto:lee.jason930@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
+    
+      
+    
+    <a href="http://tindeck.com/users/jihoon222"><img src="/images/glyphicons_017_music.png"/></a>
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+      
+
+<script type="text/javascript">
+      var disqus_shortname = 'jihoon222';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://jasonjl.me/blog/2015/04/18/rendering-list-of-elements-in-react-with-jsx/';
+        var disqus_url = 'http://jasonjl.me/blog/2015/04/18/rendering-list-of-elements-in-react-with-jsx/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+  </body>
+</html>

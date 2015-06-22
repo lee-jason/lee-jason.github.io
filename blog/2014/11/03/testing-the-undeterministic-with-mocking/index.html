@@ -1,0 +1,287 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Unit Testing Random Behavior With Mock Objects - Wow this blog looks fancy</title>
+  <meta name="author" content="Jason Lee">
+
+  
+  <meta name="description" content="Unit Testing Random Behavior With Mock Objects written November 3, 2014 in guide, java, testing What happens when you&rsquo;re trying to write some &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://jasonjl.me/blog/2014/11/03/testing-the-undeterministic-with-mocking">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Wow this blog looks fancy" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-50368577-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Unit Testing Random Behavior With Mock Objects</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2014-11-03T21:41:08-08:00" pubdate data-updated="true">November 3, 2014
+</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/guide/'>guide</a>, <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/testing/'>testing</a>
+  
+</span>
+
+
+        </div>
+        <p>What happens when you&rsquo;re trying to write some unit tests and suddenly you need to test a method with non-deterministic properties.  In other words how do you test a method whose expected behavior is random behavior?  The answer is with mock objects.  I&rsquo;ve seen a bunch of suggestions to use a mock randomizer but I haven&rsquo;t seen anyone actually explain it further than that. Hopefully this will help someone out</p>
+
+<!-- more -->
+
+
+<p>So when writing unit tests for methods, we need to execute these methods with test data or mock objects.  These mock objects either come in through the constructor during the setup or as a method parameter when calling the method.  When people say to make your random object a dependency, they mean that your random object should be an external object that is passed into the constructor or method of whatever you need to test. Since the object is being passed into the constructor, you can pass in a real non-deterministic random number generator, or a phony completely predictable deterministic &lsquo;random number generator&rsquo;.</p>
+
+<p>In the following example I&rsquo;m going to be making and testing a simple program that simply gets me a random number</p>
+
+<figure class='code'><figcaption><span>PrintRandomNumber.java </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'>    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">PrintRandomNumber</span><span class="o">{</span>
+</span><span class='line'>        <span class="kd">private</span> <span class="n">Random</span> <span class="n">random</span><span class="o">;</span>
+</span><span class='line'>        <span class="kd">public</span> <span class="nf">PrintRandomNumber</span><span class="o">(</span><span class="n">Random</span> <span class="n">random</span><span class="o">){</span>
+</span><span class='line'>            <span class="k">this</span><span class="o">.</span><span class="na">random</span> <span class="o">=</span> <span class="n">random</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getRandomInt</span><span class="o">(){</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>notice how the <code>PrintRandomNumber</code> constructor accepts a <code>Random random</code> parameter.  This means that we can pass in any class that comes from the class Random. Usually we want to use java.util.Random during real code execution, but when testing we&rsquo;ll want to mock our own random object with deterministic results.  Here&rsquo;s an example deterministic random class.</p>
+
+<figure class='code'><figcaption><span>DeterministicRandom.java </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'>    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">DeterministicRandom</span> <span class="kd">extends</span> <span class="n">Random</span><span class="o">{</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">sequentialNum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kd">public</span> <span class="nf">DeterministicRandom</span><span class="o">(){</span>
+</span><span class='line'>            <span class="kd">super</span><span class="o">();</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kd">public</span> <span class="kt">int</span> <span class="nf">nextInt</span><span class="o">(){</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">sequentialNum</span><span class="o">++;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The class <code>DeterministicRandom</code> extends the <code>Random</code> class with an overridden <code>nextInt()</code> method. This means that <code>DeterministicRandom</code> can be passed into the <code>PrintRandomNumber</code> constructor where by calling <code>nextInt()</code> will then give completely deterministic results.  The following class is a test case to show just that.</p>
+
+<figure class='code'><figcaption><span>TestPrintRandomNumber.java </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'>    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">DeterministicRandomTest</span><span class="o">{</span>
+</span><span class='line'>        <span class="n">PrintRandomNumber</span> <span class="n">printRandomNumber</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nd">@Before</span>
+</span><span class='line'>        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setUp</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span><span class="o">{</span>
+</span><span class='line'>            <span class="n">DeterministicRandom</span> <span class="n">deterministicRandom</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">DeterministicRandom</span><span class="o">();</span>
+</span><span class='line'>            <span class="n">printRandomNumber</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">PrintRandomNumber</span><span class="o">(</span><span class="n">deterministicRandom</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nd">@Test</span>
+</span><span class='line'>        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testGetRandomInt</span><span class="o">(){</span>
+</span><span class='line'>            <span class="n">assertEquals</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">printRandomNumber</span><span class="o">.</span><span class="na">getRandomInt</span><span class="o">());</span>
+</span><span class='line'>            <span class="n">assertEquals</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">printRandomNumber</span><span class="o">.</span><span class="na">getRandomInt</span><span class="o">());</span>
+</span><span class='line'>            <span class="n">assertEquals</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">printRandomNumber</span><span class="o">.</span><span class="na">getRandomInt</span><span class="o">());</span>
+</span><span class='line'>            <span class="n">assertEquals</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">printRandomNumber</span><span class="o">.</span><span class="na">getRandomInt</span><span class="o">());</span>
+</span><span class='line'>            <span class="n">assertEquals</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">printRandomNumber</span><span class="o">.</span><span class="na">getRandomInt</span><span class="o">());</span>
+</span><span class='line'>            <span class="n">assertEquals</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="n">printRandomNumber</span><span class="o">.</span><span class="na">getRandomInt</span><span class="o">());</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Running the JUnit test case above, I&rsquo;m creating a new <code>DeterministicRandom</code> that I feed into <code>PrintRandomNumber</code>&rsquo;s constructor, this way my random will always start at 0 for every test case. In the test case <code>testGetRandomInt()</code> I&rsquo;m testing to see whether <code>PrintRandomNumber.getRandomInt()</code> is working as I&rsquo;m expecting, and I&rsquo;m expecting sequential numbers starting at zero.  The test should pass since I fed <code>PrintRandomNumber</code> a completely deterministic &lsquo;random number generator&rsquo; in the setUp, <code>printRandomNumber = new PrintRandomNumber(deterministicRandom)</code>. This allows a method that&rsquo;s dependent on a random number generator to have consistent results every time you test it.</p>
+
+<p>So there you have it, that&rsquo;s how you mock a Random class.  Having to pass in your random number generator class into the constructor of the object that uses it may sound counter-intuitive (I know it did to me) but I guess it makes sense.  It allows your class to be more modular and definitely more testable. After all, we&rsquo;re not trying to test if the random number generator is working, but rather whether your class is reacting appropriately to the numbers that come from the random number generator.</p>
+
+<p>Happy testing.</p>
+
+
+        <hr class="divider-short"/>
+
+        
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2014/10/31/problems-halloween-edition/" title="Previous Post: Problems: Halloween Edition">&laquo; Previous: Problems: Halloween Edition</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2014/11/06/problems-binary-tree-designs/" title="Next Post: Problems: Binary Tree Designs">Next: Problems: Binary Tree Designs &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+
+    
+    <a href="https://github.com/lee-jason"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+    <a href="mailto:lee.jason930@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
+    
+      
+    
+    <a href="http://tindeck.com/users/jihoon222"><img src="/images/glyphicons_017_music.png"/></a>
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+      
+
+<script type="text/javascript">
+      var disqus_shortname = 'jihoon222';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://jasonjl.me/blog/2014/11/03/testing-the-undeterministic-with-mocking/';
+        var disqus_url = 'http://jasonjl.me/blog/2014/11/03/testing-the-undeterministic-with-mocking/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+  </body>
+</html>

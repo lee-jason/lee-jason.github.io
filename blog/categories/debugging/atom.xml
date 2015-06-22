@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Debugging | Wow this blog looks fancy]]></title>
+  <link href="http://jasonjl.me/blog/categories/debugging/atom.xml" rel="self"/>
+  <link href="http://jasonjl.me/"/>
+  <updated>2015-06-21T20:06:15-07:00</updated>
+  <id>http://jasonjl.me/</id>
+  <author>
+    <name><![CDATA[Jason Lee]]></name>
+    <email><![CDATA[lee.jason930@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Executing Highlighted Code in Eclipse Debugger]]></title>
+    <link href="http://jasonjl.me/blog/2014/12/07/executing-highlighted-code-in-eclipse-debugger/"/>
+    <updated>2014-12-07T20:21:20-08:00</updated>
+    <id>http://jasonjl.me/blog/2014/12/07/executing-highlighted-code-in-eclipse-debugger</id>
+    <content type="html"><![CDATA[<p>Just a short one for my sake since I keep forgetting. <br/>
+Highlight a segment of Java code while on a breakpoint and press <code>ctrl+u</code> to execute, or <code>ctrl+shift+d</code> to execute and display the result. Helpful for when you want to check if a certain conditional that&rsquo;s coming up in the next lines will return what you believe for it to return.</p>
+
+<p>Having this is super handy and something I miss when jumping from Chrome&rsquo;s javascript debugger that allows you to execute any arbitrary code in the console.</p>
+]]></content>
+  </entry>
+  
+</feed>

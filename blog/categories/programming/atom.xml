@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Programming | Wow this blog looks fancy]]></title>
+  <link href="http://jasonjl.me/blog/categories/programming/atom.xml" rel="self"/>
+  <link href="http://jasonjl.me/"/>
+  <updated>2015-06-21T20:06:15-07:00</updated>
+  <id>http://jasonjl.me/</id>
+  <author>
+    <name><![CDATA[Jason Lee]]></name>
+    <email><![CDATA[lee.jason930@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Codewars, Leetcode, Hackerrank. Online Judges Reviews]]></title>
+    <link href="http://jasonjl.me/blog/2015/03/30/practical-programming-practice-services/"/>
+    <updated>2015-03-30T12:41:31-07:00</updated>
+    <id>http://jasonjl.me/blog/2015/03/30/practical-programming-practice-services</id>
+    <content type="html"><![CDATA[<p>Sometimes the projects you work on just aren&rsquo;t stimulating enough. Sometimes you need to fill your brain with as many programming problems as possible. Usually tackling a small sized project only requires a small set of challenges to solve while the rest of the time is spent tying the project together. When you need as many challenges to tackle in as short a time as possible you need online judges.  This article is a review on the online judges, <a href="http://www.codewars.com/">Codewars</a>, <a href="https://leetcode.com/">LeetCode</a>, and <a href="https://www.hackerrank.com/">HackerRank</a>.</p>
+
+<!-- more -->
+
+
+
+
+<h2>Codewars</h2>
+
+
+<p><a href="http://www.codewars.com/">Codewars</a> takes the concept of the &lsquo;Code Kata&rsquo; and gamifies the exercises so programmers always have something to challenge themselves when they got a few minutes to spare. Challenges are usually short, ranging from minutes to a few hours.  Most of the questions often have contexts associated with them so it always feels like you&rsquo;re actually solving a potential real world problem rather using your tools as a programmer, even though the contexts are often fantastical in nature.</p>
+
+<h3>Things I like</h3>
+
+
+<p>There&rsquo;s a clear progression that Codewars wants you to take. Challenges start from the fundamentals and rises slowly in difficulty so that you have a good basis of understanding before you move to the next level.</p>
+
+<p>Solutions of all the other members are available to analyze after solving the problem. Finding out how other (more smarter) people solved the same exact problem allows you to gain insights into the gaps in your methodology. The solutions are bite sized so its easier to digest new programming features or new ways of organizing code that you&rsquo;ve never considered before. I truly think that social programming is the way to get better at writing code and I think Codewars deserves a giant plus for this feature.</p>
+
+<h3>Things I don&#8217;t like</h3>
+
+
+<p>The Java error messages are less than helpful.  I&rsquo;m not sure how they return exceptions when your code doesn&rsquo;t compile, but often times the console is going to return an exception from the enclosing outer stack that executes the code meaning you don&rsquo;t get any useful stack debugging information, you just know somethings wrong.</p>
+
+<p>Each question has tags associated with them describing what methods of programming you&rsquo;ll use to solve the problem. These tags often give a hint on what to do to solve the problem which is kind of a problem since people look at these tags as extra meta information to give them a lead. I often like to come into a problem blind and find out myself what to do in order to get to a solution.</p>
+
+<h3>Overall</h3>
+
+
+<p>Overall I think it&rsquo;s actually a really neat service. Like I said earlier, I&rsquo;ve learned so much more about JavaScript than I ever would have if I were to just continue working on my own projects. I&rsquo;m definitely going to use it again when I delve into Python.</p>
+
+<h2>LeetCode OJ</h2>
+
+
+<p><a href="https://leetcode.com/">LeetCode OJ</a> is all about the algorithms.  There are no pretenses, you&rsquo;re going to be solving very straightforward problems that have very defined lower bounds in terms of space and memory. These problems will often test cases on all edges of the spectrum and will only accept answers that meet the lowest bound limitation.  Your preferred language is just a means to work around an algorithm. At the end of each problem, Leetcode ranks you up against your peers by how quickly your code executed.</p>
+
+<h3>Things I like</h3>
+
+
+<p>No muss no fuss, these questions ask you about algorithms and after enough exercises will hammer the common ways to solve them into your brain. I think this is a good second level after reading and solving the exercises to Crack the Coding Interview. There are tons more exercises here that touches on things that CTCI doesn&rsquo;t which makes it a natural progression to the book.</p>
+
+<p>The code editor is actually really good. Everything flows like a real professional code editor including quality of life improvements such as auto tab indentation, mass commenting, auto closing brackets, mass tab indentation, highlight bracketing, etc&hellip;</p>
+
+<p>The questions are very direct.  There are no fillers, no context. At first its a little ambiguous to know what values will be used to test your program, but after a while it becomes very obvious what kinds of edge case values Leetcode expects your program to process.</p>
+
+<h3>Things I don&#8217;t like</h3>
+
+
+<p>Since the online judge only wants answers that are strictly the lowest bound in terms of space and runtime, it&rsquo;ll often fail passing solutions that are not the most optimal. It will fail an acceptable solution of O(nlogn) if the lowest bound possible is O(n). Sometimes you think of the correct algorithm, but implement it in such a way that it still exceeds the time limit. It is ambiguous to know what exactly is the bit of code to optimize in order to pass the test.</p>
+
+<p>The community seems more concerned with writing concise code rather than best practice code. Discussion solutions are often compressed to the point where its difficult to read.</p>
+
+<p>I really wish they would allow us to see each user&rsquo;s submitted code so we can see exactly what we need to do to get the most optimization out of our language of choice. I did not feel like I learned anything about runtime optimization since my code always landed in the middle in terms of speed compared to my peers.</p>
+
+<h3>Overall</h3>
+
+
+<p>This site is great if you need some extra exercises to hone in on pure algorithm practice. I would not recommend it as a place to actually learn from 0% knowledge but more of a place if you&rsquo;re looking for medium to advanced challenges. You have to be familiar with your language of choice as your language is just a tool you should be familiar with to solve a greater problem.</p>
+
+<h2>HackerRank</h2>
+
+
+<p><a href="https://www.hackerrank.com/">HackerRank</a> is site that focuses more on the competitive nature of programming. HackerRank encourages you to participate in its many ongoing week long challenges. They support a ton of languages cover a wide range of practice problems ranging from algorithms, functional programming, linux shell cmds, and even AI.</p>
+
+<h3>Things I like</h3>
+
+
+<p>Since each challenge requests you parse a text file, it actually gives you plenty of exercises in reading in a file, parsing it, and outputting it.  I feel like this is something that&rsquo;s overlooked by a lot of challenge sites so its nice to see a site that allows you to practice that skill.</p>
+
+<p>Each challenge has very clearly defined variables.  Sometimes it&rsquo;s actually kind of annoying, but each challenge will let you know exactly how the text file will be formatted and exactly what it will be testing on.</p>
+
+<p>There are a ton of active competitions going on at a time meaning you can always test your chops against other programmers.</p>
+
+<h3>Things I don&#8217;t like</h3>
+
+
+<p>Its code editor is missing a lot of convenience features that the other code editors have. Sure it has code highlighting but other than that its very uncomfortable to use. The UI around the site is nice, but I feel like it has some work to do on its code editor.</p>
+
+<p>Parsing a text file every time is kind of annoying. Some times you just want the values to be passed in as primitive data as if it would be used as a modular piece in a larger project. Since JavaScript doesn&rsquo;t have a real file output stream (without node) it requests for you to use console.log() to output your answer, which is a small inconvenience.</p>
+
+<h3>Overall</h3>
+
+
+<p>I&rsquo;ve used this the least amount so I&rsquo;m not yet decided on whether I like it or not. The challenges are appropriately challenging but the text editor is not very fun to use. Its less of a site to practice but more to compete. Some of you may view this as the same thing.</p>
+
+<h2>Conclusions</h2>
+
+
+<p>Just about doing any of these is a good natural progression in terms of interview preparation and to generally be a better programmer. All three of these sites and many more like it definitely can only help since you&rsquo;ll be exposed to a wider range of problems you never even knew existed. Of course, nothing truly beats the experience of working on a truly challenging real project but when those are few and far in between, then these online judges got you covered.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Regular Expressions]]></title>
+    <link href="http://jasonjl.me/blog/2014/11/17/regular-expressions/"/>
+    <updated>2014-11-17T10:57:53-08:00</updated>
+    <id>http://jasonjl.me/blog/2014/11/17/regular-expressions</id>
+    <content type="html"><![CDATA[<div><img src="https://s3.amazonaws.com/jasonjlblog/regularexpression_crossword.png" alt="regular expression crossword"></div>
+
+
+<p>Regular expressions are hard.  There&rsquo;s a lot to them that vary between different regular expression engines.  They&rsquo;re often considered to be an afterthought when it comes to a programmer&rsquo;s tools due to the relative infrequency at which they&rsquo;re used.  Whenever they are actually needed, the programmer most likely only reads the minimum amount required that will fulfill the parsing problem at hand.  Regular expressions are super cryptic to read and even more so when writing them in Java.  While I don&rsquo;t necessarily enjoy working with regular expressions, I highly respect those who are comfortable enough to take on any sort of parsing problem.  This post is an attempt for me to solidify some of the basic and advanced things I&rsquo;ve been picking up with regular expressions recently.</p>
+
+<!-- more -->
+
+
+
+
+<h2>Greedy will grab more, lazy will grab less</h2>
+
+
+<p>When people keep mentioning use greedy vs lazy quantifiers they&rsquo;re talking about the <code>? + *</code> symbols. The default quantifiers will use greedy matching, meaning, they will try to match as many of the quantified character before it continues trying to find matches with the rest of the expression. Appending a <code>?</code> to any quantifier will cause the regular expression engine to become &lsquo;lazy&rsquo; and only match the as little as possible before it finds a complete match.  While having a lazy engine may sound like a bad thing sometimes you just don&rsquo;t want your engine working so hard and going overboard with its matches.  Say you&rsquo;re making a chat client and you want to intercept colon delimited messages so that you can eventually replace those with emoticons.</p>
+
+<p><figure class='code'><figcaption><span>capturing delimited messages </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">msg</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">hello</span> <span class="nx">world</span> <span class="o">:</span><span class="nx">smile</span><span class="o">:</span> <span class="o">:</span><span class="nx">happy</span><span class="o">:&amp;</span><span class="nx">rdquo</span><span class="p">;;</span>
+</span><span class='line'>    <span class="c1">//greedily match any group of characters between two colons</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">emoteRegExpGreedy</span> <span class="o">=</span> <span class="sr">/:.*:/g</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">msg</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">emoteRegExpGreedy</span><span class="p">);</span> <span class="c1">//returns [&amp;ldquo;:smile: :happy:&amp;rdquo;]&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="c1">//lazily match any group of characters between two colons</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">emoteRegExpLazy</span> <span class="o">=</span> <span class="sr">/:.*?:/g</span><span class="p">;</span>
+</span><span class='line'><span class="nx">msg</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">emoteRegExpLazy</span><span class="p">);</span> <span class="c1">//returns [&quot;:smile:&quot;, &quot;:happy:&quot;]</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>note how the greedy regexp returns a single value consisting of both the :smile: and :happy: combined into a single match, while the lazy regexp properly returns two values splitting up the smile and happy.  The greedy <code>.<em></code> character matcher kept going until the final <code>:</code> was found at the end of the string, while the lazy <code>.</em>?</code> character matcher was content with ending the first match and the first sight of the <code>:</code> after &ldquo;smile&rdquo; and started a new match when it found the first <code>:</code> for &ldquo;happy&rdquo;.</p>
+
+<h2>Using matched content in replaces with groupings</h2>
+
+
+<p>This is something that so easy but not entirely apparent when initially learning about regular expressions (at least not for me).  Surrounding an expression with parenthesis will create a grouping. Groupings are designated in the order that they are written in the expression. Groupings can be designated with <code>( )</code>. A complicated pattern can be written at the start of the expression and reused as a grouping reference later in the expression.  Lets say that we want to catch whenever a user writes duplicate words in the chat box because we&rsquo;re nice and we want to catch users making silly mistakes.</p>
+
+<p><figure class='code'><figcaption><span>catching duplicate words </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">msg</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">hello</span> <span class="nx">hello</span><span class="p">,</span> <span class="nx">how</span> <span class="nx">are</span> <span class="nx">doing</span> <span class="nx">doing</span><span class="o">?</span> <span class="nx">I</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;</span><span class="nx">m</span> <span class="nx">feeling</span> <span class="nx">good</span> <span class="nx">good</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;;</span>
+</span><span class='line'>    <span class="c1">//greedily match a full word followed by one or many whitespaces followed by the same exact word.</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">doubleWordRegExp</span> <span class="o">=</span> <span class="sr">/(\b\w+)\s+\1/g</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">msg</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">doubleWordRegExp</span><span class="p">);</span> <span class="c1">//returns [&amp;ldquo;hello hello&amp;rdquo;, &amp;ldquo;doing doing&amp;rdquo;, &amp;ldquo;good good&amp;rdquo;]</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>Text that&rsquo;s captured in a grouping can also be spit out to be used in the replacement string. So continuing with our chat emoticon example, lets say that you want to replace the matched <code>:</code> delimited text with an image tag that points to the appropriate file for each emoticon.</p>
+
+<p><figure class='code'><figcaption><span>replacing groupings with captured text </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">msg</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">hello</span> <span class="nx">world</span> <span class="o">:</span><span class="nx">smile</span><span class="o">:</span> <span class="o">:</span><span class="nx">happy</span><span class="o">:&amp;</span><span class="nx">rdquo</span><span class="p">;;</span>
+</span><span class='line'>    <span class="c1">//greedily match word in between colon and put it in a grouping that will be used in replace text</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">emoteRegExpGreedy</span> <span class="o">=</span> <span class="sr">/:(\w+):/g</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">msg</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/:(\w+):/g</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="o">&lt;</span><span class="nx">img</span> <span class="nx">src</span><span class="o">=</span><span class="s1">&#39;$1.png&#39;</span><span class="o">&gt;&amp;</span><span class="nx">rdquo</span><span class="p">;);</span> <span class="c1">//returns &amp;ldquo;hello world &lt;img src=&#39;smile.png&#39;&gt; &lt;img src=&#39;happy.png&#39;&gt;&amp;rdquo;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>Parenthesis are placed around the <code>\w+</code> and is accessed with the <code>$1</code> in the replacement text. Notice how the grouping is accessed in the replacement text with the <code>$</code> symbol in JavaScript.  This symbol differs in different languages from what I understand.</p>
+
+<h2>Lookahead and Lookbehind to validate a match</h2>
+
+
+<p>Lookahead and lookbehinds are additions to a standard expression that allow you to check whether the base expression either follows, or is followed by another expression.  Lookahead and lookbehinds are not matched, as in they will not be returned by the regexp engine.  This is helpful in that sometimes you just want to capture a subset of a complete expression. Lookaheads are performed with <code>(?=suchandsuch)</code> or <code>(?!notsuchandsuch)</code>.  Lookbehinds are performed with <code>(?&lt;=textbehind)</code> or <code>(?&lt;!nottextbehind)</code>. Continuing the chat box example, lets say that we want to implement a feature where users can vote in a poll.   Users can vote for a certain option by suffixing &lsquo;<em>vote&rsquo; to a number. Our goal is to intercept that number tied to the &lsquo;</em>vote&rsquo;.</p>
+
+<p><figure class='code'><figcaption><span>regexp lookahead </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">msg</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">I</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;</span><span class="nx">m</span> <span class="nx">going</span> <span class="nx">to</span> <span class="nx">vote</span> <span class="k">for</span> <span class="mi">5</span><span class="nx">_vote</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;;</span>
+</span><span class='line'>    <span class="c1">//find matches where a digit is suffixed by &amp;lsquo;&lt;em&gt;vote&amp;rsquo;</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">voteRegExp</span> <span class="o">=</span> <span class="err">/\b(\d+)(?=&lt;/em&gt;vote)/g;</span>
+</span><span class='line'>    <span class="nx">msg</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">voteRegExp</span><span class="p">);</span> <span class="c1">//returns [&amp;lsquo;5&amp;rsquo;];</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>To be honest the example is contrived. Usually we would want to prepend &lsquo;vote_&rsquo; but JavaScriptdoes not support lookbehind so I had to use look ahead in this example.</p>
+
+<p>Okay! That does it.  I know there&rsquo;s way more about regular expressions I gotta internalize but I think this is a good place to end for now.</p>
+
+<h3>References and things</h3>
+
+
+<p><small>
+<a href="http://www.regexper.com/">RegExper</a> - Regular expressions as railroad diagrams   <br/>
+<a href="http://regexpal.com/">regexpal</a> - On the fly regular expression matching   <br/>
+<a href="http://regexcrossword.com/">Regex Crossword</a> - Crosswords where regular expressions are the hints.   <br/>
+</small></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Framework Frustration]]></title>
+    <link href="http://jasonjl.me/blog/2014/10/17/framework-frustration/"/>
+    <updated>2014-10-17T10:20:48-07:00</updated>
+    <id>http://jasonjl.me/blog/2014/10/17/framework-frustration</id>
+    <content type="html"><![CDATA[<p>Let me preface this by saying that I understand why frameworks exists.  They solve repeatable problems in application development in a team environment by maintaining consistent development standards with tried and tested techniques that stood the test of time against thousands of projects and developer input that&rsquo;s supposed to ultimately save the developer time.  That&rsquo;s great, that&rsquo;s all really great.  But, if it takes the user longer to develop the application with the framework than without it, then you have a framework deal breaker.</p>
+
+<!--more-->
+
+
+<p>I don&rsquo;t know if I&rsquo;m stupid with an inability to parse an incredibly large amount of information in a short amount of time but I have incredibly bad luck with frameworks.</p>
+
+<p>Here&rsquo;s my process in learning a new stack/language/library.  Build an application as bare bones as possible.  Have a good time reading the base documentation. Finish the application and learn about the basic elements of the application stack.  Move onto learning popular framework of that stack/language/library.</p>
+
+<ul>
+<li>Follow the installation documentation and run into errors building/installing/initializing the framework (MeanIO).</li>
+<li>Framework requires me to fiddle with infinite XML files of configuration before I can get started on actual development (Spring)</li>
+<li>Only documentation is sparse, splotchy, or an encyclopedia.(Locomotive, Play, Spring)</li>
+<li>Get overwhelmed from the amount of features I&rsquo;m not going to use in the framework.(Spring)</li>
+<li>Further down the line, framework goes against principles/expected behavior of base stack/language/library(Locomotive)</li>
+</ul>
+
+
+<p>These are all framework deal breakers and are absolute frustrations.  Granted, getting overwhelmed and having encyclopedic documentation are my fault. Feature rich and extremely well documented frameworks are great (to a fault). That&rsquo;s great. It&rsquo;s just a little overwhelming to newcomers whom I imagine, the documentation was made for the most.</p>
+
+<p>I&rsquo;m trying to be more efficient by adopting a framework for my projects but it ultimately just makes me take up even more time.  I understand that the point of learning a framework is to do it for the long haul rather than the immediate gratification but I feel like all the people who recommend their brand of framework only do so because that&rsquo;s the one they randomly started with or were recommended and are now proficient in it.  I find it hard to believe that there are framework tasters that have enough experience with all these different ones with all their different functionality and configurations to actually make an informed decision made  purely by themselves about which one truly is the most time-saving with the most features.  I know it&rsquo;s a silly thought but I&rsquo;m almost convinced that nobody actually wants to use a framework but are indirectly forced to due to constraints that involve working with a team. My distrust for frameworks can probably be explained by my relatively newbie view on the world of software engineering but when there&rsquo;s so many frameworks to choose from and new ones popping up every day for every language, there&rsquo;s a point where the expectation to jump on to the next great thing is ridiculous and the fact that it happens so often is already ridiculous.</p>
+
+<p>What I&rsquo;m essentially trying to say is, investing your time into adopting a framework for your favorite language or stack is a gamble of your own time and I don&rsquo;t like that.  Its impossible to foretell how much time you&rsquo;ll need to invest in learning the workings of it before actually getting dirty into the business logic rather than framework configs.  By the time you actually learn enough about it you&rsquo;ve already spent a week or more on a simple project before you realize you don&rsquo;t like it.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Javascript, Pass by Value or Pass by Reference?]]></title>
+    <link href="http://jasonjl.me/blog/2014/10/15/javascript/"/>
+    <updated>2014-10-15T08:40:40-07:00</updated>
+    <id>http://jasonjl.me/blog/2014/10/15/javascript</id>
+    <content type="html"><![CDATA[<p>This is something you don&#8217;t have to question until you need to pass the contents of an object around or pass the same exact reference around. For me this knowledge became important during the development of Angular and Node applications where objects and primitives are passed around like a hot potato.</p>
+
+
+<!-- more -->
+
+
+<h2 id="referencevalue">So is it pass by reference or pass by value?</h2>
+
+
+<p>Javascript uses a pass by value strategy for primitives but uses a <a href="http://en.wikipedia.org/wiki/Evaluation_strategy#Call_by_sharing">call by sharing</a> for objects.  Call by sharing is largely similar to pass by reference in that the function is able to modify the same mutable object but unlike pass by reference isn&#8217;t able to assign directly over it.  If you can stretch your imagination a bit, call by sharing is kind of what the name implies.  Outside objects passed into the function are shared, but once the function decides to overwrite it, the sharing is off and the function only plays with its own version.</p>
+
+
+<p><figure class='code'><figcaption><span>objects call by sharing </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="c1">//created original object with property &amp;lsquo;original&amp;rsquo;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'><span class="nx">obj</span><span class="p">.</span><span class="nx">original</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">original</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;;</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="c1">//function that will add a new property to an object passed to it, and will also try to reassign the object in vain.</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">prototypeProperty</span><span class="p">(</span><span class="nx">obj</span><span class="p">){</span>
+</span><span class='line'>    <span class="c1">//add new property attribute to object</span>
+</span><span class='line'>    <span class="nx">obj</span><span class="p">.</span><span class="nx">property</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="k">new</span> <span class="nx">property</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;;</span>
+</span><span class='line'>    <span class="c1">//edit the original text of the .original property</span>
+</span><span class='line'>    <span class="nx">obj</span><span class="p">.</span><span class="nx">original</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">edited</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;</span>
+</span><span class='line'>    <span class="c1">//function will overwrite the external reference with a new reference</span>
+</span><span class='line'>    <span class="c1">//does not affect the external object</span>
+</span><span class='line'>    <span class="nx">obj</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">prototypeProperty</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">property</span><span class="p">)</span> <span class="c1">// &amp;ldquo;new property&amp;rdquo;, note how the original obj is not empty</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">original</span><span class="p">)</span> <span class="c1">// &amp;ldquo;edited&amp;rdquo;, even though strings are immutable, the function was changing the properties of the mutable object, not the string.</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p><figure class='code'><figcaption><span>arrays call by sharing </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="c1">//create new array</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="c1">//function that changes first two array values, pops the last value, and replaces the external reference with its own internal reference.</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">modifyArray</span><span class="p">(</span><span class="nx">arr</span><span class="p">){</span>
+</span><span class='line'>    <span class="c1">//update the first two array values</span>
+</span><span class='line'>    <span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="c1">//remove the last array value, array is now length 4</span>
+</span><span class='line'><span class="nx">arr</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//futilly try to replace the array with another one</span>
+</span><span class='line'><span class="c1">//only the internal arr has been replaced, the original arr outside this scope is still the same</span>
+</span><span class='line'><span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">2534</span><span class="p">,</span><span class="o">-</span><span class="mi">345</span><span class="p">,</span><span class="o">-</span><span class="mi">3463</span><span class="p">,</span><span class="o">-</span><span class="mi">4536</span><span class="p">,</span><span class="o">-</span><span class="mi">6453</span><span class="p">];</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="c1">//pass in the og array</span>
+</span><span class='line'><span class="nx">modifyArray</span><span class="p">(</span><span class="nx">arr</span><span class="p">);</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span> <span class="c1">//100 note how none of the array values are reflecting the new negative values</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span> <span class="c1">//200</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="c1">//4&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h2 id="reference">What is pass by reference?</h2>
+
+
+<p>Pass by reference is when variables passed in to functions are given the direct memory address.  This allows the function to manipulate the object or primitive as it exists outside the scope of the function.  The assignment operators that were &#8216;reverted&#8217; in the previous examples would be applied once the code exited the scope of the function.  This is a generally unsafe way to program due to functions having the ability to make assignments to the initial variable. Although I&#8217;ve never used it, from what I read, FORTRAN and Haskell and C with pointers uses a pass by reference evaluation strategy</p>
+
+
+<h2 id="value">What is pass by value?</h2>
+
+
+<p>Pass by value means that when you pass that variable into a function its the equivalent of creating a new var and making a copy of the passed in var. They&#8217;re not necessarily the same exact variable in the same exact memory address but rather copies. Modifying the copy does not affect the original. By having functions have predictable outcomes. Programmers can rely that functions will not alter their original variable and would always return a new copy that they can decide to use after the function exits. This is generally a safer way to program by preventing the programmer from overriding variables within functions. Many modern programming languages employ this strategy when it comes to primitives such as Javascript, Java, C#</p>
+
+
+<p><figure class='code'><figcaption><span>primitives passed by value </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="c1">//set initial values</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">string</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">num</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="c1">//function that reassigns values</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">passValue</span><span class="p">(</span><span class="nx">str</span><span class="p">,</span> <span class="nx">num</span><span class="p">,</span> <span class="nx">bool</span><span class="p">){</span>
+</span><span class='line'>    <span class="c1">//new variables are copied with the value of the original variables</span>
+</span><span class='line'>    <span class="nx">str</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">othervalue</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;;</span>
+</span><span class='line'>    <span class="nx">num</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">;</span>
+</span><span class='line'>    <span class="kr">boolean</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="c1">//call function that reassigns values</span>
+</span><span class='line'><span class="nx">passValue</span><span class="p">(</span><span class="nx">str</span><span class="p">,</span> <span class="nx">num</span><span class="p">,</span> <span class="nx">bool</span><span class="p">);</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="c1">//original variables don&amp;rsquo;t change</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">str</span><span class="p">);</span> <span class="c1">// &amp;ldquo;string&amp;rdquo;</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">num</span><span class="p">);</span> <span class="c1">// 1</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">bool</span><span class="p">);</span> <span class="c1">// true&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h2 id="mutability">What is mutability?</h2>
+
+
+<p>Mutablility describes whether a certain object is mutatable or changeable after its been created.  Arrays and Objects are considered to be mutable in Javascript.  They have functions that actively change the original object such as Array.splice or Object.prototype.</p>
+
+
+<h2 id="immutability">What is immutability?</h2>
+
+
+<p>Immutability is, you guessed it, describes an object or primitive that&#8217;s not mutatable after its been created. Javascript primitives such as booleans, Strings, integers are not modifiable.  Now this can be confusing because you change boolean flags in your code or add incrementers to your integer variables or modify strings all the time.  What mutability means is whether the same object, the same primitive itself can be modified and still be the same.  When your code changes a boolean flag from true to false in your code, or have an integer incrementer, or updates a string to lowercase you&#8217;re getting a brand new value that overrides the original value. Excuse the terrible analogy but you&#8217;re unable to renovate the original house so you destroy it and plant a new house on top of it.</p>
+
+
+<h2 id="primitive">What is a primitive?</h2>
+
+
+<p>primitives differ from language to language but they are generally the most basic immutable value as declared by the programming language.  The primitives in Javascript are booleans, numbers, and strings and these are all immutable.  Everything else is either an object or undefined (or NaN or null).</p>
+
+
+<h2 id="conclusion">The wrap up</h2>
+
+
+<p>So there you have it. When objects are passed into functions, a copy of the address goes in.  That&#8217;s why you&#8217;re able to manipulate the original mutable object in the function. Everything you would want to know about Javascript and its objects.</p>
+
+]]></content>
+  </entry>
+  
+</feed>

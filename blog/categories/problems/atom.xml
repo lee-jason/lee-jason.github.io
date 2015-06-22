@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Problems | Wow this blog looks fancy]]></title>
+  <link href="http://jasonjl.me/blog/categories/problems/atom.xml" rel="self"/>
+  <link href="http://jasonjl.me/"/>
+  <updated>2015-06-21T20:06:15-07:00</updated>
+  <id>http://jasonjl.me/</id>
+  <author>
+    <name><![CDATA[Jason Lee]]></name>
+    <email><![CDATA[lee.jason930@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Problems: Binary Tree Designs]]></title>
+    <link href="http://jasonjl.me/blog/2014/11/06/problems-binary-tree-designs/"/>
+    <updated>2014-11-06T19:35:39-08:00</updated>
+    <id>http://jasonjl.me/blog/2014/11/06/problems-binary-tree-designs</id>
+    <content type="html"><![CDATA[<div><img src="https://s3.amazonaws.com/jasonjlblog/herobinarytreeexample.png" alt="sample binary tree structures based off threez nodes"></div>
+
+
+<p>So I&rsquo;ve been brushing up and working with binary trees recently and I was pleasantly reminded how binary trees can flex and change while still maintaining the same data. It was fun testing self balancing trees when they would keep changing up on me. I got a little annoyed and my mind started to wander and wondered just how many different kinds of trees can a set of numbers create?</p>
+
+<p><strong>Problem:</strong> Given the amount of nodes in a set, how many different binary tree structures can be made from it?</p>
+
+<!-- more -->
+
+
+<p>The picture above shows three different tree examples based off three nodes.  If we keep going, we find out that there&rsquo;s five total unique tree structures just through brute force. I don&rsquo;t care about which numbers fill in which node in this problem (although that does sound like quite the problem) I just care about the shape of the tree structure. With that said, I was having trouble figuring out all the different tree types for four nodes and I didn&rsquo;t even try for five nodes. That&rsquo;s the point where we give up and ask the computer</p>
+
+<p><figure class='code'><figcaption><span>Recursive solution to tree pattern count </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'>    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">binaryTreeCount</span><span class="o">(</span><span class="kt">int</span> <span class="n">nodes</span><span class="o">,</span> <span class="kt">int</span> <span class="n">count</span><span class="o">){</span>
+</span><span class='line'>        <span class="k">if</span><span class="o">(</span><span class="n">nodes</span><span class="o">==</span><span class="mi">1</span><span class="o">){</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">count</span><span class="o">+</span><span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="c1">//simulate left node path</span>
+</span><span class='line'>        <span class="n">count</span><span class="o">=</span><span class="n">binaryCount</span><span class="o">(</span><span class="n">nodes</span><span class="o">-</span><span class="mi">1</span><span class="o">,</span> <span class="n">count</span><span class="o">);</span>
+</span><span class='line'>        <span class="c1">//simulate right node path</span>
+</span><span class='line'>        <span class="n">count</span><span class="o">=</span><span class="n">binaryCount</span><span class="o">(</span><span class="n">nodes</span><span class="o">-</span><span class="mi">1</span><span class="o">,</span> <span class="n">count</span><span class="o">);</span>
+</span><span class='line'>        <span class="c1">//simulate left right node path</span>
+</span><span class='line'>        <span class="k">if</span><span class="o">(</span><span class="n">nodes</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="o">){</span>
+</span><span class='line'>            <span class="n">count</span><span class="o">=</span><span class="n">binaryCount</span><span class="o">(</span><span class="n">nodes</span><span class="o">-</span><span class="mi">2</span><span class="o">,</span> <span class="n">count</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">count</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>This recursive function is simulating a depth first search that&rsquo;s limited by the amount of nodes available to it.  Once it reaches the end of a path, it adds one to the &lsquo;count&rsquo; counter that gets passed back up and down the recursive stack.  The function goes down the left path, and the right path, and also considers paths that can be generated from a node that branches into two paths with the third condition. I&rsquo;m not a mathmagician but the runtime of this isn&rsquo;t so hot.  I&rsquo;m pretty sure I can make it better by storing the path counts for amount of nodes down a certain path in a reference table so I don&rsquo;t have to calculate the repeated calculations every time but I&rsquo;m just kind of glad right now that I got the answer I wanted.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Problems: Halloween Edition]]></title>
+    <link href="http://jasonjl.me/blog/2014/10/31/problems-halloween-edition/"/>
+    <updated>2014-10-31T05:53:42-07:00</updated>
+    <id>http://jasonjl.me/blog/2014/10/31/problems-halloween-edition</id>
+    <content type="html"><![CDATA[<p><img src="https://s3.amazonaws.com/jasonjlblog/halloween_graph.png" alt="halloween map of your neighborhood!"></p>
+
+<p><caption>Here&rsquo;s a map of your neighborhood. Pink represents the candy value higher the better, Green and black nodes represent houses, blue is the distance between houses</caption></p>
+
+<p><strong>Problem:</strong> You&rsquo;re a kid, and tonight&rsquo;s the greatest night a kid could have next to Christmas. Halloween night is coming soon and you&rsquo;re prepping your bags for the trick or treating.  The problem is, is that your parents are tired and are only willing to walk a certain number of feet before they call it a night.  Given a map detailing the amount of feet between each house and the amount of candy given per house, how do you maximize the amount of candy gained before having to return back home?</p>
+
+<!-- more -->
+
+
+<p>Of course, graphing optimization problems.  Isn&rsquo;t this what every kid is thinking on Halloween?  I know it was definitely keeping <i>me</i> up last night, even though I don&rsquo;t trick or treat anymore.  This is slightly different from the <a href="http://en.wikipedia.org/wiki/Travelling_salesman_problem">traveling salesman problem</a> in that each location now has a weight, and now the salesman doesn&rsquo;t need to travel to every location.  I guess its a variant of the traveling salesman problem if the salesman&rsquo;s car had n amount of miles of fuel and the each location had variable amounts of money to be made and he needs to return home by the end of the trip. In this problem, we can assume that the graph is undirected and your house is accessible through a loop. To save some computation time, this algorithm does not cross over visited nodes.  Paths will not have intersections.</p>
+
+<h2>Proposed Solution</h2>
+
+
+<p>So after starting to really think about this problem at 6am and it now being 11am, the problem is not as easy as I thought.  I&rsquo;ve given it some thought and this is what I propose.  In order to get the true most optimal path a ton of paths have to be evaluated. A backtrack algorithm would be used to trace down paths starting from the house node going all the way down until it reaches the house node again.  This algorithm would be pretty terrible due to there being O(!N) paths but since backtracking is being used we can save ourselves from checking dead-end paths sooner.</p>
+
+<h3>A Solution</h3>
+
+
+<p><figure class='code'><figcaption><span>halloween path optimization pseudocode </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'>    <span class="n">Class</span> <span class="n">Node</span><span class="o">{</span>
+</span><span class='line'>        <span class="c1">//Node class contains&amp;hellip;</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">candyValue</span>
+</span><span class='line'>        <span class="n">NodesNPaths</span><span class="o">[]</span> <span class="n">connectingNodes</span><span class="o">;</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">totalCandyValue</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">totalSteps</span>
+</span><span class='line'>        <span class="n">Node</span> <span class="n">prevNode</span>
+</span><span class='line'>        <span class="kt">boolean</span> <span class="n">visited</span>
+</span><span class='line'>    <span class="o">}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">//bestPath modifies rootNode to have history of </span>
+</span><span class='line'><span class="n">Node</span> <span class="nf">bestPath</span><span class="o">(</span><span class="n">Node</span> <span class="n">rootNode</span><span class="o">,</span> <span class="n">Node</span> <span class="n">currNode</span><span class="o">,</span> <span class="kt">int</span> <span class="n">pathLength</span><span class="o">,</span> <span class="n">Node</span> <span class="n">prevNode</span><span class="o">,</span> <span class="kt">int</span> <span class="n">stepQuota</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">initial</span><span class="o">){</span>
+</span><span class='line'>    <span class="c1">//route is a failure when totalsteps is over the stepquota,</span>
+</span><span class='line'>    <span class="c1">//when the node has already been visited AND its not the root node</span>
+</span><span class='line'>    <span class="c1">//its fine to go back to the root node to update its values if its under the step quota and its already been visited.</span>
+</span><span class='line'>    <span class="k">if</span><span class="o">(</span><span class="n">currNode</span><span class="o">.</span><span class="na">totalSteps</span> <span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">stepQuota</span> <span class="o">||</span> <span class="n">currNode</span><span class="o">.</span><span class="na">visited</span> <span class="o">&amp;</span><span class="n">amp</span><span class="o">;&amp;</span><span class="n">amp</span><span class="o">;</span> <span class="n">currNode</span> <span class="o">!=</span> <span class="n">rootNode</span><span class="o">){</span>
+</span><span class='line'>        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">//replace tally of path of most candy</span>
+</span><span class='line'>    <span class="n">currNode</span><span class="o">.</span><span class="na">totalCandyValue</span> <span class="o">=</span> <span class="n">currNode</span><span class="o">.</span><span class="na">candyValue</span> <span class="o">+</span> <span class="n">prevNode</span><span class="o">.</span><span class="na">totalCandyValue</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">currNode</span><span class="o">.</span><span class="na">totalSteps</span> <span class="o">+=</span> <span class="n">pathLength</span> <span class="o">+</span> <span class="n">prevNode</span><span class="o">.</span><span class="na">totalSteps</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">currNode</span><span class="o">.</span><span class="na">prevNode</span> <span class="o">=</span> <span class="n">prevNode</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">currNode</span><span class="o">.</span><span class="na">visited</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">for</span><span class="o">(</span><span class="n">Node</span> <span class="n">connectingNode</span> <span class="o">:</span> <span class="n">currNode</span><span class="o">.</span><span class="na">connectingNodes</span><span class="o">){</span>
+</span><span class='line'>        <span class="n">Node</span> <span class="n">nextNode</span> <span class="o">=</span> <span class="n">bestPath</span><span class="o">(</span><span class="n">rootNode</span><span class="o">,</span> <span class="n">connectingNode</span><span class="o">.</span><span class="na">node</span><span class="o">,</span> <span class="n">connectingNode</span><span class="o">.</span><span class="na">pathLength</span><span class="o">,</span> <span class="n">Node</span><span class="o">.</span><span class="na">currNode</span><span class="o">,</span> <span class="n">stepQuota</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+</span><span class='line'>        <span class="k">if</span><span class="o">(</span><span class="n">nextNode</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+</span><span class='line'>            <span class="c1">//reset node status, so next branch can access this point again</span>
+</span><span class='line'>            <span class="n">currNode</span><span class="o">.</span><span class="na">visited</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'>            <span class="k">return</span> <span class="kc">null</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>The algorithm above will update the rootNode with the history where we can traverse through and eventually find the best path.  So in plain english here&rsquo;s what&rsquo;s going on.
+The method above will recursively dig into the graph in a depth first search.  the function will break when it discovers that the path its on exceeds the amount of allotted steps or if the node has been visited and is NOT the root node.  This not distinction exists because revisiting the home node is necessary in order to complete the looping path and update the home node&rsquo;s history and current tally.  Each traversed node keeps track of the previous node that it came from as well as a running tally of how many steps it took to get there as well as the amount of candy gained.  The function is then called recursively on each of the visited node&rsquo;s connected paths and the cycle repeats until no more paths exist. I&rsquo;m not a mathmagician but this algorithm should have a worst case scenario of O(!N + N) where N is number of nodes.</p>
+
+<p>I thought of another addition that allows a path to end earlier before having to dig several nodes deep to reach the step limit. There could be a pre-processing stage where we figure out the shortest path to home from each node.  At each node we check to see if our available steps is more than the steps required to go back home. If it is, then the path is a bust and the algorithm can move on to the next path. This time-saving measure over the course of !N calculations could potentially reduce a lot of number crunching even though the algorithm is would still be of factorial time.</p>
+
+<p>This algorithm is pretty terrible and I&rsquo;m surprised to see that I wasn&rsquo;t able to find much information on a scenario similar to this.  Either I&rsquo;m using the wrong search terms or people just never were curious about finding optimal paths when both the nodes and edges have weights which I highly doubt.</p>
+
+<p>I would absolutely love to read if anybody else has any insight into these kinds of problems.</p>
+]]></content>
+  </entry>
+  
+</feed>

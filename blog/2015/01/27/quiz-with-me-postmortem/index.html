@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Quiz With Me Postmortem - Wow this blog looks fancy</title>
+  <meta name="author" content="Jason Lee">
+
+  
+  <meta name="description" content="Quiz With Me Postmortem written January 27, 2015 in angular, javascript, mongoose, node, postmortem, project website source code Quiz With Me is a &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://jasonjl.me/blog/2015/01/27/quiz-with-me-postmortem">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Wow this blog looks fancy" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-50368577-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Quiz With Me Postmortem</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2015-01-27T12:20:43-08:00" pubdate data-updated="true">January 27, 2015
+</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/angular/'>angular</a>, <a class='category' href='/blog/categories/javascript/'>javascript</a>, <a class='category' href='/blog/categories/mongoose/'>mongoose</a>, <a class='category' href='/blog/categories/node/'>node</a>, <a class='category' href='/blog/categories/postmortem/'>postmortem</a>, <a class='category' href='/blog/categories/project/'>project</a>
+  
+</span>
+
+
+        </div>
+        <p><video muted autoplay loop width="550px" poster="https://s3.amazonaws.com/jasonjlblog/quizwithme.jpg">
+    <source src="https://s3.amazonaws.com/jasonjlblog/quizwithme.mp4" type="video/mp4">
+    <source src="https://s3.amazonaws.com/jasonjlblog/quizwithme.webm" type="video/webm">
+    <img src="https://s3.amazonaws.com/jasonjlblog/quizwithme.jpg">
+</video></p>
+
+<p><a href="http://quiz.jasonjl.me">website</a> <br/>
+<a href="https://github.com/lee-jason/QuizWithMe">source code</a></p>
+
+<p>Quiz With Me is a community generated trivia site. Each user competes against the people around the world to test themselves with the trivia questions that they submit. Quiz With Me brings the joy of answering and creating trivia questions vs the entire world!</p>
+
+<!-- more -->
+
+
+<p></p>
+
+<p>Every player on Quiz With Me are all competing against each other directly in the same trivia game. Each player gets time to answer the same question as everyone else. Once time is up, the polls are tallied and users can compare their choice to those of their peers. Players can play anonymously or sign-up to keep track of their points. Each player can also submit their own multiple choice trivia question with at least four or more potential answers. Each question can also be judged by the community as to whether it is factually correct or just nonsensical BS.</p>
+
+<h2>The Backend</h2>
+
+
+<p>The backend is ran on node.js with the express framework with a mongo+mongoose persistence layer.  This is my second project working with node and I wanted to follow REST API guidelines when creating endpoints. You would think I would use socket.io again to create real-time experience but I really wanted to practice working on creating a RESTful API. Its funny, all API creation guides recommend making your server server-side content stateless.  The problem here is that I needed to synchronize all users to the server&rsquo;s state, the time remaining on the current question, and the question itself. I think its easy to create a stateless REST endpoints when dealing with normal documents, but when we&rsquo;re creating a game of sorts, its kind of assumed that we&rsquo;re going to be maintaining a state that all clients have to synchronize to right?</p>
+
+<h2>The Frontend</h2>
+
+
+<p>The front end is composed of a single index.html page that contains a bootstrapped themed skeleton and an angular.js app file that fills it all in.  The angular.js file has all the routes inside providers that asynchronously contact the server endpoints to get new questions, or handle logins and registrations, or create new questions. There&rsquo;s controllers for the questions segment, a controller for the poll segment, and controller for the header bar.  Each of these controllers does what angular does best which is watch for changes to objects inside the controller which automatically update the  tags in the front end. The page is also responsive in that the buttons and content will reorganize themselves based off the window size.  There&rsquo;s slight display issues regarding the header bar in the mobile view but I&rsquo;m generally happy with how I finally got to try out this new framework everyone <a href="http://larseidnes.com/2014/11/05/angularjs-the-bad-parts/">loves</a> <a href="https://medium.com/este-js-framework/whats-wrong-with-angular-js-97b0a787f903">to</a> <a href="http://www.thoughtworks.com/insights/blog/angularjs-bad-bits">hate</a>.</p>
+
+<h2>The good, the bad</h2>
+
+
+<p>Of course, competing with your friends and strangers across the world would be the most ideal scenario but the problem is the lack of a user base.  The site functions well with all the features of account management, question submission, question tribunal, in an acceptable presentation but all of this doesn&rsquo;t really matter unless someone is using it.  The design is also very bare. At this point I&rsquo;m happy that the functionality works as making the front end look polished was never the goal. The site suffers from terrible SEO due to the angular generated front end that dynamically fills in content. I tried to remedy this by adding an &lsquo;about&rsquo; light box describing the site but it doesn&rsquo;t seem to help. I&rsquo;m still unsure how to organically get hits for web applications like these without actually doing the work of marketing it first. Its making me believe that the new Google SEO algorithm is dependent heavily on public impression and how well it does on social network sites, Twitter, Facebook, Reddit and so on. The goal of this project was to continue working with node web applications and to get my feet wet with angular.  With the completion of this site, I feel like I graduated from the kiddy pool and ended up in the deep-end.</p>
+
+
+        <hr class="divider-short"/>
+
+        
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2015/01/27/confess-dot-me-postmortem/" title="Previous Post: Confess.me Postmortem">&laquo; Previous: Confess.me Postmortem</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2015/01/27/share-codes-postmortem/" title="Next Post: Share Codes Postmortem">Next: Share Codes Postmortem &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+
+    
+    <a href="https://github.com/lee-jason"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+    <a href="mailto:lee.jason930@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
+    
+      
+    
+    <a href="http://tindeck.com/users/jihoon222"><img src="/images/glyphicons_017_music.png"/></a>
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+      
+
+<script type="text/javascript">
+      var disqus_shortname = 'jihoon222';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://jasonjl.me/blog/2015/01/27/quiz-with-me-postmortem/';
+        var disqus_url = 'http://jasonjl.me/blog/2015/01/27/quiz-with-me-postmortem/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+  </body>
+</html>

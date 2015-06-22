@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Review | Wow this blog looks fancy]]></title>
+  <link href="http://jasonjl.me/blog/categories/review/atom.xml" rel="self"/>
+  <link href="http://jasonjl.me/"/>
+  <updated>2015-06-21T20:06:15-07:00</updated>
+  <id>http://jasonjl.me/</id>
+  <author>
+    <name><![CDATA[Jason Lee]]></name>
+    <email><![CDATA[lee.jason930@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[A Review of Hired]]></title>
+    <link href="http://jasonjl.me/blog/2015/04/11/a-review-of-hired/"/>
+    <updated>2015-04-11T18:17:41-07:00</updated>
+    <id>http://jasonjl.me/blog/2015/04/11/a-review-of-hired</id>
+    <content type="html"><![CDATA[<p>After gaining back my technical skills and feeling confident in interviewing again I decided to become useful and jump into the endless sea of available technical jobs. Of course I applied to the typical big engineering companies and some other smaller ones but sometimes you just need to know what else is out there. I think <a href="https://hired.com/">Hired</a> fills this void perfectly.</p>
+
+<!-- more -->
+
+
+<p>preface: It seems like this is the second time I&rsquo;ve plugged Hired, I ensure you reader that I am not in their books.</p>
+
+<p>Hired is just like a typical job hunting site, except this time the roles are reversed; the recruiters hunt while you respond. Pretty crazy concept right? Instead of having you search for positions through Monster, Dice, or other job listing sites, you publicly advertise yourself and your abilities and the companies come to you.</p>
+
+<h2>The Story</h2>
+
+
+<p>I&rsquo;ve been around six to seven months unemployed. During that time I&rsquo;ve been working on personal projects to familiarize myself with the current trends in web development. I finally felt that I was ready to contribute with my new-found skills and was ready to go on the hunt. I had some companies in mind, the typical engineering bigs, Amazon, Microsoft, Facebook so on and a few smaller ones. I also wanted to see what else was out there and decided to try out Hired.</p>
+
+<h2>The Rundown</h2>
+
+
+<p>I sign up, set up my profile, and list my skills and locations I want to work. In the same week I get a call from my &lsquo;Talent Advocate&rsquo; to walk me through the whole process, the kind of work I&rsquo;m looking for, and some advice on how to make my profile stand out to employers. It was essentially a recruiting phone screen that you can&rsquo;t mess up. After the screen I fix up my profile a little, add a nice picture, list out my GitHub projects, and make my location preference much more specific. My Advocate then places a one-liner describing me and my work that companies will view when browsing over my profile. After that I&rsquo;m ready to roll and submit my profile to be available for the next &lsquo;auction&rsquo; which starts every Sunday each week and lasts for two weeks.</p>
+
+<h3>Hired Roadmap</h3>
+
+
+<ol>
+  <li>1. Fill out your profile</li>
+  <li>2. Get a call from a &#8216;Talent Advocate&#8217; or Hired recruiter</li>
+  <li>3. Fix up your profile</li>
+  <li>4. Put it up for the next &#8216;auction&#8217;</li>
+  <li>5. Wait for the &#8216;offers&#8217; to roll in</li>
+</ol>
+
+
+<p>Now when Hired says candidates usually get 5-15 &lsquo;offers&rsquo;, they really just mean introductions but we knew that already right?  In fact from my experience, the offered equity and salary and signing bonuses are still negotiable for the better or worse. These offers are just a way for companies to entice you so you can start talking. In fact Hired requires you to get back to each and every company that contacts you. You have the option of declining the offer outright, re-negotiating terms or clarifying job descriptions, or immediately set a phone interview right then and there. After the two weeks are over you&rsquo;re free to continue communication with each of the contacted companies until you&rsquo;re no longer considered or until you finally get your dream job.</p>
+
+<h2>Things I liked</h2>
+
+
+<h3>Loads of responses</h3>
+
+
+<p>The response rate is incredible. From my own personal searches, I&rsquo;ve received less than 1/6th response per resume sent out. With Hired, I just create one profile and received 12 requests for interviews. That&rsquo;s a 1200% return for 1 resume posted! If you&rsquo;re looking just to see what&rsquo;s out there, Hired will get you a solid returns on your time invested into the site.</p>
+
+<h3>Very Concentrated, Very Quick</h3>
+
+
+<p>I like how there&rsquo;s a very defined start and end time on responses. It forces each company that&rsquo;s gunning for your heart to get a fair start and lines up each company&rsquo;s interview schedules together which allows you to have a more organized schedule. It also benefits you in that when multiple companies end up giving you job offers, you can use each offer as leverage to see which one loves you more.</p>
+
+<h2>Things I don&#8217;t like</h2>
+
+
+<h3>You&#8217;re still going through the initial recruiting hoops</h3>
+
+
+<p>So this is what happens. Recruiters sit down Monday morning and browse Hired for the latest batch of candidates. They sift through and find some profiles where the skills and history seem to match the requirements of the job. They contact you to set up a call where they&hellip; have you&hellip; state your skills and history to see if you&rsquo;re a good fit&hellip;</p>
+
+<p>I don&rsquo;t get it. The initial recruiting call seems highly unnecessary since a Hired profile gives way more information than a normal resume does. It also gives more information that a standard recruiting call will ever expose. I think this practice of screening the candidate is still done because internal company recruiting processes are slow to change and a concept like Hired which should make this step obsolete is too different from their traditional hiring process that they choose to leave this redundant step in.</p>
+
+<p>I personally would rather talk directly to an engineer for the opening call but that was very rare.</p>
+
+<h3>Talent advocate sets up your one-liner description</h3>
+
+
+<p>Your talent advocate will size you up with a one-liner description after your thirty minute introductory call. This description is the first thing recruiters will see when they see your name. I actually wanted to look for more Node.js and fullstack JavaScript opportunities, but my talent advocate boiled me down to &lsquo;Frontend developer previously with Experian; led multiple teams and projects to success&rsquo;. I didn&rsquo;t realize until after the two weeks were over that this was how I was being advertised which kind of explained why I got so many offers for front-end lead positions even though this was something I wanted to shift away from.</p>
+
+<p>It appears now that Hired encourages you to contact your Talent Advocate if you&rsquo;re not happy with your description. I&rsquo;d like to think my complaining about this made a difference haha..</p>
+
+<h3>Most of the positions are going to be startups from SF</h3>
+
+
+<p>Home to all the hippest engineers, SF and Bay Area companies are begging for more talent. I originally wanted to look for positions all over the United States but my Advocate recommended I boil it down to three cities. I chose LA, SF, and Seattle. I got 1 response from LA, 1 response from Seattle, and 10 responses from SF. Out of those 12, 2 of those were large companies and the rest were Series A startups.</p>
+
+<p>These kinds of results may change depending on the type of job you&rsquo;re looking for but if you&rsquo;re a front-end engineer or any web engineer, you&rsquo;re going to be getting similar results.</p>
+
+<h2>All in all..</h2>
+
+
+<p>It&rsquo;s a really good service. Its searching for jobs without actually putting in all the work of having to find them. Granted all the responses you&rsquo;re going to get aren&rsquo;t going to resonate with you and some companies that contact you sound like straight up scams but the quantity of offers definitely offset the few that aren&rsquo;t quality.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Codewars, Leetcode, Hackerrank. Online Judges Reviews]]></title>
+    <link href="http://jasonjl.me/blog/2015/03/30/practical-programming-practice-services/"/>
+    <updated>2015-03-30T12:41:31-07:00</updated>
+    <id>http://jasonjl.me/blog/2015/03/30/practical-programming-practice-services</id>
+    <content type="html"><![CDATA[<p>Sometimes the projects you work on just aren&rsquo;t stimulating enough. Sometimes you need to fill your brain with as many programming problems as possible. Usually tackling a small sized project only requires a small set of challenges to solve while the rest of the time is spent tying the project together. When you need as many challenges to tackle in as short a time as possible you need online judges.  This article is a review on the online judges, <a href="http://www.codewars.com/">Codewars</a>, <a href="https://leetcode.com/">LeetCode</a>, and <a href="https://www.hackerrank.com/">HackerRank</a>.</p>
+
+<!-- more -->
+
+
+
+
+<h2>Codewars</h2>
+
+
+<p><a href="http://www.codewars.com/">Codewars</a> takes the concept of the &lsquo;Code Kata&rsquo; and gamifies the exercises so programmers always have something to challenge themselves when they got a few minutes to spare. Challenges are usually short, ranging from minutes to a few hours.  Most of the questions often have contexts associated with them so it always feels like you&rsquo;re actually solving a potential real world problem rather using your tools as a programmer, even though the contexts are often fantastical in nature.</p>
+
+<h3>Things I like</h3>
+
+
+<p>There&rsquo;s a clear progression that Codewars wants you to take. Challenges start from the fundamentals and rises slowly in difficulty so that you have a good basis of understanding before you move to the next level.</p>
+
+<p>Solutions of all the other members are available to analyze after solving the problem. Finding out how other (more smarter) people solved the same exact problem allows you to gain insights into the gaps in your methodology. The solutions are bite sized so its easier to digest new programming features or new ways of organizing code that you&rsquo;ve never considered before. I truly think that social programming is the way to get better at writing code and I think Codewars deserves a giant plus for this feature.</p>
+
+<h3>Things I don&#8217;t like</h3>
+
+
+<p>The Java error messages are less than helpful.  I&rsquo;m not sure how they return exceptions when your code doesn&rsquo;t compile, but often times the console is going to return an exception from the enclosing outer stack that executes the code meaning you don&rsquo;t get any useful stack debugging information, you just know somethings wrong.</p>
+
+<p>Each question has tags associated with them describing what methods of programming you&rsquo;ll use to solve the problem. These tags often give a hint on what to do to solve the problem which is kind of a problem since people look at these tags as extra meta information to give them a lead. I often like to come into a problem blind and find out myself what to do in order to get to a solution.</p>
+
+<h3>Overall</h3>
+
+
+<p>Overall I think it&rsquo;s actually a really neat service. Like I said earlier, I&rsquo;ve learned so much more about JavaScript than I ever would have if I were to just continue working on my own projects. I&rsquo;m definitely going to use it again when I delve into Python.</p>
+
+<h2>LeetCode OJ</h2>
+
+
+<p><a href="https://leetcode.com/">LeetCode OJ</a> is all about the algorithms.  There are no pretenses, you&rsquo;re going to be solving very straightforward problems that have very defined lower bounds in terms of space and memory. These problems will often test cases on all edges of the spectrum and will only accept answers that meet the lowest bound limitation.  Your preferred language is just a means to work around an algorithm. At the end of each problem, Leetcode ranks you up against your peers by how quickly your code executed.</p>
+
+<h3>Things I like</h3>
+
+
+<p>No muss no fuss, these questions ask you about algorithms and after enough exercises will hammer the common ways to solve them into your brain. I think this is a good second level after reading and solving the exercises to Crack the Coding Interview. There are tons more exercises here that touches on things that CTCI doesn&rsquo;t which makes it a natural progression to the book.</p>
+
+<p>The code editor is actually really good. Everything flows like a real professional code editor including quality of life improvements such as auto tab indentation, mass commenting, auto closing brackets, mass tab indentation, highlight bracketing, etc&hellip;</p>
+
+<p>The questions are very direct.  There are no fillers, no context. At first its a little ambiguous to know what values will be used to test your program, but after a while it becomes very obvious what kinds of edge case values Leetcode expects your program to process.</p>
+
+<h3>Things I don&#8217;t like</h3>
+
+
+<p>Since the online judge only wants answers that are strictly the lowest bound in terms of space and runtime, it&rsquo;ll often fail passing solutions that are not the most optimal. It will fail an acceptable solution of O(nlogn) if the lowest bound possible is O(n). Sometimes you think of the correct algorithm, but implement it in such a way that it still exceeds the time limit. It is ambiguous to know what exactly is the bit of code to optimize in order to pass the test.</p>
+
+<p>The community seems more concerned with writing concise code rather than best practice code. Discussion solutions are often compressed to the point where its difficult to read.</p>
+
+<p>I really wish they would allow us to see each user&rsquo;s submitted code so we can see exactly what we need to do to get the most optimization out of our language of choice. I did not feel like I learned anything about runtime optimization since my code always landed in the middle in terms of speed compared to my peers.</p>
+
+<h3>Overall</h3>
+
+
+<p>This site is great if you need some extra exercises to hone in on pure algorithm practice. I would not recommend it as a place to actually learn from 0% knowledge but more of a place if you&rsquo;re looking for medium to advanced challenges. You have to be familiar with your language of choice as your language is just a tool you should be familiar with to solve a greater problem.</p>
+
+<h2>HackerRank</h2>
+
+
+<p><a href="https://www.hackerrank.com/">HackerRank</a> is site that focuses more on the competitive nature of programming. HackerRank encourages you to participate in its many ongoing week long challenges. They support a ton of languages cover a wide range of practice problems ranging from algorithms, functional programming, linux shell cmds, and even AI.</p>
+
+<h3>Things I like</h3>
+
+
+<p>Since each challenge requests you parse a text file, it actually gives you plenty of exercises in reading in a file, parsing it, and outputting it.  I feel like this is something that&rsquo;s overlooked by a lot of challenge sites so its nice to see a site that allows you to practice that skill.</p>
+
+<p>Each challenge has very clearly defined variables.  Sometimes it&rsquo;s actually kind of annoying, but each challenge will let you know exactly how the text file will be formatted and exactly what it will be testing on.</p>
+
+<p>There are a ton of active competitions going on at a time meaning you can always test your chops against other programmers.</p>
+
+<h3>Things I don&#8217;t like</h3>
+
+
+<p>Its code editor is missing a lot of convenience features that the other code editors have. Sure it has code highlighting but other than that its very uncomfortable to use. The UI around the site is nice, but I feel like it has some work to do on its code editor.</p>
+
+<p>Parsing a text file every time is kind of annoying. Some times you just want the values to be passed in as primitive data as if it would be used as a modular piece in a larger project. Since JavaScript doesn&rsquo;t have a real file output stream (without node) it requests for you to use console.log() to output your answer, which is a small inconvenience.</p>
+
+<h3>Overall</h3>
+
+
+<p>I&rsquo;ve used this the least amount so I&rsquo;m not yet decided on whether I like it or not. The challenges are appropriately challenging but the text editor is not very fun to use. Its less of a site to practice but more to compete. Some of you may view this as the same thing.</p>
+
+<h2>Conclusions</h2>
+
+
+<p>Just about doing any of these is a good natural progression in terms of interview preparation and to generally be a better programmer. All three of these sites and many more like it definitely can only help since you&rsquo;ll be exposed to a wider range of problems you never even knew existed. Of course, nothing truly beats the experience of working on a truly challenging real project but when those are few and far in between, then these online judges got you covered.</p>
+]]></content>
+  </entry>
+  
+</feed>

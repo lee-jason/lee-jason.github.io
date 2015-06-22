@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Text Twist Bot - Wow this blog looks fancy</title>
+  <meta name="author" content="Jason Lee">
+
+  
+  <meta name="description" content="Text Twist Bot written November 21, 2014 in bots, java, postmortem, project source code source game Text Twist Bot is a bot made to play the anagram &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://jasonjl.me/blog/2014/11/21/text-twist-bot">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Wow this blog looks fancy" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-50368577-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Text Twist Bot</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2014-11-21T23:28:34-08:00" pubdate data-updated="true">November 21, 2014
+</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/bots/'>bots</a>, <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/postmortem/'>postmortem</a>, <a class='category' href='/blog/categories/project/'>project</a>
+  
+</span>
+
+
+        </div>
+        <p><video muted autoplay loop width="400px" poster="https://s3.amazonaws.com/jasonjlblog/texttwistbot.jpg">
+    <source src="https://s3.amazonaws.com/jasonjlblog/texttwistbot.mp4" type="video/mp4">
+    <source src="https://s3.amazonaws.com/jasonjlblog/texttwistbot.webm" type="video/webm">
+    <img src="https://s3.amazonaws.com/jasonjlblog/texttwistbot.jpg">
+</video></p>
+
+<p><a href="https://github.com/lee-jason/TextTwistBot">source code</a> <br/>
+<a href="http://zone.msn.com/en/texttwist/default.htm?intgid=hp_word_1">source game</a></p>
+
+<p>Text Twist Bot is a bot made to play the anagram solving game Text Twist. Once ran, the bot will auto detect the location of the window, parse the current letters on the board, and automatically input all anagrams that can be found from those six letters.  Of course solving anagrams is not new in the field of programming but whatever, revel in its glory!</p>
+
+<!-- more -->
+
+
+<p>In its most basic form, the Text Twist Bot is simply an anagram solver wrapped in a robot that detects the game board and inputs the letters.  Upon execution, the program reads in an extensive list of english words.  These words are placed as a value into a HashMap where their keys are the letters of the word but alphabetically ordered.  This means that words like &lsquo;eat&rsquo; and &lsquo;tea&rsquo; will both have the keys of &lsquo;aet&rsquo;.  You might then ask &ldquo;But Jason, doesn&rsquo;t HashMaps only accept unique key values?&rdquo; then I&rsquo;ll answer back &ldquo;Why yes, that&rsquo;s correct, that&rsquo;s why I extended the base HashMap class with a MultiValueMap that automatically creates a Collection as a value when new values are added to the same key&rdquo;.  This means that no value with the same key will be overwritten but rather added onto in the collection.  Initially I used a <a href="https://commons.apache.org/proper/commons-collections/javadocs/api-3.2.1/org/apache/commons/collections/map/MultiValueMap.html">MultiValueMap</a> from the apache commons collection library, but after being asked to implement it in an interview (that I bombed) I felt compelled to go back and re-implement it by extending the base HashMap class. Hashing and adding a word to the MultiValueMap takes constant time O(1) for each english word in the list meaning the whole process of adding all the words in the list runs in linear time O(n) where n is the number of words in the list. Now that all the words are processed in the map, I can now lookup anagrams of each groupings of letters at constant speed! Amazing!</p>
+
+<p>Finding the location of the game board and the letters to use was another challenge.  The Java class Robot definitely comes in handy when doing these kinds of screen reading actions.  To determine the location of the board, I take a full screen picture of the primary monitor where I then go pixel by pixel looking for two specific origin pixels.  Once these pixels are found, then I would know the origin of the game board as well as the location of the letters since the letter location is positioned relatively to the origin.  I&rsquo;m still not sure if doing these pixel by pixel searches to find something is the best way to go about it but after seeing how fast it goes about the search, I felt that it was a good enough solution for the problem at hand.</p>
+
+<p>Now that I had the location of the game board I needed to find out the letters to solve an anagram for.  Since I didn&rsquo;t use any OCR technologies for this project, I needed a way to determine which letters were currently on the board. In Text Twist, the letters are represented by spheres.  These spheres initially appear on the base row.  When pressed, the letter then shifts up to the input row leaving behind an empty yellow sphere. Knowing this, I had the Robot type the alphabet multiple times for each letter in order then press enter.  This would sort the letters and bring them back to the base row.  I would then slowly type the alphabet in sequence and determine whether a letter was shifted to the input row by using pixel detection.  If a letter had shifted, then we know the letter that was just typed is in play.  This would continue until all letters were found.  The letters would then be alphabetically sorted then passed into a <a href="http://en.wikipedia.org/wiki/Power_set">Powerset</a> generator where each set represents a key in the MultiValueMap. Once the values were found, it was game time and the Robot will feverishly type in the letters as fast as the game would take them, only stopping once it finished with inputting all words found.</p>
+
+<h2>Issues and Improvements</h2>
+
+
+<p>Of course everything isn&rsquo;t all sunshine and rainbows.  If the robot inputs the text too quickly, the game can&rsquo;t process it and will ignore it often mucking up an answer and causing the game to stall. Delays were implemented to make the Robot delay each keypress by 15ms.  Also, the word list that I found sometimes doesn&rsquo;t have pluralized versions of the word meaning it usually will find a word but not its plural form.  I had a create a cheap word pluraliser that doesn&rsquo;t cover every instance. Also a word just may be missing from the word list which means I add it in manually after the game lets me know which words I missed.  In short the bot isn&rsquo;t perfect.  More work can be put into it to make it have 100% word coverage but I think it does the job pretty well for now.</p>
+
+
+        <hr class="divider-short"/>
+
+        
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2014/11/18/balancing-confidence/" title="Previous Post: Balancing Confidence, Arrogance, Ignorance, and Humility">&laquo; Previous: Balancing Confidence, Arrogance, Ignorance, and Humility</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2014/11/24/bejeweled-bot/" title="Next Post: Bejeweled Bot">Next: Bejeweled Bot &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+
+    
+    <a href="https://github.com/lee-jason"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+    <a href="mailto:lee.jason930@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
+    
+      
+    
+    <a href="http://tindeck.com/users/jihoon222"><img src="/images/glyphicons_017_music.png"/></a>
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+      
+
+<script type="text/javascript">
+      var disqus_shortname = 'jihoon222';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://jasonjl.me/blog/2014/11/21/text-twist-bot/';
+        var disqus_url = 'http://jasonjl.me/blog/2014/11/21/text-twist-bot/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+  </body>
+</html>

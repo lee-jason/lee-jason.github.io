@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Share Codes Postmortem - Wow this blog looks fancy</title>
+  <meta name="author" content="Jason Lee">
+
+  
+  <meta name="description" content="Share Codes Postmortem written January 27, 2015 in angular, javascript, mongo, node, postmortem, project website source code Share Codes is a site &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://jasonjl.me/blog/2015/01/27/share-codes-postmortem">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Wow this blog looks fancy" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-50368577-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Share Codes Postmortem</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2015-01-27T14:40:13-08:00" pubdate data-updated="true">January 27, 2015
+</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/angular/'>angular</a>, <a class='category' href='/blog/categories/javascript/'>javascript</a>, <a class='category' href='/blog/categories/mongo/'>mongo</a>, <a class='category' href='/blog/categories/node/'>node</a>, <a class='category' href='/blog/categories/postmortem/'>postmortem</a>, <a class='category' href='/blog/categories/project/'>project</a>
+  
+</span>
+
+
+        </div>
+        <p><video muted autoplay loop width="550px" poster="https://s3.amazonaws.com/jasonjlblog/sharecodes.jpg">
+    <source src="https://s3.amazonaws.com/jasonjlblog/sharecodes.mp4" type="video/mp4">
+    <source src="https://s3.amazonaws.com/jasonjlblog/sharecodes.webm" type="video/webm">
+    <img src="https://s3.amazonaws.com/jasonjlblog/sharecodes.jpg">
+</video></p>
+
+<p><a href="http://sharecodes.jasonjl.me">website</a> <br/>
+<a href="https://github.com/lee-jason/ShareCodes">source code</a></p>
+
+<p>Share Codes is a site for people to trade beta/alpha/early access codes. The premise is simple, people with codes post their email and people who want codes post their emails. Match made in heaven!</p>
+
+<!-- more -->
+
+
+<p></p>
+
+<p>This site was originally created for people to share the early access demo code for the video game Super Smash Brothers for 3DS. Only a few privileged people were able to receive an early access code from Nintendo and had a few codes to share.  Internet communities across the web were going wild on searching for a spare code while those fortunate ones with the codes had the opportunity to get something in return for having such a rare commodity. I felt a site like this was needed to help people filter all the noise into something more digestible. The site was furiously written and released and it even helped some people find and give away codes.</p>
+
+<h2>The Backend</h2>
+
+
+<p>The backend was made with node with the express framework.  Once again I tried to make a proper REST API style endpoints that my front end would connect to. All emails are stored in mongodb through mongoose. The server has a scheduled timed function that prunes emails from the email list if the email is older than 30 minutes. That&rsquo;s it, there&rsquo;s nothing more interesting to say about the backend.</p>
+
+<h2>The Frontend</h2>
+
+
+<p>The front end was created with plain old html with the bootstrap framework for styling.  I don&rsquo;t really like using the bootstrap grid layout feature so I don&rsquo;t use that and make my own responsive layout using flexible containers and media queries. The form posting of the emails is not actually asynchronous. I know the experience would have probably been better if emails asynchronously updated without a page refresh but I haven&rsquo;t worked on a non-asynchronous site in so long that I really wanted to remind myself how to do it using traditional forms, actions, and methods.  Its funny, I&rsquo;m a developer born into the web 2.0 world that I have little project experience on how to do things in the web 1.0 world. I also wanted users to keep refreshing their pages to simulate heavy load to test how much strain a single Heroku dyno can take.</p>
+
+<h2>The good, the bad</h2>
+
+
+<p>The micro app was a blast to make. I knew that there was a time limit of relevancy since the codes would expire in a week. I churned this site out in around six hours just to see if I could. I think I felt that this would be kind of a proving ground whether I&rsquo;m comfortable enough with node to create a basic web application relatively quickly. Fortunately I was able to reuse the framework from my other node projects that already had the configurations I wanted.  The site worked and I felt really alive after I saw actual users on the site. I continued to make small improvements to the layout, adding extra fields, cleaning up text, making it responsive, all within the first hour of being live. If I wanted to generalize this, I can just swap out the title and make it apply for any kind of pre-access code sharing site.</p>
+
+<p>So here&rsquo;s the bad. The bad involved the marketing. Once I was done, I sent it around to my friends, then I made a post on Reddit in the primary thread and any other thread involved in trading of codes. Unfortunately for me, these threads were already filled to the brim with people looking for codes. It was a storm of fish desperately trying to gobble the bait. I think it was the largest Reddit thread I&rsquo;ve seen at 20,000 comments since I last seen it. Every time I would make a post in a thread I would check the analytics and I was fortunate to even get a few bites. Someone even posted it on their Facebook wall thereby getting a few more bites. It was pretty swell, my site was actually being used by real people. Many of them posted their email looking for codes but nobody posted their email giving away their code. It was a seller&rsquo;s market at a rate of 1 seller to 50 buyers. Some users kept reposting their email when it got pruned but then eventually the site would be empty.</p>
+
+<p>Well, there you have it. I&rsquo;m glad that some people were helped by the site, but it didn&rsquo;t spread even when I hopped around forums posting the link. I think the clarity of the share codes service is actually really helpful but when people are already ingrained in their communities it seems that they can&rsquo;t be bothered to use anything else.</p>
+
+
+        <hr class="divider-short"/>
+
+        
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2015/01/27/quiz-with-me-postmortem/" title="Previous Post: Quiz With Me Postmortem">&laquo; Previous: Quiz With Me Postmortem</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2015/01/27/6-dot-82-visualizer-postmortem/" title="Next Post: 6.82 Visualizer Postmortem">Next: 6.82 Visualizer Postmortem &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+
+    
+    <a href="https://github.com/lee-jason"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+    <a href="mailto:lee.jason930@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
+    
+      
+    
+    <a href="http://tindeck.com/users/jihoon222"><img src="/images/glyphicons_017_music.png"/></a>
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+      
+
+<script type="text/javascript">
+      var disqus_shortname = 'jihoon222';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://jasonjl.me/blog/2015/01/27/share-codes-postmortem/';
+        var disqus_url = 'http://jasonjl.me/blog/2015/01/27/share-codes-postmortem/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+  </body>
+</html>

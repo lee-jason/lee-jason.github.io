@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Problems: Binary Tree Designs - Wow this blog looks fancy</title>
+  <meta name="author" content="Jason Lee">
+
+  
+  <meta name="description" content="Problems: Binary Tree Designs written November 6, 2014 in java, problems So I&rsquo;ve been brushing up and working with binary trees recently and I &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://jasonjl.me/blog/2014/11/06/problems-binary-tree-designs">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Wow this blog looks fancy" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-50368577-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Problems: Binary Tree Designs</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2014-11-06T19:35:39-08:00" pubdate data-updated="true">November 6, 2014
+</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/problems/'>problems</a>
+  
+</span>
+
+
+        </div>
+        <div><img src="https://s3.amazonaws.com/jasonjlblog/herobinarytreeexample.png" alt="sample binary tree structures based off threez nodes"></div>
+
+
+<p>So I&rsquo;ve been brushing up and working with binary trees recently and I was pleasantly reminded how binary trees can flex and change while still maintaining the same data. It was fun testing self balancing trees when they would keep changing up on me. I got a little annoyed and my mind started to wander and wondered just how many different kinds of trees can a set of numbers create?</p>
+
+<p><strong>Problem:</strong> Given the amount of nodes in a set, how many different binary tree structures can be made from it?</p>
+
+<!-- more -->
+
+
+<p>The picture above shows three different tree examples based off three nodes.  If we keep going, we find out that there&rsquo;s five total unique tree structures just through brute force. I don&rsquo;t care about which numbers fill in which node in this problem (although that does sound like quite the problem) I just care about the shape of the tree structure. With that said, I was having trouble figuring out all the different tree types for four nodes and I didn&rsquo;t even try for five nodes. That&rsquo;s the point where we give up and ask the computer</p>
+
+<figure class='code'><figcaption><span>Recursive solution to tree pattern count </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'>    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">binaryTreeCount</span><span class="o">(</span><span class="kt">int</span> <span class="n">nodes</span><span class="o">,</span> <span class="kt">int</span> <span class="n">count</span><span class="o">){</span>
+</span><span class='line'>        <span class="k">if</span><span class="o">(</span><span class="n">nodes</span><span class="o">==</span><span class="mi">1</span><span class="o">){</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">count</span><span class="o">+</span><span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="c1">//simulate left node path</span>
+</span><span class='line'>        <span class="n">count</span><span class="o">=</span><span class="n">binaryCount</span><span class="o">(</span><span class="n">nodes</span><span class="o">-</span><span class="mi">1</span><span class="o">,</span> <span class="n">count</span><span class="o">);</span>
+</span><span class='line'>        <span class="c1">//simulate right node path</span>
+</span><span class='line'>        <span class="n">count</span><span class="o">=</span><span class="n">binaryCount</span><span class="o">(</span><span class="n">nodes</span><span class="o">-</span><span class="mi">1</span><span class="o">,</span> <span class="n">count</span><span class="o">);</span>
+</span><span class='line'>        <span class="c1">//simulate left right node path</span>
+</span><span class='line'>        <span class="k">if</span><span class="o">(</span><span class="n">nodes</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="o">){</span>
+</span><span class='line'>            <span class="n">count</span><span class="o">=</span><span class="n">binaryCount</span><span class="o">(</span><span class="n">nodes</span><span class="o">-</span><span class="mi">2</span><span class="o">,</span> <span class="n">count</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">count</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This recursive function is simulating a depth first search that&rsquo;s limited by the amount of nodes available to it.  Once it reaches the end of a path, it adds one to the &lsquo;count&rsquo; counter that gets passed back up and down the recursive stack.  The function goes down the left path, and the right path, and also considers paths that can be generated from a node that branches into two paths with the third condition. I&rsquo;m not a mathmagician but the runtime of this isn&rsquo;t so hot.  I&rsquo;m pretty sure I can make it better by storing the path counts for amount of nodes down a certain path in a reference table so I don&rsquo;t have to calculate the repeated calculations every time but I&rsquo;m just kind of glad right now that I got the answer I wanted.</p>
+
+
+        <hr class="divider-short"/>
+
+        
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2014/11/03/testing-the-undeterministic-with-mocking/" title="Previous Post: Unit Testing Random Behavior with Mock Objects">&laquo; Previous: Unit Testing Random Behavior with Mock Objects</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2014/11/17/regular-expressions/" title="Next Post: Regular Expressions">Next: Regular Expressions &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+
+    
+    <a href="https://github.com/lee-jason"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+    <a href="mailto:lee.jason930@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
+    
+      
+    
+    <a href="http://tindeck.com/users/jihoon222"><img src="/images/glyphicons_017_music.png"/></a>
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+      
+
+<script type="text/javascript">
+      var disqus_shortname = 'jihoon222';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://jasonjl.me/blog/2014/11/06/problems-binary-tree-designs/';
+        var disqus_url = 'http://jasonjl.me/blog/2014/11/06/problems-binary-tree-designs/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+  </body>
+</html>

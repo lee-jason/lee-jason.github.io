@@ -1,0 +1,305 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Logging Information on Browser Crashes - Wow this blog looks fancy</title>
+  <meta name="author" content="Jason Lee">
+
+  
+  <meta name="description" content="Logging Information on Browser Crashes written June 21, 2015 in browsers, javascript, logging Every now and then your web application does something &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://jasonjl.me/blog/2015/06/21/taking-action-on-browser-crashes">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Wow this blog looks fancy" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-50368577-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Logging Information on Browser Crashes</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2015-06-21T13:25:04-07:00" pubdate data-updated="true">June 21, 2015
+</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/browsers/'>browsers</a>, <a class='category' href='/blog/categories/javascript/'>javascript</a>, <a class='category' href='/blog/categories/logging/'>logging</a>
+  
+</span>
+
+
+        </div>
+        <p><img class="hero-image" src="https://s3.amazonaws.com/jasonjlblog/awsnap.png" width='500'/></p>
+
+<p>Every now and then your web application does something so wild and unpredictable that it crashes the browser that you&rsquo;re running it on. In order to create a better product for our users, we would need to log pertinent information every time our app crashes. Unfortunately there is no way to send a crash log before or during the crash due to the unpredictable nature of the crash and the browser&rsquo;s web environment no longer working. The best thing to do is to send the logs <i>after</i> the crash. This post will go through a technique to detect when the user&rsquo;s previous session has crashed so that we can perform the relevant logging actions.</p>
+
+<!-- more -->
+
+
+
+
+<script type="text/javascript">
+   window.addEventListener('load', function () {
+      sessionStorage.setItem('good_exit', 'pending');
+      setInterval(function () {
+         sessionStorage.setItem('time_before_crash', new Date().toString());
+      }, 1000);
+   });
+
+   window.addEventListener('beforeunload', function () {
+      sessionStorage.setItem('good_exit', 'true');
+   });
+   
+   if(sessionStorage.getItem('good_exit') && 
+      sessionStorage.getItem('good_exit') !== 'true') {
+      alert('Hey, welcome back from your crash, looks like you crashed on: ' + sessionStorage.getItem('time_before_crash'));
+   }
+</script>
+
+
+
+
+<h2>Preface</h2>
+
+
+<p>Currently I&rsquo;ve only been able to support this technique on Google&rsquo;s Chrome and Mozilla&rsquo;s Firefox browser. This technique takes advantage of these two browser&rsquo;s support for restorable sessionStorage. The <a href="https://wiki.whatwg.org/wiki/FAQ#What_is_the_WHATWG.3F">WHATWG</a> HTML spec currently describes sessionStorage to delete itself once the browser context ends but also makes a note that browsing contexts can continue to persist even after the browser is closed. This is useful if the browser chooses to save the session to reload it after the user closes the browser window or if the browser window crashes.
+<a href="https://html.spec.whatwg.org/multipage/webstorage.html#the-sessionstorage-attribute">WHATWG spec on sessionStorage</a></p>
+
+<h2>Simulating the Crash</h2>
+
+
+<p>First, we&rsquo;ll have to find out ways to simulate crashes on our browsers. Fortunately for our sake, its pretty easy to do for both Mozilla and Chrome.</p>
+
+<h3>Crashing on Chrome</h3>
+
+
+<ol>
+    <li>Go to the page you want to crash</li>
+    <li>Paste this into your url &#8216;chrome://crash&#8217;</li>
+    <li>Press Enter</li>
+</ol>
+
+
+<p>That was pretty easy. This brings up Chrome&rsquo;s &lsquo;Aw Snap!&rsquo; error page which simulates as if an irrecoverable error actually happened on the previous site you were on.</p>
+
+<h3>Crashing on Firefox</h3>
+
+
+<ol>
+    <li>Go to the page you want to crash</li>
+    <li>Open your Task Manager on Windows or Activity Monitor on OSX</li>
+    <li>Find your firefox process and end the process or force quit it</li>
+</ol>
+
+
+<p>Force stopping the processes trigger&rsquo;s Firefox&rsquo;s crash conditions and emulates a real crash scenario. Firefox should ask you to restore your previous tabs along with your previous session as well.</p>
+
+<h2>Go ahead, try it!</h2>
+
+
+<p>Now that we know how to crash this page, go ahead and try it! When you come back there should be an alert letting you know that you came back from a crash and at what time</p>
+
+<h2>Acting on the Crash</h2>
+
+
+<p>Now that we know how to crash the browsers we just need to place the code in.</p>
+
+<figure class='code'><figcaption><span>Logging on browser crash  </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>   <span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;load&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="s1">&#39;good_exit&#39;</span><span class="p">,</span> <span class="s1">&#39;pending&#39;</span><span class="p">);</span>
+</span><span class='line'>      <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>         <span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="s1">&#39;time_before_crash&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">toString</span><span class="p">());</span>
+</span><span class='line'>      <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+</span><span class='line'>   <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;beforeunload&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="s1">&#39;good_exit&#39;</span><span class="p">,</span> <span class="s1">&#39;true&#39;</span><span class="p">);</span>
+</span><span class='line'>   <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="k">if</span><span class="p">(</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="s1">&#39;good_exit&#39;</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+</span><span class='line'>      <span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="s1">&#39;good_exit&#39;</span><span class="p">)</span> <span class="o">!==</span> <span class="s1">&#39;true&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="cm">/*</span>
+</span><span class='line'><span class="cm">         insert crash logging code here</span>
+</span><span class='line'><span class="cm">     */</span>
+</span><span class='line'>      <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;Hey, welcome back from your crash, looks like you crashed on: &#39;</span> <span class="o">+</span> <span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="s1">&#39;time_before_crash&#39;</span><span class="p">));</span>
+</span><span class='line'>   <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The code above is checking if the user successfully closes, refreshes, or browses to another page by applying a <code>good_exit = true</code> flag in our sessionStorage. When the user successfully loads the page, the &lsquo;good_exit&rsquo; flag will be set to &lsquo;pending&rsquo; as we&rsquo;re not sure if the user will successfully exit from this session. If the user unsuccessfully closes, refreshes, or browsers to another page and manages to crash the browser, the &lsquo;good_exit&rsquo; flag will not be changed to &lsquo;true&rsquo; and will stay as &lsquo;pending. Everytime the user loads the page we check whether they&rsquo;re coming back from a crash. If they are, then we apply our crashalytics code.</p>
+
+<h2>Things to do after a crash</h2>
+
+
+<p>Remember that your sessionStorage is saved and recovered so anything that your user was doing before the crash can be recovered.  This means you can store the last visited url, the time that they visited your site, any actions they have taken on the page, anything that you can store in sessionStorage can be recovered.</p>
+
+<p>Say for instance the last thing the user was doing before the crash was typing a very long response in a text box. You can save the contents of the text box every few seconds into sessionStorage so that you can reload it once the user comes back from the crash. Or if you just want some analytics on the last actions the user took you can create a sessionStorage item to log and trace the actions taken by the user by listening to clicks and key inputs on your document. When the visitor returns you can post that information back to your server so you have something to go on when trying to fix your buggy site. Or when a user comes back to your page you can directly ask them to submit a bug report about what they were doing before they crashed. Many native desktop programs already do something like this and now you too can bring this feature to your buggy web application!</p>
+
+<h2>Caveats</h2>
+
+
+<p>An already listed caveat is this may or may not currently work for Internet Explorer or Safari. I wasn&rsquo;t able to reliable crash those browsers to test whether they bring back sessions after crashes. Another caveat is that since sessionStorage content isn&rsquo;t shared between tabs, users will have to refresh or reload the same tab with the same sessionStorage in order for the crash logging code to execute. If users open a new tab to connect after a crash then there will be no record of there being a crash. It will act as if you started a new browser session. As you can see this method isn&rsquo;t 100% reliable, but it does give options to cover some of your user base.</p>
+
+<p><small>tested on Chrome version 43.0.2357.81 and Firefox 38.0.5 on June 21, 2015</small></p>
+
+
+        <hr class="divider-short"/>
+
+        
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2015/04/18/rendering-list-of-elements-in-react-with-jsx/" title="Previous Post: Rendering List of Elements in React with JSX">&laquo; Previous: Rendering List of Elements in React with JSX</a>
+        
+
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+
+    
+    <a href="https://github.com/lee-jason"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+    <a href="mailto:lee.jason930@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
+    
+      
+    
+    <a href="http://tindeck.com/users/jihoon222"><img src="/images/glyphicons_017_music.png"/></a>
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+      
+
+<script type="text/javascript">
+      var disqus_shortname = 'jihoon222';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://jasonjl.me/blog/2015/06/21/taking-action-on-browser-crashes/';
+        var disqus_url = 'http://jasonjl.me/blog/2015/06/21/taking-action-on-browser-crashes/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+  </body>
+</html>

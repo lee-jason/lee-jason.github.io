@@ -14,9 +14,9 @@ Every now and then your web application does something so wild and unpredictable
 <script type="text/javascript">
    window.addEventListener('load', function () {
       sessionStorage.setItem('good_exit', 'pending');
-      setInterval(1000, function () {
+      setInterval(function () {
          sessionStorage.setItem('time_before_crash', new Date().toString());
-      });
+      }, 1000);
    });
 
    window.addEventListener('beforeunload', function () {
@@ -53,7 +53,7 @@ That was pretty easy. This brings up Chrome's 'Aw Snap!' error page which simula
 Force stopping the processes trigger's Firefox's crash conditions and emulates a real crash scenario. Firefox should ask you to restore your previous tabs along with your previous session as well.
 
 <h2>Go ahead, try it!</h2>
-Now that we know how to crash this page, go ahead and try it! When you come back there should be an alert letting you know that you came back from a crash
+Now that we know how to crash this page, go ahead and try it! When you come back there should be an alert letting you know that you came back from a crash and at what time
 
 
 <h2>Acting on the Crash</h2>
@@ -62,7 +62,9 @@ Now that we know how to crash the browsers we just need to place the code in.
 {% codeblock lang:javascript Logging on browser crash  %}
    window.addEventListener('load', function () {
    	sessionStorage.setItem('good_exit', 'pending');
-   	sessionStorage.setItem('last_visited_url', window.location)
+   	setInterval(function () {
+         sessionStorage.setItem('time_before_crash', new Date().toString());
+      }, 1000);
    });
 
    window.addEventListener('beforeunload', function () {
@@ -74,9 +76,7 @@ Now that we know how to crash the browsers we just need to place the code in.
    	/*
    		insert crash logging code here
    	*/
-      $.post('/log_crash', {
-         last_visited_url: sessionStorage.getItem('last_visited_url');
-      });
+      alert('Hey, welcome back from your crash, looks like you crashed on: ' + sessionStorage.getItem('time_before_crash'));
    }
 {% endcodeblock %}
 
